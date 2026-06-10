@@ -1,0 +1,44 @@
+name: Update Scores
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - env:
+          API_URL: ${{ vars.API_URL || 'https://worldcup26.ir' }}
+        run: node scripts/update-scores.mjs
+      - id: commit
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add public/games.json
+            git commit -m "Update scores"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  deploy:
+    if: needs.update.outputs.changed == 'true'
+    needs: update
+    permissions:
+      contents: read
+      id-token: write
+      pages: write
+    uses: ./.github/workflows/deploy.yml
