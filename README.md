@@ -11,11 +11,14 @@ via a scheduled GitHub Action that commits `public/games.json`.
   CSV). Drop a file in, rebuild, done. Predictions are frozen before kickoff.
 - **Kickoff times** — the sheet records them in Brasília time (UTC-3); the UI
   converts each kickoff to the viewer's local timezone at render time.
-- **Scores** — `.github/workflows/update-scores.yml` runs hourly, fetches the
-  [worldcup26.ir](https://github.com/rezarahiminia/worldcup2026) API
-  server-side (it has no CORS), normalizes it into `public/games.json`, and
-  commits when something changed; that triggers a Pages deploy. A left-open tab
-  also re-fetches `games.json` every `VITE_REFRESH_INTERVAL_MS`.
+- **Scores** — `.github/workflows/update-scores.yml` runs every 15 minutes
+  and walks a source chain server-side: **FIFA's public JSON API**
+  (`api.fifa.com`, live scores) → ESPN scoreboard → the
+  [worldcup26.ir](https://github.com/rezarahiminia/worldcup2026) API. The
+  first healthy source wins, gets normalized into `public/games.json`, and is
+  committed when something changed; the workflow then chains the Pages deploy
+  itself (bot pushes cannot trigger `on: push`). A left-open tab also
+  re-fetches `games.json` every `VITE_REFRESH_INTERVAL_MS`.
 
 ## Scoring
 
@@ -29,8 +32,9 @@ started are not scored; live matches score provisionally. Ties share a rank
 
 | Setting | Where | Default |
 | --- | --- | --- |
-| Score refresh cadence | `cron` in `update-scores.yml` | hourly |
-| Score source | `API_URL` repository variable | `https://worldcup26.ir` |
+| Score refresh cadence | `cron` in `update-scores.yml` | every 15 min |
+| Preferred score source | `SCORE_SOURCE` repository variable (`fifa`, `espn`, `worldcup26`) | `fifa` |
+| worldcup26 base URL | `API_URL` repository variable | `https://worldcup26.ir` |
 | Client re-fetch interval | `VITE_REFRESH_INTERVAL_MS` (build-time) | `3600000` |
 | Games file URL | `VITE_GAMES_URL` (build-time) | `<base>/games.json` |
 

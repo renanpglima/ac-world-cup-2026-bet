@@ -2,7 +2,9 @@ name: Update Scores
 
 on:
   schedule:
-    - cron: '0 * * * *'
+    # Every 15 minutes during the tournament (Jun 11 - Jul 19 2026); GitHub
+    # may delay scheduled runs by a few minutes under load.
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -20,6 +22,7 @@ jobs:
           node-version: 22
       - env:
           API_URL: ${{ vars.API_URL || 'https://worldcup26.ir' }}
+          SCORE_SOURCE: ${{ vars.SCORE_SOURCE || 'fifa' }}
         run: node scripts/update-scores.mjs
       - id: commit
         run: |
