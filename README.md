@@ -14,8 +14,9 @@ via a scheduled GitHub Action that commits `public/games.json`.
   and the what-if panel while the match is live.
 - **📈 Race** — cumulative points per participant across the 17 group-stage
   days (finished matches only).
-- **One tab per participant** — their 72 predictions with real scores, status,
-  and per-match points color-coded by tier.
+- **🎯 Bets** — pick a participant in the sub-menu to see their 72
+  predictions with real scores, status, and per-match points color-coded by
+  tier.
 
 ## How It Works
 

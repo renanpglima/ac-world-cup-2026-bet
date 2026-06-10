@@ -42,9 +42,15 @@ function TabButton({
 export default function App() {
 	const participants = useMemo(loadParticipants, []);
 
+	const [bettor, setBettor] = useState<string | null>(null);
 	const [fetchFailed, setFetchFailed] = useState(false);
 	const [gamesFile, setGamesFile] = useState<GamesFile | null>(null);
 	const [tab, setTab] = useState('leaderboard');
+
+	const selectBettor = (name: string) => {
+		setBettor(name);
+		setTab('bets');
+	};
 
 	useEffect(() => {
 		let active = true;
@@ -120,9 +126,12 @@ export default function App() {
 			? 'Scores unavailable — showing predictions only'
 			: 'Loading scores…';
 
-	const selected = participants.find(
-		(participant) => participant.name === tab
-	);
+	const activeBettor =
+		tab === 'bets'
+			? (participants.find(
+					(participant) => participant.name === bettor
+				) ?? participants[0])
+			: undefined;
 
 	return (
 		<div className="min-h-screen bg-slate-950 font-sans">
@@ -151,25 +160,40 @@ export default function App() {
 						📈 Race
 					</TabButton>
 
-					{participants.map((participant) => (
-						<TabButton
-							active={tab === participant.name}
-							key={participant.name}
-							onClick={() => setTab(participant.name)}
-						>
-							{participant.name}
-						</TabButton>
-					))}
+					<TabButton
+						active={tab === 'bets'}
+						onClick={() => setTab('bets')}
+					>
+						🎯 Bets
+					</TabButton>
 				</nav>
 
-				{selected ? (
-					<ParticipantView games={games} participant={selected} />
+				{tab === 'bets' && (
+					<nav className="-mt-4 mb-6 flex gap-1 overflow-x-auto border-l-2 border-emerald-500/30 pb-1 pl-3">
+						{participants.map((participant) => (
+							<button
+								className={`whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+									activeBettor?.name === participant.name
+										? 'bg-amber-400 font-semibold text-amber-950'
+										: 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-slate-200'
+								}`}
+								key={participant.name}
+								onClick={() => setBettor(participant.name)}
+							>
+								{participant.name}
+							</button>
+						))}
+					</nav>
+				)}
+
+				{activeBettor ? (
+					<ParticipantView games={games} participant={activeBettor} />
 				) : tab === 'matches' ? (
 					<MatchesView cards={cards} whatIf={whatIf} />
 				) : tab === 'race' ? (
 					<EvolutionChart evolution={evolution} />
 				) : (
-					<Leaderboard onSelect={setTab} rows={rows} />
+					<Leaderboard onSelect={selectBettor} rows={rows} />
 				)}
 			</main>
 		</div>
