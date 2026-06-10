@@ -42,3 +42,5 @@ jobs:
       id-token: write
       pages: write
     uses: ./.github/workflows/deploy.yml
+
+# Registered via touch-push: GitHub skipped indexing this schedule-only workflow on first push
