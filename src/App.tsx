@@ -2,8 +2,10 @@ import {useEffect, useMemo, useState} from 'react';
 
 import {Header} from './components/Header';
 import {Leaderboard} from './components/Leaderboard';
+import {MatchesView} from './components/MatchesView';
 import {ParticipantView} from './components/ParticipantView';
 import {fetchGames, getMatchStatus} from './lib/games';
+import {buildMatchCards} from './lib/matches';
 import {loadParticipants} from './lib/predictions';
 import {buildLeaderboard} from './lib/ranking';
 import type {GamesFile} from './lib/types';
@@ -77,6 +79,11 @@ export default function App() {
 		[participants, games]
 	);
 
+	const cards = useMemo(
+		() => buildMatchCards(participants, games),
+		[participants, games]
+	);
+
 	const liveCount = games.filter(
 		(game) => getMatchStatus(game) === 'live'
 	).length;
@@ -109,6 +116,13 @@ export default function App() {
 						🏆 Leaderboard
 					</TabButton>
 
+					<TabButton
+						active={tab === 'matches'}
+						onClick={() => setTab('matches')}
+					>
+						⚽ Matches
+					</TabButton>
+
 					{participants.map((participant) => (
 						<TabButton
 							active={tab === participant.name}
@@ -122,6 +136,8 @@ export default function App() {
 
 				{selected ? (
 					<ParticipantView games={games} participant={selected} />
+				) : tab === 'matches' ? (
+					<MatchesView cards={cards} />
 				) : (
 					<Leaderboard onSelect={setTab} rows={rows} />
 				)}
