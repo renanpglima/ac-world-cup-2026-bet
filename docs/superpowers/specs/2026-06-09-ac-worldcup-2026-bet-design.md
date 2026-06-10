@@ -59,7 +59,11 @@ Game { id: number; group: string; matchday: number; localDate: string;
 
 ### Join
 
-`Prediction.matchNo ↔ Game.id` (both number the same 72 group-stage matches; verified: match 1 = Mexico × South Africa in both sources). Parse-time guard: if the team pair of a joined row does not line up (normalized name comparison), fall back to matching by team names + date and log a console warning.
+The **team-name pair is the authoritative join**: the sheet and the API order fixtures differently within matchdays, so `Prediction.matchNo ↔ Game.id` only lines up for some matches (verified: 17 of 72 in the real data). `findGameForPrediction` tries the id join first but trusts it only when the team pair agrees; otherwise it falls back to matching by team names + date (±1 day, the sources' local dates sit in different timezones) and logs a console warning, with a final team-names-only pass as a safety net.
+
+Team names are normalized (diacritics, case, punctuation) and canonicalized through an alias map because the sheet uses FIFA names while the API uses different English names (Korea Republic ↔ South Korea, Czechia ↔ Czech Republic, USA ↔ United States, Türkiye ↔ Turkey, Côte d'Ivoire ↔ Ivory Coast, Cabo Verde ↔ Cape Verde, IR Iran ↔ Iran, Congo DR ↔ Democratic Republic of the Congo).
+
+`games.json` ships only the 72 group-stage games (`type: 'group'` in the raw API): knockout placeholders have no team names until the bracket is decided, and excluding them also means a future knockout rematch of a group pairing can never collide with the team-name fallback.
 
 ## Scoring Rules (from the sheet's "Ranking and Rules" tab)
 

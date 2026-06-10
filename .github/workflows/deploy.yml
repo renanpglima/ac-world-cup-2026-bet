@@ -11,12 +11,14 @@ permissions:
   id-token: write
   pages: write
 
-concurrency:
-  cancel-in-progress: true
-  group: pages
-
 jobs:
   deploy:
+    # Job-level (not workflow-level) concurrency: top-level concurrency is
+    # ignored when this workflow runs via workflow_call (from
+    # update-scores.yml), and the job level covers every trigger path.
+    concurrency:
+      cancel-in-progress: true
+      group: pages
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

@@ -1,4 +1,4 @@
-import {describe, expect, it} from 'vitest';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 
 import {
 	findGameForPrediction,
@@ -60,13 +60,49 @@ describe('getMatchStatus', () => {
 
 describe('normalizeTeamName', () => {
 	it('strips diacritics, case, and punctuation', () => {
-		expect(normalizeTeamName("Côte d'Ivoire")).toBe('cotedivoire');
-		expect(normalizeTeamName('Türkiye')).toBe('turkiye');
-		expect(normalizeTeamName('Korea Republic')).toBe('korearepublic');
+		expect(normalizeTeamName('São Tomé')).toBe('saotome');
+		expect(normalizeTeamName('Bosnia and Herzegovina')).toBe(
+			'bosniaandherzegovina'
+		);
+	});
+
+	it('canonicalizes FIFA names to the API vocabulary', () => {
+		expect(normalizeTeamName("Côte d'Ivoire")).toBe(
+			normalizeTeamName('Ivory Coast')
+		);
+		expect(normalizeTeamName('Türkiye')).toBe(normalizeTeamName('Turkey'));
+		expect(normalizeTeamName('Korea Republic')).toBe(
+			normalizeTeamName('South Korea')
+		);
+		expect(normalizeTeamName('Czechia')).toBe(
+			normalizeTeamName('Czech Republic')
+		);
+		expect(normalizeTeamName('USA')).toBe(
+			normalizeTeamName('United States')
+		);
+		expect(normalizeTeamName('Cabo Verde')).toBe(
+			normalizeTeamName('Cape Verde')
+		);
+		expect(normalizeTeamName('IR Iran')).toBe(normalizeTeamName('Iran'));
+		expect(normalizeTeamName('Congo DR')).toBe(
+			normalizeTeamName('Democratic Republic of the Congo')
+		);
+	});
+
+	it('returns an empty string for a missing name', () => {
+		expect(normalizeTeamName(undefined as unknown as string)).toBe('');
 	});
 });
 
 describe('findGameForPrediction', () => {
+	beforeEach(() => {
+		vi.spyOn(console, 'warn').mockImplementation(() => {});
+	});
+
+	afterEach(() => {
+		vi.restoreAllMocks();
+	});
+
 	it('joins by match number when the teams line up', () => {
 		expect(findGameForPrediction(makePrediction(), [makeGame()])).toEqual(
 			makeGame()
@@ -75,11 +111,61 @@ describe('findGameForPrediction', () => {
 
 	it('falls back to team matching when the id points at the wrong game', () => {
 		const games = [
-			makeGame({awayTeam: 'Czechia', homeTeam: 'Korea Republic', id: 1}),
+			makeGame({awayTeam: 'Ecuador', homeTeam: 'Germany', id: 1}),
 			makeGame({id: 50}),
 		];
 
 		expect(findGameForPrediction(makePrediction(), games)?.id).toBe(50);
+	});
+
+	it('warns when the team-name fallback is used', () => {
+		const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+		findGameForPrediction(makePrediction(), [makeGame({id: 50})]);
+
+		expect(warn).toHaveBeenCalledOnce();
+
+		warn.mockRestore();
+	});
+
+	it('joins through team aliases when the sources name teams differently', () => {
+		const prediction = makePrediction({
+			team1: 'Korea Republic',
+			team2: 'Czechia',
+		});
+		const games = [
+			makeGame({awayTeam: 'Czech Republic', homeTeam: 'South Korea', id: 2}),
+		];
+
+		expect(findGameForPrediction(prediction, games)?.id).toBe(2);
+	});
+
+	it('prefers the game on the predicted date when teams rematch', () => {
+		const games = [
+			makeGame({id: 80, localDate: '07/04/2026 13:00'}),
+			makeGame({id: 50}),
+		];
+
+		expect(findGameForPrediction(makePrediction(), games)?.id).toBe(50);
+	});
+
+	it('tolerates a one-day timezone skew in the fallback date match', () => {
+		const prediction = makePrediction({date: 'Jun/14'});
+		const games = [makeGame({id: 50, localDate: '06/13/2026 21:00'})];
+
+		expect(findGameForPrediction(prediction, games)?.id).toBe(50);
+	});
+
+	it('survives games without team names', () => {
+		const knockoutGame = makeGame({
+			awayTeam: undefined as unknown as string,
+			homeTeam: undefined as unknown as string,
+			id: 73,
+		});
+
+		expect(
+			findGameForPrediction(makePrediction({matchNo: 73}), [knockoutGame])
+		).toBeUndefined();
 	});
 
 	it('matches teams in flipped order', () => {

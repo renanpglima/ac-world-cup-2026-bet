@@ -39,4 +39,17 @@ describe('normalizeGames', () => {
 
 		expect(game.finished).toBe(true);
 	});
+
+	it('drops knockout games, which have no team names until decided', () => {
+		const knockoutGame = {
+			...RAW_GAME,
+			away_team_name_en: undefined,
+			group: 'R32',
+			home_team_name_en: undefined,
+			id: '73',
+			type: 'r32',
+		};
+
+		expect(normalizeGames([RAW_GAME, knockoutGame])).toHaveLength(1);
+	});
 });

@@ -12,12 +12,29 @@ export function getMatchStatus(game: Game): MatchStatus {
 	return 'live';
 }
 
+// The pool's sheet uses FIFA team names while the API uses different English
+// names; map the normalized FIFA spelling to the API's vocabulary so both
+// sides canonicalize to the same token.
+
+const TEAM_ALIASES: Record<string, string> = {
+	caboverde: 'capeverde',
+	congodr: 'democraticrepublicofthecongo',
+	cotedivoire: 'ivorycoast',
+	czechia: 'czechrepublic',
+	iriran: 'iran',
+	korearepublic: 'southkorea',
+	turkiye: 'turkey',
+	usa: 'unitedstates',
+};
+
 export function normalizeTeamName(name: string): string {
-	return name
+	const normalized = (name ?? '')
 		.normalize('NFD')
 		.replace(/[\u0300-\u036f]/g, '')
 		.toLowerCase()
 		.replace(/[^a-z0-9]/g, '');
+
+	return TEAM_ALIASES[normalized] ?? normalized;
 }
 
 function teamsMatch(prediction: Prediction, game: Game): boolean {
@@ -31,6 +48,52 @@ function teamsMatch(prediction: Prediction, game: Game): boolean {
 	);
 }
 
+const MONTHS: Record<string, number> = {
+	apr: 4,
+	aug: 8,
+	dec: 12,
+	feb: 2,
+	jan: 1,
+	jul: 7,
+	jun: 6,
+	mar: 3,
+	may: 5,
+	nov: 11,
+	oct: 10,
+	sep: 9,
+};
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+function datesMatch(prediction: Prediction, game: Game): boolean {
+	const predictionParts = prediction.date.match(/^([A-Za-z]+)\/(\d+)$/);
+	const gameParts = game.localDate.match(/^(\d+)\/(\d+)\/(\d+)/);
+
+	if (!predictionParts || !gameParts) {
+		return false;
+	}
+
+	const month = MONTHS[predictionParts[1].toLowerCase().slice(0, 3)];
+
+	if (!month) {
+		return false;
+	}
+
+	const year = Number(gameParts[3]);
+	const gameTime = Date.UTC(
+		year,
+		Number(gameParts[1]) - 1,
+		Number(gameParts[2])
+	);
+	const predictionTime = Date.UTC(year, month - 1, Number(predictionParts[2]));
+
+	// The sheet's dates and the API's local dates sit in different timezones,
+	// so late-evening games land on the next calendar day in the sheet; allow
+	// a one-day skew.
+
+	return Math.abs(predictionTime - gameTime) <= DAY_MS;
+}
+
 export function findGameForPrediction(
 	prediction: Prediction,
 	games: Game[]
@@ -41,9 +104,17 @@ export function findGameForPrediction(
 		return byId;
 	}
 
-	const byTeams = games.find((game) => teamsMatch(prediction, game));
+	const byTeams =
+		games.find(
+			(game) => teamsMatch(prediction, game) && datesMatch(prediction, game)
+		) ?? games.find((game) => teamsMatch(prediction, game));
 
-	if (byId && !byTeams) {
+	if (byTeams) {
+		console.warn(
+			`Match #${prediction.matchNo} (${prediction.team1} x ${prediction.team2}): id join mismatched; matched game ${byTeams.id} by team names`
+		);
+	}
+	else {
 		console.warn(
 			`Match #${prediction.matchNo} (${prediction.team1} x ${prediction.team2}): id join mismatched and no team fallback found`
 		);
