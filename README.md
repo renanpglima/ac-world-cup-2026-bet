@@ -1,8 +1,21 @@
 # AC World Cup 2026 BET
 
-Leaderboard for the Analytics Cloud World Cup 2026 betting pool. Static site
+Leaderboard for the Analytics Cloud World Cup 2026 betting pool, live at
+**<https://interaminense.github.io/ac-world-cup-2026-bet/>**. Static site
 (GitHub Pages): predictions are CSVs bundled at build time; live scores arrive
 via a scheduled GitHub Action that commits `public/games.json`.
+
+## Views
+
+- **🏆 Leaderboard** — totals, exact-score count, competition ranking (ties
+  share a rank).
+- **⚽ Matches** — one card per game, grouped by the viewer's local day:
+  kickoff time, live score, everyone's predictions ranked by points earned,
+  and the what-if panel while the match is live.
+- **📈 Race** — cumulative points per participant across the 17 group-stage
+  days (finished matches only).
+- **One tab per participant** — their 72 predictions with real scores, status,
+  and per-match points color-coded by tier.
 
 ## How It Works
 
@@ -47,5 +60,5 @@ npm install
 npm run dev            # dev server
 npm test               # unit tests (scoring, ranking, parsers)
 npm run build          # production build
-npm run update-scores  # refresh public/games.json from the API
+npm run update-scores  # refresh public/games.json from the source chain
 ```
