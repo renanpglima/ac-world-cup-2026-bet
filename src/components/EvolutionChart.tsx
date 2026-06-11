@@ -1,3 +1,5 @@
+import {useState} from 'react';
+
 import type {Evolution} from '../lib/evolution';
 
 const COLORS = [
@@ -26,6 +28,8 @@ const PAD = {bottom: 30, left: 40, right: 16, top: 14};
 
 export function EvolutionChart({evolution}: {evolution: Evolution}) {
 	const {days, series} = evolution;
+
+	const [hovered, setHovered] = useState<string | null>(null);
 
 	if (days.length === 0) {
 		return (
@@ -128,8 +132,18 @@ export function EvolutionChart({evolution}: {evolution: Evolution}) {
 							),
 						].join(' ');
 
+						const total = item.totals[item.totals.length - 1] ?? 0;
+
 						return (
-							<g key={item.name}>
+							<g
+								className="transition-opacity duration-200"
+								key={item.name}
+								onMouseEnter={() => setHovered(item.name)}
+								onMouseLeave={() => setHovered(null)}
+								opacity={
+									hovered && hovered !== item.name ? 0.2 : 1
+								}
+							>
 								<polyline
 									fill="none"
 									points={points}
@@ -137,6 +151,16 @@ export function EvolutionChart({evolution}: {evolution: Evolution}) {
 									strokeLinejoin="round"
 									strokeWidth="2"
 								/>
+
+								{/* Invisible fat stroke: hover hit-area + line tooltip. */}
+								<polyline
+									fill="none"
+									points={points}
+									stroke="transparent"
+									strokeWidth="14"
+								>
+									<title>{`${item.name} — ${total} pts`}</title>
+								</polyline>
 
 								{item.totals.map((value, index) => (
 									<circle
@@ -160,8 +184,12 @@ export function EvolutionChart({evolution}: {evolution: Evolution}) {
 			<div className="flex flex-wrap gap-2">
 				{ranked.map((item) => (
 					<span
-						className="flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1 text-sm text-slate-300"
+						className={`flex cursor-default items-center gap-1.5 rounded-full px-3 py-1 text-sm text-slate-300 transition-colors ${
+							hovered === item.name ? 'bg-white/15' : 'bg-white/5'
+						}`}
 						key={item.name}
+						onMouseEnter={() => setHovered(item.name)}
+						onMouseLeave={() => setHovered(null)}
 					>
 						<span
 							className="h-2.5 w-2.5 rounded-full"
