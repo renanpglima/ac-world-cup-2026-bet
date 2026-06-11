@@ -1,13 +1,13 @@
 {
-	"fetchedAt": "2026-06-10T04:15:03.007Z",
+	"fetchedAt": "2026-06-11T19:17:38.417Z",
 	"games": [
 		{
 			"awayScore": 0,
 			"awayTeam": "South Africa",
 			"finished": false,
-			"timeElapsed": "notstarted",
+			"timeElapsed": "12",
 			"group": "Group A",
-			"homeScore": 0,
+			"homeScore": 1,
 			"homeTeam": "Mexico",
 			"id": 400021443,
 			"localDate": "2026-06-11T19:00:00Z",
