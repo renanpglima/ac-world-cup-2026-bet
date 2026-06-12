@@ -30,3 +30,12 @@ export function localize(
 ): string | undefined {
 	return value?.[locale] ?? value?.en;
 }
+
+// Defensive: leaderboard commentary must be emoji-free, even if an older
+// cached commentary.json still carries them.
+export function stripEmoji(text: string): string {
+	return text
+		.replace(/\p{Extended_Pictographic}/gu, '')
+		.replace(/\s{2,}/g, ' ')
+		.trim();
+}

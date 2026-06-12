@@ -62,29 +62,27 @@ export function Leaderboard({
 										name={row.name}
 									/>
 
-									<span>
-										<span className="flex items-center gap-1.5 font-medium text-white">
-											{row.name}
-
-											{(row.movement ?? 0) > 0 && (
-												<span className="text-xs text-emerald-400">
-													▲
-												</span>
-											)}
-
-											{(row.movement ?? 0) < 0 && (
-												<span className="text-xs text-rose-400">
-													▼
-												</span>
-											)}
-										</span>
-
-										{titles[row.name] && (
-											<span className="block text-xs text-slate-500">
-												{titles[row.name]}
-											</span>
-										)}
+									<span className="font-medium text-white">
+										{row.name}
 									</span>
+
+									{(row.movement ?? 0) > 0 && (
+										<span className="text-xs text-emerald-400">
+											▲
+										</span>
+									)}
+
+									{(row.movement ?? 0) < 0 && (
+										<span className="text-xs text-rose-400">
+											▼
+										</span>
+									)}
+
+									{titles[row.name] && (
+										<span className="text-xs text-slate-500">
+											{titles[row.name]}
+										</span>
+									)}
 								</span>
 							</td>
 

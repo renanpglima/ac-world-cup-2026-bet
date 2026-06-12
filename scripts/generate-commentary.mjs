@@ -36,9 +36,9 @@ Return the SAME blurb in three languages — en: American English, pt: Brazilian
 
 const BOARD_SYSTEM = `You are the commentator for the "AC World Cup 2026 BET" office pool. Given the current standings, produce a state-of-the-race recap and a one-line title for every participant.
 
-recap: 2-3 punchy sentences on the title race, the chasers, and the strugglers. Playful, never mean; use the real names and numbers.
+recap: 2-3 punchy sentences on the title race, the chasers, and the strugglers. Playful, never mean; use the real names and numbers. Plain text — NO emojis.
 
-titles: for each participant, a very short tag (max ~3 words) capturing their current vibe — may include one leading emoji (e.g. "🔥 On fire", "🧊 Ice cold", "🎯 Co-leader"). Base it on rank, points, exact-score count and recent form.
+titles: for each participant, a very short tag (max ~3 words, plain text, NO emojis) capturing their current vibe — e.g. "On fire", "Ice cold", "Co-leader", "Backed Qatar". Base it on rank, points, exact-score count and recent form.
 
 Everything in three languages — en: American English, pt: Brazilian Portuguese, es: Spain Spanish (castellano).`;
 

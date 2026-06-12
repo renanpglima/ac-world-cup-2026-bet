@@ -9,7 +9,7 @@ import {RulesView} from './components/RulesView';
 import {fetchCommentary} from './lib/commentary';
 import {buildEvolution} from './lib/evolution';
 import {fetchGames} from './lib/games';
-import {detectLocale, localize} from './lib/locale';
+import {detectLocale, localize, stripEmoji} from './lib/locale';
 import {buildMatchCards} from './lib/matches';
 import {loadParticipants} from './lib/predictions';
 import {buildLeaderboardWithMovement} from './lib/ranking';
@@ -92,9 +92,9 @@ export default function App() {
 					)
 				);
 
-				setBoardRecap(
-					localize(commentaryFile.leaderboard?.recap, locale)
-				);
+				const recap = localize(commentaryFile.leaderboard?.recap, locale);
+
+				setBoardRecap(recap ? stripEmoji(recap) : undefined);
 
 				setBoardTitles(
 					Object.fromEntries(
@@ -102,7 +102,7 @@ export default function App() {
 							commentaryFile.leaderboard?.titles ?? {}
 						).map(([name, text]) => [
 							name,
-							localize(text, locale) ?? '',
+							stripEmoji(localize(text, locale) ?? ''),
 						])
 					)
 				);
