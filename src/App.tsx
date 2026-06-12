@@ -255,7 +255,7 @@ export default function App() {
 				) : (
 					<Leaderboard
 						onSelect={selectBettor}
-						recap={boardRecap}
+						recap={liveGames.length === 0 ? boardRecap : undefined}
 						rows={rows}
 						titles={boardTitles}
 					/>

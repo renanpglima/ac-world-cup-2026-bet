@@ -203,6 +203,26 @@ function maskGame(games, target) {
 	);
 }
 
+// How many of the pool's fixtures are currently live (mirrors the frontend's
+// header live-count, scoped to the 72 group-stage games the pool tracks).
+export function liveFixtureCount(games, players) {
+	const fixtures = players[0]?.preds ?? {};
+	let count = 0;
+
+	for (const [matchNo, fixture] of Object.entries(fixtures)) {
+		const game = findGame(
+			{matchNo: Number(matchNo), team1: fixture.team1, team2: fixture.team2},
+			games
+		);
+
+		if (game && status(game) === 'live') {
+			count++;
+		}
+	}
+
+	return count;
+}
+
 // Group-stage fixtures the pool tracks, drawn from the first participant
 // (every CSV shares the same 72 fixtures).
 export function finishedFixtures(games, players) {

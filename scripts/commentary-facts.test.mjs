@@ -5,6 +5,7 @@ import {
 	buildMatchFacts,
 	computeBoard,
 	finishedFixtures,
+	liveFixtureCount,
 	parsePredictions,
 	scorePrediction,
 } from './commentary-facts.mjs';
@@ -86,5 +87,23 @@ describe('leaderboard facts', () => {
 		const board = computeBoard(gamesWith({}), players);
 
 		expect(board.every((row) => row.total === 0)).toBe(true);
+	});
+});
+
+describe('liveFixtureCount', () => {
+	it('counts only the fixtures that are live', () => {
+		const fixtures = players[0].preds;
+		const games = Object.entries(fixtures).map(([matchNo, fx], index) => ({
+			awayScore: 0,
+			awayTeam: fx.team2,
+			finished: index === 1,
+			homeScore: index === 0 ? 1 : 0,
+			homeTeam: fx.team1,
+			id: Number(matchNo),
+			timeElapsed:
+				index === 0 ? '55' : index === 1 ? 'finished' : 'notstarted',
+		}));
+
+		expect(liveFixtureCount(games, players)).toBe(1);
 	});
 });

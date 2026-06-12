@@ -3,7 +3,9 @@ import {existsSync, readFileSync, writeFileSync} from 'node:fs';
 import {
 	buildLeaderboardFacts,
 	buildMatchFacts,
+	computeBoard,
 	finishedFixtures,
+	liveFixtureCount,
 	parsePredictions,
 } from './commentary-facts.mjs';
 
@@ -34,13 +36,13 @@ Use only the real names, scores and numbers in the facts provided — never inve
 
 Return the SAME blurb in three languages — en: American English, pt: Brazilian Portuguese (casual "zoeira"), es: Spain Spanish (castellano).`;
 
-const BOARD_SYSTEM = `You are the commentator for the "AC World Cup 2026 BET" office pool. Given the current standings, produce a state-of-the-race recap and a one-line title for every participant.
+const RECAP_SYSTEM = `You are the commentator for the "AC World Cup 2026 BET" office pool. The match day is over — there are no live games — so write a settled state-of-the-race recap: 2-3 punchy sentences on the title race, the chasers, and the strugglers. Playful, never mean; use the real names and numbers. Plain text — NO emojis.
 
-recap: 2-3 punchy sentences on the title race, the chasers, and the strugglers. Playful, never mean; use the real names and numbers. Plain text — NO emojis.
+Return it in three languages — en: American English, pt: Brazilian Portuguese, es: Spain Spanish (castellano).`;
 
-titles: for each participant, a very short tag (max ~3 words, plain text, NO emojis) capturing their current vibe — e.g. "On fire", "Ice cold", "Co-leader", "Backed Qatar". Base it on rank, points, exact-score count and recent form.
+const TITLES_SYSTEM = `You are the commentator for the "AC World Cup 2026 BET" office pool. For every participant in the standings, write a very short tag (max ~3 words, plain text, NO emojis) capturing their current vibe — e.g. "On fire", "Ice cold", "Co-leader", "Backed the upset". Base it on rank, points, exact-score count and recent form. Return exactly one entry per participant.
 
-Everything in three languages — en: American English, pt: Brazilian Portuguese, es: Spain Spanish (castellano).`;
+Return each tag in three languages — en: American English, pt: Brazilian Portuguese, es: Spain Spanish (castellano).`;
 
 let anthropic;
 
@@ -67,20 +69,21 @@ async function callJson(system, facts, schema) {
 		throw new Error('model refused');
 	}
 
-	const block = response.content.find((b) => b.type === 'text');
-
-	return JSON.parse(block.text);
+	return JSON.parse(response.content.find((b) => b.type === 'text').text);
 }
 
 async function commentMatch(facts) {
 	return callJson(MATCH_SYSTEM, facts, LOCALIZED_SCHEMA);
 }
 
-async function commentBoard(facts) {
+async function commentRecap(facts) {
+	return callJson(RECAP_SYSTEM, facts, LOCALIZED_SCHEMA);
+}
+
+async function commentTitles(facts) {
 	const schema = {
 		additionalProperties: false,
 		properties: {
-			recap: LOCALIZED_SCHEMA,
 			titles: {
 				items: {
 					additionalProperties: false,
@@ -96,18 +99,15 @@ async function commentBoard(facts) {
 				type: 'array',
 			},
 		},
-		required: ['recap', 'titles'],
+		required: ['titles'],
 		type: 'object',
 	};
 
-	const result = await callJson(BOARD_SYSTEM, facts, schema);
+	const result = await callJson(TITLES_SYSTEM, facts, schema);
 
-	return {
-		recap: result.recap,
-		titles: Object.fromEntries(
-			result.titles.map(({name, ...langs}) => [name, langs])
-		),
-	};
+	return Object.fromEntries(
+		result.titles.map(({name, ...langs}) => [name, langs])
+	);
 }
 
 const games = JSON.parse(readFileSync(GAMES_FILE, 'utf8')).games;
@@ -118,35 +118,54 @@ const commentary = existsSync(OUT_FILE)
 	: {byMatch: {}};
 
 commentary.byMatch ??= {};
+commentary.leaderboard ??= {};
 
-const pending = finishedFixtures(games, players).filter(
+const board = computeBoard(games, players);
+// A signature of the standings — changes whenever a goal (or kickoff / final
+// whistle) moves anyone's points, i.e. whenever the ranking actually changes.
+const signature = JSON.stringify(board.map((row) => [row.name, row.total]));
+const live = liveFixtureCount(games, players);
+const hasScores = board.some((row) => row.total > 0);
+
+const pendingMatches = finishedFixtures(games, players).filter(
 	(fixture) => !commentary.byMatch[fixture.matchNo]
 );
 
-if (pending.length === 0) {
-	console.log('No newly finished matches; commentary is up to date.');
+// Titles track every ranking change (every goal). Recap is the settled summary
+// — only refreshed once a match day has no live games left.
+const needTitles =
+	hasScores && signature !== commentary.leaderboard.titlesSignature;
+const needRecap =
+	hasScores &&
+	live === 0 &&
+	signature !== commentary.leaderboard.recapSignature;
+
+if (pendingMatches.length === 0 && !needTitles && !needRecap) {
+	console.log('Commentary up to date; nothing to generate.');
 	process.exit(0);
 }
 
 if (DRY_RUN) {
 	console.log(
-		`[dry run] no ANTHROPIC_API_KEY — would generate commentary for ${pending.length} match(es):`
+		`[dry run] no ANTHROPIC_API_KEY — matches=${pendingMatches.length} titles=${needTitles} recap=${needRecap} liveGames=${live}`
 	);
 
-	for (const fixture of pending) {
+	for (const fixture of pendingMatches) {
 		console.log(JSON.stringify(buildMatchFacts(fixture, games, players)));
 	}
 
-	console.log('[dry run] leaderboard facts:');
-	console.log(JSON.stringify(buildLeaderboardFacts(games, players)));
+	if (needTitles || needRecap) {
+		console.log(JSON.stringify(buildLeaderboardFacts(games, players)));
+	}
+
 	process.exit(0);
 }
 
-for (const fixture of pending) {
-	const facts = buildMatchFacts(fixture, games, players);
-
+for (const fixture of pendingMatches) {
 	try {
-		commentary.byMatch[fixture.matchNo] = await commentMatch(facts);
+		commentary.byMatch[fixture.matchNo] = await commentMatch(
+			buildMatchFacts(fixture, games, players)
+		);
 		console.log(`Generated commentary for match ${fixture.matchNo}`);
 	}
 	catch (error) {
@@ -154,14 +173,30 @@ for (const fixture of pending) {
 	}
 }
 
-try {
-	commentary.leaderboard = await commentBoard(
-		buildLeaderboardFacts(games, players)
-	);
-	console.log('Generated leaderboard recap and titles');
+if (needTitles) {
+	try {
+		commentary.leaderboard.titles = await commentTitles(
+			buildLeaderboardFacts(games, players)
+		);
+		commentary.leaderboard.titlesSignature = signature;
+		console.log('Updated leaderboard titles (ranking changed)');
+	}
+	catch (error) {
+		console.error(`Leaderboard titles failed: ${error.message}`);
+	}
 }
-catch (error) {
-	console.error(`Leaderboard commentary failed: ${error.message}`);
+
+if (needRecap) {
+	try {
+		commentary.leaderboard.recap = await commentRecap(
+			buildLeaderboardFacts(games, players)
+		);
+		commentary.leaderboard.recapSignature = signature;
+		console.log('Updated leaderboard recap (no live games)');
+	}
+	catch (error) {
+		console.error(`Leaderboard recap failed: ${error.message}`);
+	}
 }
 
 commentary.generatedAt = new Date().toISOString();
