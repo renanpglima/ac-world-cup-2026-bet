@@ -60,31 +60,41 @@ export function Leaderboard({
 							<td className="py-3 pl-2 pr-2">
 								<span className="flex min-w-0 items-center gap-2.5">
 									<Avatar
-										className="h-8 w-8 rounded-full"
+										className="h-8 w-8 shrink-0 rounded-full"
 										name={row.name}
 									/>
 
-									<span className="truncate font-medium text-white">
-										{row.name}
+									<span className="min-w-0">
+										<span className="flex items-center gap-1.5">
+											<span className="truncate font-medium text-white">
+												{row.name}
+											</span>
+
+											{(row.movement ?? 0) > 0 && (
+												<span className="text-xs text-emerald-400">
+													▲
+												</span>
+											)}
+
+											{(row.movement ?? 0) < 0 && (
+												<span className="text-xs text-rose-400">
+													▼
+												</span>
+											)}
+
+											{titles[row.name] && (
+												<span className="hidden truncate text-xs text-slate-500 sm:inline">
+													{titles[row.name]}
+												</span>
+											)}
+										</span>
+
+										{titles[row.name] && (
+											<span className="block truncate text-xs text-slate-500 sm:hidden">
+												{titles[row.name]}
+											</span>
+										)}
 									</span>
-
-									{(row.movement ?? 0) > 0 && (
-										<span className="text-xs text-emerald-400">
-											▲
-										</span>
-									)}
-
-									{(row.movement ?? 0) < 0 && (
-										<span className="text-xs text-rose-400">
-											▼
-										</span>
-									)}
-
-									{titles[row.name] && (
-										<span className="hidden truncate text-xs text-slate-500 sm:inline">
-											{titles[row.name]}
-										</span>
-									)}
 								</span>
 							</td>
 
