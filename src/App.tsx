@@ -8,7 +8,7 @@ import {ParticipantView} from './components/ParticipantView';
 import {RulesView} from './components/RulesView';
 import {fetchCommentary} from './lib/commentary';
 import {buildEvolution} from './lib/evolution';
-import {fetchGames, getMatchStatus} from './lib/games';
+import {fetchGames} from './lib/games';
 import {detectLocale, localize} from './lib/locale';
 import {buildMatchCards} from './lib/matches';
 import {loadParticipants} from './lib/predictions';
@@ -149,9 +149,18 @@ export default function App() {
 		[cards, participants, games]
 	);
 
-	const liveCount = games.filter(
-		(game) => getMatchStatus(game) === 'live'
-	).length;
+	const liveGames = useMemo(
+		() =>
+			cards
+				.filter((card) => card.status === 'live')
+				.map((card) => ({
+					r1: card.r1 ?? 0,
+					r2: card.r2 ?? 0,
+					team1: card.team1,
+					team2: card.team2,
+				})),
+		[cards]
+	);
 
 	const statusText = gamesFile
 		? `Last updated ${new Date(gamesFile.fetchedAt).toLocaleString('en-US', {
@@ -173,7 +182,7 @@ export default function App() {
 
 	return (
 		<div className="min-h-screen bg-slate-950 font-sans">
-			<Header liveCount={liveCount} statusText={statusText} />
+			<Header liveGames={liveGames} statusText={statusText} />
 
 			<main className="mx-auto max-w-5xl px-4 py-6">
 				<nav className="mb-6 flex gap-1 overflow-x-auto pb-1">
