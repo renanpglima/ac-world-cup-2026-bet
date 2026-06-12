@@ -1,3 +1,84 @@
 {
-	"byMatch": {}
+	"byMatch": {
+		"1": {
+			"en": "Match 1 of AC World Cup 2026 BET is in the books, and what a start — EIGHT people nailed the exact 2-0 scoreline (Adriano, Caio, Deborah, Joe, Nilton, Rafaella, Renan, and Tiago all pocket 25 points)! Caio rockets straight to the top with 50 points, while Tiago climbs a spot to sit comfortably at number two. Poor Gabriel, though — a brutal 9-place tumble after just one game… the pool is already ruthless, folks!",
+			"es": "¡El partido 1 del AC World Cup 2026 BET ya está en los libros, y vaya debut — OCHO participantes acertaron el marcador exacto 2-0 (Adriano, Caio, Deborah, Joe, Nilton, Rafaella, Renan y Tiago se llevan 25 puntos cada uno)! Caio se dispara directo a la cima con 50 puntos, y Tiago sube un puesto para instalarse cómodo en el segundo. Pero pobre Gabriel — una caída de 9 posiciones tras un solo partido… esto ya no tiene compasión, amigos.",
+			"pt": "O jogo 1 do AC World Cup 2026 BET já era, e que estreia — OITO pessoas acertaram o placar exato de 2-0 (Adriano, Caio, Deborah, Joe, Nilton, Rafaella, Renan e Tiago embolsam 25 pontos cada)! Caio já foi direto pro topo com 50 pontos, e Tiago subiu uma posição pra se sentar bem confortável em segundo. Mas o Gabriel… despencou 9 posições logo na primeira rodada — a bolinha tá sem dó desde o primeiro apito, galera!"
+		}
+	},
+	"leaderboard": {
+		"recap": {
+			"en": "Caio is flying at the top with 50 points and a jaw-dropping 2 exact scores in just one match — nobody else is even close to that accuracy. Tiago and Rachael are lurking in 2nd and 3rd, but a six-strong pack at 25 points means the chasing group is massive and anyone can surge. Gabriel is the lone ranger at the bottom with 10 points, but with so many games still to play, nothing is written yet!",
+			"es": "Caio lidera con autoridad con 50 puntos y 2 resultados exactos en un solo partido — una puntería que nadie más ha igualado. Tiago y Rachael acechan desde el 2.º y 3.º puesto, pero un pelotón de seis jugadores empatados a 25 puntos mantiene la carrera completamente abierta. Gabriel es el farolillo rojo con 10 puntos, pero el torneo acaba de empezar y todo puede cambiar.",
+			"pt": "Caio está na liderança absoluta com 50 pontos e impressionantes 2 placares exatos em apenas uma rodada — uma precisão que ninguém mais conseguiu. Tiago e Rachael espreitam na 2ª e 3ª posições, mas um grupo de seis jogadores empatados com 25 pontos deixa a disputa totalmente aberta. Gabriel está sozinho na lanterna com 10 pontos, mas o torneio mal começou e tudo pode mudar!"
+		},
+		"titles": {
+			"Caio": {
+				"en": "👑 Untouchable Leader",
+				"es": "👑 Líder Intratable",
+				"pt": "👑 Líder Absoluto"
+			},
+			"Tiago": {
+				"en": "🚀 Rising Fast",
+				"es": "🚀 Escalando Rápido",
+				"pt": "🚀 Subindo Forte"
+			},
+			"Rachael": {
+				"en": "🎯 Steady Chaser",
+				"es": "🎯 Perseguidora Firme",
+				"pt": "🎯 Perseguidora Sólida"
+			},
+			"Adriano": {
+				"en": "⚡ Pack Hunter",
+				"es": "⚡ Cazador del Grupo",
+				"pt": "⚡ No Pelotão"
+			},
+			"Deborah": {
+				"en": "⚡ Pack Hunter",
+				"es": "⚡ Cazadora del Grupo",
+				"pt": "⚡ No Pelotão"
+			},
+			"Joe": {
+				"en": "⚡ Pack Hunter",
+				"es": "⚡ Cazador del Grupo",
+				"pt": "⚡ No Pelotão"
+			},
+			"Nilton": {
+				"en": "⚡ Pack Hunter",
+				"es": "⚡ Cazador del Grupo",
+				"pt": "⚡ No Pelotão"
+			},
+			"Rafaella": {
+				"en": "⚡ Pack Hunter",
+				"es": "⚡ Cazadora del Grupo",
+				"pt": "⚡ No Pelotão"
+			},
+			"Renan": {
+				"en": "⚡ Pack Hunter",
+				"es": "⚡ Cazador del Grupo",
+				"pt": "⚡ No Pelotão"
+			},
+			"Bruna": {
+				"en": "📉 Slipping Back",
+				"es": "📉 Perdiendo Terreno",
+				"pt": "📉 Perdendo Chão"
+			},
+			"Eudaldo": {
+				"en": "📉 Slipping Back",
+				"es": "📉 Perdiendo Terreno",
+				"pt": "📉 Perdendo Chão"
+			},
+			"Marcio": {
+				"en": "📉 Slipping Back",
+				"es": "📉 Perdiendo Terreno",
+				"pt": "📉 Perdendo Chão"
+			},
+			"Gabriel": {
+				"en": "🆘 Last Stand",
+				"es": "🆘 Al Límite",
+				"pt": "🆘 Na Lanterna"
+			}
+		}
+	},
+	"generatedAt": "2026-06-12T03:50:45.659Z"
 }
