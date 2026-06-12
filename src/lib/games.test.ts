@@ -118,12 +118,34 @@ describe('findGameForPrediction', () => {
 		expect(findGameForPrediction(makePrediction(), games)?.id).toBe(50);
 	});
 
-	it('warns when the team-name fallback is used', () => {
+	it('stays silent when the team-name join succeeds', () => {
 		const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
 		findGameForPrediction(makePrediction(), [makeGame({id: 50})]);
 
+		expect(warn).not.toHaveBeenCalled();
+
+		warn.mockRestore();
+	});
+
+	it('warns when no game in a populated list matches', () => {
+		const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+		findGameForPrediction(makePrediction(), [
+			makeGame({awayTeam: 'Germany', homeTeam: 'France', id: 50}),
+		]);
+
 		expect(warn).toHaveBeenCalledOnce();
+
+		warn.mockRestore();
+	});
+
+	it('stays silent before games have loaded', () => {
+		const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+		findGameForPrediction(makePrediction(), []);
+
+		expect(warn).not.toHaveBeenCalled();
 
 		warn.mockRestore();
 	});

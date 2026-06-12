@@ -104,19 +104,18 @@ export function findGameForPrediction(
 		return byId;
 	}
 
+	// The sheet numbers matches 1-72 while the API uses 9-digit ids, so the
+	// team-pair match is the authoritative join, not a fallback — it's silent.
 	const byTeams =
 		games.find(
 			(game) => teamsMatch(prediction, game) && datesMatch(prediction, game)
 		) ?? games.find((game) => teamsMatch(prediction, game));
 
-	if (byTeams) {
+	// Only a genuine data problem: a prediction that can't be matched against a
+	// populated games list. Skip the initial render where games hasn't loaded.
+	if (!byTeams && games.length > 0) {
 		console.warn(
-			`Match #${prediction.matchNo} (${prediction.team1} x ${prediction.team2}): id join mismatched; matched game ${byTeams.id} by team names`
-		);
-	}
-	else {
-		console.warn(
-			`Match #${prediction.matchNo} (${prediction.team1} x ${prediction.team2}): id join mismatched and no team fallback found`
+			`Match #${prediction.matchNo} (${prediction.team1} x ${prediction.team2}): no matching game found`
 		);
 	}
 
