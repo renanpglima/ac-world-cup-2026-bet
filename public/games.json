@@ -1,5 +1,5 @@
 {
-	"fetchedAt": "2026-06-12T20:25:14.712Z",
+	"fetchedAt": "2026-06-12T20:30:21.336Z",
 	"games": [
 		{
 			"awayScore": 0,
@@ -29,7 +29,7 @@
 			"awayScore": 1,
 			"awayTeam": "Bosnia and Herzegovina",
 			"finished": false,
-			"timeElapsed": "64",
+			"timeElapsed": "68",
 			"group": "Group B",
 			"homeScore": 0,
 			"homeTeam": "Canada",
