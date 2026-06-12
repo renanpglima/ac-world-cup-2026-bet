@@ -31,7 +31,7 @@ function TabButton({
 }) {
 	return (
 		<button
-			className={`whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+			className={`whitespace-nowrap rounded-full px-4 py-2 text-center text-sm font-medium transition-colors sm:py-1.5 ${
 				active
 					? 'bg-emerald-500 text-emerald-950'
 					: 'bg-white/5 text-slate-300 hover:bg-white/10'
@@ -188,7 +188,7 @@ export default function App() {
 			<Header liveGames={liveGames} statusText={statusText} />
 
 			<main className="mx-auto max-w-5xl px-4 py-6">
-				<nav className="mb-6 flex flex-wrap gap-1.5">
+				<nav className="mb-6 flex flex-col gap-1.5 sm:flex-row sm:flex-wrap">
 					<TabButton
 						active={tab === 'leaderboard'}
 						onClick={() => setTab('leaderboard')}
