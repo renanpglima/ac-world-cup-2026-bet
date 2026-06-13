@@ -8,6 +8,7 @@ import {
 	liveFixtureCount,
 	parsePredictions,
 } from './commentary-facts.mjs';
+import {buildSlackMessage, postToSlack} from './slack.mjs';
 
 const GAMES_FILE = new URL('../public/games.json', import.meta.url);
 const OUT_FILE = new URL('../public/commentary.json', import.meta.url);
@@ -167,6 +168,23 @@ for (const fixture of pendingMatches) {
 			buildMatchFacts(fixture, games, players)
 		);
 		console.log(`Generated commentary for match ${fixture.matchNo}`);
+
+		// Post the finished-match digest to Slack. Gated by SLACK_WEBHOOK_URL,
+		// so a missing secret is a silent no-op rather than a hard failure.
+		try {
+			if (
+				await postToSlack(
+					buildSlackMessage(fixture.matchNo, games, players, commentary)
+				)
+			) {
+				console.log(`Posted match ${fixture.matchNo} digest to Slack`);
+			}
+		}
+		catch (slackError) {
+			console.error(
+				`Slack post for match ${fixture.matchNo} failed: ${slackError.message}`
+			);
+		}
 	}
 	catch (error) {
 		console.error(`Match ${fixture.matchNo} failed: ${error.message}`);

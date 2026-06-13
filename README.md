@@ -43,6 +43,12 @@ via a scheduled GitHub Action that commits `public/games.json`.
   leaderboard recap and per-player titles, in en/pt/es, written to
   `public/commentary.json`. The AI is only called when a match just finished —
   never on an unchanged tick. The frontend shows it in the viewer's language.
+- **Slack digest** — when a match finishes, the same step posts a digest
+  (match score, the English AI blurb, the full standings, and a link to the
+  app) to the pool's Slack channel via a Workflow Builder webhook. Gated by the
+  `SLACK_WEBHOOK_URL` secret, so it is a no-op when the secret is unset. The
+  `notify-slack.yml` workflow (manual `workflow_dispatch`) re-posts the most
+  recently finished match's digest on demand — handy for testing.
 
 ## Scoring
 
@@ -63,6 +69,7 @@ started are not scored; live matches score provisionally. Ties share a rank
 | Games file URL | `VITE_GAMES_URL` (build-time) | `<base>/games.json` |
 | Claude API key (commentary) | `ANTHROPIC_API_KEY` repository **secret** | — (required for commentary) |
 | Commentary model | `COMMENTARY_MODEL` repository variable | `claude-sonnet-4-6` |
+| Slack webhook (match digest) | `SLACK_WEBHOOK_URL` repository **secret** | — (no digest when unset) |
 
 ## Development
 

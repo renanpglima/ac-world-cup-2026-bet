@@ -35,6 +35,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           COMMENTARY_MODEL: ${{ vars.COMMENTARY_MODEL || 'claude-sonnet-4-6' }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
           if git diff --quiet public/games.json; then
             echo "changed=false" >> "$GITHUB_OUTPUT"

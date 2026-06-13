@@ -1,0 +1,21 @@
+name: Notify Slack
+
+# Manual trigger: post the most recently finished match's digest to Slack
+# using the committed games.json + commentary.json. No commit, no deploy —
+# just a one-off so we can test the integration against real prod data.
+on:
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          cache: npm
+          node-version: 22
+      - run: npm ci
+      - env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: node scripts/notify-slack.mjs
