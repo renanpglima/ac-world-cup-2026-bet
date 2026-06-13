@@ -34,73 +34,73 @@
 		},
 		"titles": {
 			"Caio": {
-				"en": "Sharp leader",
-				"es": "Líder afilado",
-				"pt": "Líder certeiro"
+				"en": "Dominant leader",
+				"es": "Líder dominante",
+				"pt": "Líder dominante"
 			},
 			"Rachael": {
+				"en": "Solid second",
+				"es": "Sólido segundo",
+				"pt": "Segundo sólido"
+			},
+			"Tiago": {
 				"en": "Chasing the top",
 				"es": "Persiguiendo al líder",
 				"pt": "Caçando o topo"
 			},
-			"Tiago": {
-				"en": "Breathing down necks",
-				"es": "Pisando los talones",
-				"pt": "No pescoço do rival"
-			},
 			"Nilton": {
-				"en": "Knocking on the door",
-				"es": "Llamando a la puerta",
-				"pt": "Batendo na porta"
-			},
-			"Adriano": {
-				"en": "Mid-pack battle",
-				"es": "Pelea en el grupo",
-				"pt": "Briga no meio"
-			},
-			"Deborah": {
-				"en": "Tied for fifth",
-				"es": "Empatada en quinto",
-				"pt": "Empatada no quinto"
-			},
-			"Rafaella": {
-				"en": "Stuck in a tie",
-				"es": "Atascada en empate",
-				"pt": "Presa no empate"
-			},
-			"Renan": {
-				"en": "Fighting for position",
-				"es": "Peleando el puesto",
-				"pt": "Brigando por posição"
-			},
-			"Bruna": {
-				"en": "Just off pace",
-				"es": "Algo rezagada",
-				"pt": "Ligeiramente atrás"
-			},
-			"Marcio": {
-				"en": "Fading quietly",
-				"es": "Desvaneciéndose despacio",
-				"pt": "Sumindo aos poucos"
+				"en": "Right on his heels",
+				"es": "Pisándole los talones",
+				"pt": "No seu encalço"
 			},
 			"Joe": {
-				"en": "Lone ranger below",
-				"es": "Solitario en el fondo",
-				"pt": "Solitário lá embaixo"
+				"en": "Fading back",
+				"es": "Perdiendo terreno",
+				"pt": "Perdendo fôlego"
 			},
-			"Gabriel": {
-				"en": "Needs a lifeline",
-				"es": "Necesita un milagro",
-				"pt": "Precisando de socorro"
+			"Adriano": {
+				"en": "Four-way tie",
+				"es": "Empate a cuatro",
+				"pt": "Empate em quatro"
+			},
+			"Deborah": {
+				"en": "Four-way tie",
+				"es": "Empate a cuatro",
+				"pt": "Empate em quatro"
+			},
+			"Rafaella": {
+				"en": "Four-way tie",
+				"es": "Empate a cuatro",
+				"pt": "Empate em quatro"
+			},
+			"Renan": {
+				"en": "Four-way tie",
+				"es": "Empate a cuatro",
+				"pt": "Empate em quatro"
+			},
+			"Bruna": {
+				"en": "Scoreless slump",
+				"es": "Racha sin puntos",
+				"pt": "Em seca de pontos"
 			},
 			"Eudaldo": {
-				"en": "Basement dweller",
-				"es": "Pegado al suelo",
-				"pt": "No porão da tabela"
+				"en": "Scoreless slump",
+				"es": "Racha sin puntos",
+				"pt": "Em seca de pontos"
+			},
+			"Gabriel": {
+				"en": "Deep in the pack",
+				"es": "Perdido en el grupo",
+				"pt": "Fundo do grupo"
+			},
+			"Marcio": {
+				"en": "Needs a miracle",
+				"es": "Necesita un milagro",
+				"pt": "Precisa de milagre"
 			}
 		},
-		"titlesSignature": "[[\"Caio\",75],[\"Rachael\",69],[\"Tiago\",64],[\"Nilton\",62],[\"Adriano\",35],[\"Deborah\",35],[\"Rafaella\",35],[\"Renan\",35],[\"Bruna\",33],[\"Marcio\",30],[\"Joe\",25],[\"Gabriel\",20],[\"Eudaldo\",18]]",
+		"titlesSignature": "[[\"Caio\",75],[\"Rachael\",57],[\"Tiago\",52],[\"Nilton\",50],[\"Joe\",40],[\"Adriano\",35],[\"Deborah\",35],[\"Rafaella\",35],[\"Renan\",35],[\"Bruna\",33],[\"Eudaldo\",33],[\"Gabriel\",20],[\"Marcio\",18]]",
 		"recapSignature": "[[\"Caio\",75],[\"Rachael\",57],[\"Tiago\",52],[\"Nilton\",50],[\"Adriano\",35],[\"Deborah\",35],[\"Rafaella\",35],[\"Renan\",35],[\"Bruna\",33],[\"Joe\",25],[\"Gabriel\",20],[\"Eudaldo\",18],[\"Marcio\",18]]"
 	},
-	"generatedAt": "2026-06-13T22:05:21.817Z"
+	"generatedAt": "2026-06-13T22:25:25.128Z"
 }
