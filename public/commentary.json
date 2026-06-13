@@ -19,6 +19,11 @@
 			"en": "USA put on a show against Paraguay — and somehow the pool's own show was just as dramatic! Six players (Caio, Eudaldo, Joe, Marcio, Nilton, and Tiago) got absolutely nothing from that 4-1 thriller, while Joe took the biggest tumble of the day, dropping five spots. Meanwhile, Rachael quietly climbed two places to sit comfortably behind Caio, who somehow keeps his iron grip on first despite scoring a fat zero today — that's some serious cushion, boss!",
 			"es": "¡Estados Unidos le dió una paliza a Paraguay y el bombo de la oficina no se quedó atrás en drama! Seis jugadores — Caio, Eudaldo, Joe, Marcio, Nilton y Tiago — se fueron a casa con las manos vacías de ese 4-1, mientras que Joe se pegó el batacazo del día bajando cinco puestos de golpe. Rachael, en cambio, subió dos posiciones con discreción y ya respira en el cuello del líder, que aguanta el primer puesto a pesar de haber raspado un cero redondo hoy — ¡menuda almohada de puntos tiene Caio!",
 			"pt": "Os EUA fizeram festa contra o Paraguai, mas o bolão também deu seu show à parte! Seis jogadores — Caio, Eudaldo, Joe, Marcio, Nilton e Tiago — não aproveitaram nada do 4-1 e foram pra vala, enquanto o Joe tomou o maior tombo do dia, despencando cinco posições. A Rachael subiu quietinha dois lugares e já está colada no pódio, e o Caio segura a liderança mesmo com um zero redondo hoje — que travesseiro de pontos confortável, hein chefe!"
+		},
+		"5": {
+			"en": "Match 5 brought pure chaos — Qatar 1-1 Switzerland was apparently too spicy for *everyone* to handle, as all 13 players scored a big fat zero on this one. Yes, ALL thirteen. Caio stays on top of the leaderboard at 75 points, but even the leader couldn't sniff this draw — cold comfort for a pool where nobody got bragging rights today!",
+			"es": "El partido 5 fue un desastre colectivo — Qatar 1-1 Suiza resultó ser el acertijo que nadie en el grupo pudo descifrar, con los 13 participantes marcando un redondo cero. Caio sigue líder con 75 puntos, pero ni él se salvó del batacazo. ¡Hoy el único ganador fue el empate!",
+			"pt": "O jogo 5 foi uma tragédia coletiva — Qatar 1-1 Suíça pegou todo mundo de calças curtas, e os 13 participantes foram pra casa com um golaço de zero. Isso mesmo, TREZE pessoas, nem uma acertou. Caio segura a liderança com 75 pontos, mas hoje o bolão inteiro levou uma invertida do futebol!"
 		}
 	},
 	"leaderboard": {
@@ -29,73 +34,73 @@
 		},
 		"titles": {
 			"Caio": {
-				"en": "Untouchable leader",
-				"es": "Líder inalcanzable",
-				"pt": "Líder intocável"
-			},
-			"Tiago": {
-				"en": "Chasing the top",
-				"es": "Persiguiendo al líder",
-				"pt": "Caçando o topo"
-			},
-			"Nilton": {
-				"en": "Breathing down necks",
-				"es": "Pisando los talones",
-				"pt": "No pescoço do líder"
+				"en": "Runaway leader",
+				"es": "Líder destacado",
+				"pt": "Líder isolado"
 			},
 			"Rachael": {
-				"en": "Holding steady",
-				"es": "Aguantando el ritmo",
-				"pt": "Segurando firme"
+				"en": "Holding second",
+				"es": "Firme en segundo",
+				"pt": "Segurando o segundo"
+			},
+			"Tiago": {
+				"en": "Chasing the gap",
+				"es": "Acortando distancias",
+				"pt": "Encostando no segundo"
+			},
+			"Nilton": {
+				"en": "Knocking on top",
+				"es": "Llamando a la puerta",
+				"pt": "Batendo na porta"
 			},
 			"Adriano": {
-				"en": "Stuck in the pack",
-				"es": "Atascado en el grupo",
-				"pt": "Preso no pelotão"
+				"en": "Four-way tie",
+				"es": "Empate a cuatro",
+				"pt": "Empate quádruplo"
 			},
 			"Deborah": {
-				"en": "Stuck in the pack",
-				"es": "Atascada en el grupo",
-				"pt": "Presa no pelotão"
+				"en": "Four-way tie",
+				"es": "Empate a cuatro",
+				"pt": "Empate quádruplo"
 			},
 			"Rafaella": {
-				"en": "Stuck in the pack",
-				"es": "Atascada en el grupo",
-				"pt": "Presa no pelotão"
+				"en": "Four-way tie",
+				"es": "Empate a cuatro",
+				"pt": "Empate quádruplo"
 			},
 			"Renan": {
-				"en": "Stuck in the pack",
-				"es": "Atascado en el grupo",
-				"pt": "Preso no pelotão"
+				"en": "Four-way tie",
+				"es": "Empate a cuatro",
+				"pt": "Empate quádruplo"
 			},
 			"Bruna": {
-				"en": "Rising from below",
-				"es": "Subiendo desde abajo",
-				"pt": "Subindo nas posições"
+				"en": "Just off the pack",
+				"es": "Rozando el grupo",
+				"pt": "Perto do grupo"
 			},
 			"Joe": {
-				"en": "Sliding down fast",
-				"es": "Cayendo en picado",
-				"pt": "Caindo rápido"
+				"en": "Quiet but alive",
+				"es": "Callado pero vivo",
+				"pt": "Quieto mas vivo"
 			},
 			"Gabriel": {
-				"en": "Climbing quietly",
-				"es": "Subiendo en silencio",
-				"pt": "Subindo quietinho"
-			},
-			"Marcio": {
-				"en": "Fading away",
-				"es": "Desvaneciéndose",
-				"pt": "Sumindo no mapa"
+				"en": "Needs a spark",
+				"es": "Necesita un chispazo",
+				"pt": "Precisa acordar"
 			},
 			"Eudaldo": {
-				"en": "Off the radar",
-				"es": "Fuera del radar",
-				"pt": "Fora do radar"
+				"en": "Stuck at the bottom",
+				"es": "Anclado abajo",
+				"pt": "Preso no fundo"
+			},
+			"Marcio": {
+				"en": "Stuck at the bottom",
+				"es": "Anclado abajo",
+				"pt": "Preso no fundo"
 			}
 		},
-		"titlesSignature": "[[\"Caio\",90],[\"Tiago\",77],[\"Nilton\",75],[\"Rachael\",67],[\"Adriano\",45],[\"Deborah\",45],[\"Rafaella\",45],[\"Renan\",45],[\"Bruna\",43],[\"Joe\",35],[\"Gabriel\",30],[\"Marcio\",28],[\"Eudaldo\",18]]",
+		"titlesSignature": "[[\"Caio\",75],[\"Rachael\",57],[\"Tiago\",52],[\"Nilton\",50],[\"Adriano\",35],[\"Deborah\",35],[\"Rafaella\",35],[\"Renan\",35],[\"Bruna\",33],[\"Joe\",25],[\"Gabriel\",20],[\"Eudaldo\",18],[\"Marcio\",18]]",
 		"recapSignature": "[[\"Caio\",75],[\"Rachael\",57],[\"Tiago\",52],[\"Nilton\",50],[\"Adriano\",35],[\"Deborah\",35],[\"Rafaella\",35],[\"Renan\",35],[\"Bruna\",33],[\"Joe\",25],[\"Gabriel\",20],[\"Eudaldo\",18],[\"Marcio\",18]]"
 	},
-	"generatedAt": "2026-06-13T19:23:45.163Z"
+	"generatedAt": "2026-06-13T21:05:32.038Z"
 }
