@@ -24,73 +24,73 @@
 		},
 		"titles": {
 			"Caio": {
-				"en": "Untouchable leader",
-				"es": "Líder imparable",
-				"pt": "Líder intocável"
+				"en": "Perfect record",
+				"es": "Récord perfecto",
+				"pt": "Recorde perfeito"
 			},
 			"Rachael": {
 				"en": "Holding strong",
-				"es": "Aguantando firme",
+				"es": "Manteniéndose firme",
 				"pt": "Segurando bem"
 			},
 			"Tiago": {
-				"en": "Climbing up",
-				"es": "Subiendo puestos",
-				"pt": "Subindo na tabela"
+				"en": "Steady climber",
+				"es": "Ascenso constante",
+				"pt": "Subindo firme"
 			},
 			"Nilton": {
-				"en": "Biggest riser",
-				"es": "Mayor escalada",
-				"pt": "Maior escalada"
-			},
-			"Bruna": {
-				"en": "Losing ground",
-				"es": "Perdiendo terreno",
-				"pt": "Perdendo terreno"
-			},
-			"Adriano": {
-				"en": "Sliding down",
-				"es": "Bajando posiciones",
-				"pt": "Caindo na tabela"
-			},
-			"Deborah": {
-				"en": "Fading fast",
-				"es": "Cayendo rápido",
-				"pt": "Caindo rápido"
-			},
-			"Rafaella": {
-				"en": "Stuck in place",
-				"es": "Sin avanzar",
-				"pt": "Parada no lugar"
+				"en": "Surging up fast",
+				"es": "Subiendo rápido",
+				"pt": "Disparou na tabela"
 			},
 			"Renan": {
-				"en": "Going nowhere",
-				"es": "Sin moverse",
-				"pt": "Sem evoluir"
+				"en": "Slipping back",
+				"es": "Perdiendo terreno",
+				"pt": "Escorregando"
+			},
+			"Bruna": {
+				"en": "Fading out",
+				"es": "Desvaneciendo",
+				"pt": "Perdendo força"
+			},
+			"Adriano": {
+				"en": "Stuck in place",
+				"es": "Sin avanzar",
+				"pt": "Parado no tempo"
+			},
+			"Deborah": {
+				"en": "Treading water",
+				"es": "Sin despegar",
+				"pt": "Marcando passo"
+			},
+			"Rafaella": {
+				"en": "Needs a spark",
+				"es": "Necesita chispa",
+				"pt": "Precisa reagir"
 			},
 			"Joe": {
-				"en": "Hanging on",
-				"es": "Resistiendo",
-				"pt": "Se segurando"
+				"en": "Chasing the pack",
+				"es": "Persiguiendo al grupo",
+				"pt": "Correndo atrás"
 			},
 			"Gabriel": {
-				"en": "No exact hits",
-				"es": "Sin aciertos exactos",
-				"pt": "Sem acertos exatos"
+				"en": "Stalled out",
+				"es": "Motor apagado",
+				"pt": "Motor travado"
 			},
 			"Eudaldo": {
-				"en": "Scoreless streak",
-				"es": "Sin puntuar",
-				"pt": "Em jejum"
-			},
-			"Marcio": {
 				"en": "Deep in trouble",
 				"es": "En apuros",
-				"pt": "Em dificuldade"
+				"pt": "Em apuros"
+			},
+			"Marcio": {
+				"en": "Must bounce back",
+				"es": "Hay que reaccionar",
+				"pt": "Precisa reagir já"
 			}
 		},
-		"titlesSignature": "[[\"Caio\",75],[\"Rachael\",57],[\"Tiago\",52],[\"Nilton\",50],[\"Bruna\",43],[\"Adriano\",35],[\"Deborah\",35],[\"Rafaella\",35],[\"Renan\",35],[\"Joe\",25],[\"Gabriel\",20],[\"Eudaldo\",18],[\"Marcio\",18]]",
+		"titlesSignature": "[[\"Caio\",75],[\"Rachael\",62],[\"Tiago\",52],[\"Nilton\",50],[\"Renan\",40],[\"Bruna\",36],[\"Adriano\",35],[\"Deborah\",35],[\"Rafaella\",35],[\"Joe\",25],[\"Gabriel\",20],[\"Eudaldo\",18],[\"Marcio\",18]]",
 		"recapSignature": "[[\"Caio\",75],[\"Tiago\",52],[\"Nilton\",50],[\"Rachael\",47],[\"Adriano\",25],[\"Deborah\",25],[\"Joe\",25],[\"Rafaella\",25],[\"Renan\",25],[\"Bruna\",18],[\"Eudaldo\",18],[\"Marcio\",18],[\"Gabriel\",10]]"
 	},
-	"generatedAt": "2026-06-13T01:55:25.824Z"
+	"generatedAt": "2026-06-13T02:40:25.748Z"
 }
