@@ -1,5 +1,5 @@
 {
-	"fetchedAt": "2026-06-13T22:50:12.623Z",
+	"fetchedAt": "2026-06-13T22:55:17.614Z",
 	"games": [
 		{
 			"awayScore": 0,
@@ -65,7 +65,7 @@
 			"awayScore": 1,
 			"awayTeam": "Morocco",
 			"finished": false,
-			"timeElapsed": "45",
+			"timeElapsed": "1",
 			"group": "Group C",
 			"homeScore": 1,
 			"homeTeam": "Brazil",
