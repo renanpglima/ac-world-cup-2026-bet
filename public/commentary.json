@@ -29,68 +29,68 @@
 				"pt": "Perfeito até agora"
 			},
 			"Rachael": {
-				"en": "Holding strong",
-				"es": "Aguantando firme",
-				"pt": "Segurando bem"
+				"en": "Fading fast",
+				"es": "Perdiendo terreno",
+				"pt": "Perdendo espaço"
 			},
 			"Tiago": {
-				"en": "Chasing second",
-				"es": "Persiguiendo el segundo",
-				"pt": "Caçando o segundo"
+				"en": "Surging up",
+				"es": "Subiendo fuerte",
+				"pt": "Em ascensão"
 			},
 			"Nilton": {
-				"en": "Surging up fast",
-				"es": "Subiendo rápido",
-				"pt": "Subindo rápido"
+				"en": "Catching the pack",
+				"es": "Alcanzando al grupo",
+				"pt": "Chegando por trás"
+			},
+			"Renan": {
+				"en": "Stalled out",
+				"es": "Se quedó frenado",
+				"pt": "Travado no lugar"
 			},
 			"Adriano": {
 				"en": "Sliding down",
-				"es": "Bajando posiciones",
+				"es": "Resbalando posiciones",
 				"pt": "Escorregando"
 			},
 			"Deborah": {
-				"en": "Sliding down",
-				"es": "Bajando posiciones",
-				"pt": "Escorregando"
-			},
-			"Rafaella": {
-				"en": "Sliding down",
-				"es": "Bajando posiciones",
-				"pt": "Escorregando"
-			},
-			"Renan": {
 				"en": "Losing ground",
-				"es": "Perdiendo terreno",
+				"es": "Cediendo terreno",
 				"pt": "Perdendo terreno"
 			},
+			"Rafaella": {
+				"en": "Dropping off",
+				"es": "Cayendo posiciones",
+				"pt": "Caindo na tabela"
+			},
 			"Bruna": {
-				"en": "Gone cold",
-				"es": "Se enfrió",
-				"pt": "Esfriou"
+				"en": "Blanked again",
+				"es": "En blanco otra vez",
+				"pt": "Em branco de novo"
 			},
 			"Gabriel": {
-				"en": "Stuck in mud",
-				"es": "Atascado",
-				"pt": "Travado"
+				"en": "Stuck at zero",
+				"es": "Sin puntuar",
+				"pt": "Sem pontuar"
 			},
 			"Joe": {
-				"en": "Treading water",
-				"es": "Sin avanzar",
-				"pt": "Patinando"
+				"en": "Bottom of pack",
+				"es": "En el fondo",
+				"pt": "No fundo do poço"
 			},
 			"Eudaldo": {
-				"en": "Off the pace",
-				"es": "Fuera del ritmo",
-				"pt": "Fora do ritmo"
+				"en": "Holding on",
+				"es": "Aguantando ahí",
+				"pt": "Se segurando"
 			},
 			"Marcio": {
-				"en": "Off the pace",
-				"es": "Fuera del ritmo",
-				"pt": "Fora do ritmo"
+				"en": "In the shadows",
+				"es": "En las sombras",
+				"pt": "Na sombra"
 			}
 		},
-		"titlesSignature": "[[\"Caio\",75],[\"Rachael\",57],[\"Tiago\",52],[\"Nilton\",50],[\"Adriano\",40],[\"Deborah\",40],[\"Rafaella\",40],[\"Renan\",35],[\"Bruna\",28],[\"Gabriel\",25],[\"Joe\",25],[\"Eudaldo\",18],[\"Marcio\",18]]",
+		"titlesSignature": "[[\"Caio\",75],[\"Rachael\",72],[\"Tiago\",52],[\"Nilton\",50],[\"Renan\",50],[\"Adriano\",43],[\"Deborah\",43],[\"Rafaella\",43],[\"Bruna\",28],[\"Gabriel\",28],[\"Joe\",25],[\"Eudaldo\",18],[\"Marcio\",18]]",
 		"recapSignature": "[[\"Caio\",75],[\"Tiago\",52],[\"Nilton\",50],[\"Rachael\",47],[\"Adriano\",25],[\"Deborah\",25],[\"Joe\",25],[\"Rafaella\",25],[\"Renan\",25],[\"Bruna\",18],[\"Eudaldo\",18],[\"Marcio\",18],[\"Gabriel\",10]]"
 	},
-	"generatedAt": "2026-06-13T01:10:24.042Z"
+	"generatedAt": "2026-06-13T01:35:26.332Z"
 }

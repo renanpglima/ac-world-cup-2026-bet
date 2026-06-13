@@ -1,5 +1,5 @@
 {
-	"fetchedAt": "2026-06-13T01:30:18.931Z",
+	"fetchedAt": "2026-06-13T01:35:19.054Z",
 	"games": [
 		{
 			"awayScore": 0,
@@ -41,9 +41,9 @@
 			"awayScore": 0,
 			"awayTeam": "Paraguay",
 			"finished": false,
-			"timeElapsed": "28",
+			"timeElapsed": "32",
 			"group": "Group D",
-			"homeScore": 1,
+			"homeScore": 2,
 			"homeTeam": "USA",
 			"id": 400021458,
 			"localDate": "2026-06-13T01:00:00Z",
