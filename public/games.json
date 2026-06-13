@@ -1,5 +1,5 @@
 {
-	"fetchedAt": "2026-06-13T20:00:14.759Z",
+	"fetchedAt": "2026-06-13T20:15:15.232Z",
 	"games": [
 		{
 			"awayScore": 0,
@@ -53,7 +53,7 @@
 			"awayScore": 1,
 			"awayTeam": "Switzerland",
 			"finished": false,
-			"timeElapsed": "1",
+			"timeElapsed": "48",
 			"group": "Group B",
 			"homeScore": 0,
 			"homeTeam": "Qatar",
