@@ -53,74 +53,74 @@
 			"pt": "Rachael segura o comando com autoridade nos 117 pontos, abrindo 7 de vantagem sobre Caio (110) e 22 sobre Nilton (95), sem dar nenhum sinal de desacelerar. No meio do pelotao, o engarrafamento e total: Tiago (84) persegue o pódio enquanto Marcio, Adriano, Deborah, Rafaella e Renan estao todos empatados na faixa dos 55 a 63 pontos. Gabriel fecha a tabela com 40 pontos, mas com muitas rodadas pela frente, ninguem pode cruzar os bracos ainda."
 		},
 		"titles": {
-			"Caio": {
-				"en": "Commanding the lead",
-				"es": "Dominando la cima",
-				"pt": "Dominando a liderança"
-			},
 			"Rachael": {
-				"en": "Closing the gap",
-				"es": "Acercándose al líder",
-				"pt": "Chegando perto"
+				"en": "Runaway leader",
+				"es": "Líder destacada",
+				"pt": "Líder isolada"
 			},
-			"Nilton": {
-				"en": "Solid in third",
-				"es": "Sólido en tercero",
-				"pt": "Sólido em terceiro"
+			"Caio": {
+				"en": "Chasing hard",
+				"es": "Persiguiendo fuerte",
+				"pt": "Caçando a líder"
 			},
 			"Tiago": {
-				"en": "Chasing the pack",
-				"es": "Persiguiendo al grupo",
-				"pt": "Caçando o pelotão"
+				"en": "Breathing down neck",
+				"es": "Pisando los talones",
+				"pt": "No pescoço do 2º"
 			},
-			"Marcio": {
-				"en": "Midfield grinder",
-				"es": "Luchador del medio",
-				"pt": "Guerreiro do meio"
-			},
-			"Adriano": {
-				"en": "Three-way tie",
-				"es": "Triple empate",
-				"pt": "Empate triplo"
-			},
-			"Deborah": {
-				"en": "Three-way tie",
-				"es": "Triple empate",
-				"pt": "Empate triplo"
-			},
-			"Rafaella": {
-				"en": "Three-way tie",
-				"es": "Triple empate",
-				"pt": "Empate triplo"
-			},
-			"Renan": {
-				"en": "Three-way tie",
-				"es": "Triple empate",
-				"pt": "Empate triplo"
-			},
-			"Bruna": {
-				"en": "Knocking on the door",
-				"es": "Llamando a la puerta",
-				"pt": "Batendo na porta"
-			},
-			"Gabriel": {
-				"en": "Needs a big push",
-				"es": "Necesita empujón",
-				"pt": "Precisa acelerar"
+			"Nilton": {
+				"en": "Solid in fourth",
+				"es": "Sólido en cuarto",
+				"pt": "Firme em quarto"
 			},
 			"Eudaldo": {
-				"en": "Tied at the bottom",
-				"es": "Empate en cola",
-				"pt": "Empate na lanterna"
+				"en": "Tied for fifth",
+				"es": "Empatado en quinto",
+				"pt": "Empatado no 5º"
 			},
 			"Joe": {
-				"en": "Tied at the bottom",
-				"es": "Empate en cola",
-				"pt": "Empate na lanterna"
+				"en": "Tied for fifth",
+				"es": "Empatado en quinto",
+				"pt": "Empatado no 5º"
+			},
+			"Marcio": {
+				"en": "Just off the pack",
+				"es": "Justo detrás",
+				"pt": "Logo atrás do grupo"
+			},
+			"Adriano": {
+				"en": "Midpack grind",
+				"es": "En el pelotón",
+				"pt": "No meio do grupo"
+			},
+			"Deborah": {
+				"en": "Midpack grind",
+				"es": "En el pelotón",
+				"pt": "No meio do grupo"
+			},
+			"Rafaella": {
+				"en": "Midpack grind",
+				"es": "En el pelotón",
+				"pt": "No meio do grupo"
+			},
+			"Renan": {
+				"en": "Midpack grind",
+				"es": "En el pelotón",
+				"pt": "No meio do grupo"
+			},
+			"Bruna": {
+				"en": "No exact scores",
+				"es": "Sin aciertos exactos",
+				"pt": "Sem placares exatos"
+			},
+			"Gabriel": {
+				"en": "Must catch up",
+				"es": "Necesita remontar",
+				"pt": "Precisa reagir"
 			}
 		},
-		"titlesSignature": "[[\"Caio\",125],[\"Rachael\",117],[\"Nilton\",95],[\"Tiago\",84],[\"Marcio\",73],[\"Adriano\",70],[\"Deborah\",70],[\"Rafaella\",70],[\"Renan\",70],[\"Bruna\",68],[\"Gabriel\",55],[\"Eudaldo\",53],[\"Joe\",53]]",
+		"titlesSignature": "[[\"Rachael\",142],[\"Caio\",110],[\"Tiago\",109],[\"Nilton\",95],[\"Eudaldo\",65],[\"Joe\",65],[\"Marcio\",63],[\"Adriano\",55],[\"Deborah\",55],[\"Rafaella\",55],[\"Renan\",55],[\"Bruna\",53],[\"Gabriel\",40]]",
 		"recapSignature": "[[\"Rachael\",117],[\"Caio\",110],[\"Nilton\",95],[\"Tiago\",84],[\"Marcio\",63],[\"Adriano\",55],[\"Deborah\",55],[\"Rafaella\",55],[\"Renan\",55],[\"Bruna\",53],[\"Eudaldo\",53],[\"Joe\",53],[\"Gabriel\",40]]"
 	},
-	"generatedAt": "2026-06-14T21:10:25.712Z"
+	"generatedAt": "2026-06-14T21:20:28.834Z"
 }
