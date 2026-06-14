@@ -48,74 +48,74 @@
 			"pt": "Rachael subiu para a liderança com um ótimo aproveitamento de 10 pontos na rodada, abrindo uma vantagem mínima de apenas 2 pontos sobre Caio numa briga pelo titulo que promete emocionar ate o fim, enquanto Nilton segura tranquilo o terceiro lugar com 85 pontos mas precisaria de um milagre para alcançar a dupla da frente. Marcio, Adriano, Deborah, Rafaella e Renan formam um grupo compacto no meio da tabela, ainda vivos mas torcendo para que os lideres tropecem. La embaixo, Joe foi a grande surpresa da rodada com 18 pontos arrasadores que o fizeram subir tres posicoes de uma vez, enquanto Gabriel, isolado na lanterna com 30 pontos, tem muito chao pela frente."
 		},
 		"titles": {
-			"Rachael": {
-				"en": "On the rise",
-				"es": "En ascenso",
-				"pt": "Em ascensão"
-			},
 			"Caio": {
-				"en": "Slipping at the top",
-				"es": "Resbalando arriba",
-				"pt": "Escorregando no topo"
+				"en": "Untouchable leader",
+				"es": "Líder inalcanzable",
+				"pt": "Líder intocável"
+			},
+			"Rachael": {
+				"en": "Climbing fast",
+				"es": "Escalando rápido",
+				"pt": "Subindo rápido"
 			},
 			"Nilton": {
-				"en": "Holding steady",
-				"es": "Firme en su lugar",
-				"pt": "Segurando a posição"
+				"en": "Sliding back",
+				"es": "Perdiendo terreno",
+				"pt": "Caindo posições"
 			},
 			"Tiago": {
-				"en": "Gap is growing",
-				"es": "La brecha crece",
-				"pt": "A distância aumenta"
+				"en": "Solid fourth",
+				"es": "Cuarto firme",
+				"pt": "Quarto sólido"
 			},
 			"Marcio": {
-				"en": "Mid-pack survivor",
-				"es": "Sobreviviente del grupo",
-				"pt": "Sobrevivendo no meio"
-			},
-			"Adriano": {
-				"en": "Stuck in traffic",
-				"es": "Atascado en el grupo",
-				"pt": "Preso no pelotão"
-			},
-			"Deborah": {
-				"en": "Stuck in traffic",
-				"es": "Atascada en el grupo",
-				"pt": "Presa no pelotão"
+				"en": "Tied, watching",
+				"es": "Empatado, alerta",
+				"pt": "Empatado, atento"
 			},
 			"Rafaella": {
-				"en": "Stuck in traffic",
-				"es": "Atascada en el grupo",
-				"pt": "Presa no pelotão"
-			},
-			"Renan": {
-				"en": "Stuck in traffic",
-				"es": "Atascado en el grupo",
-				"pt": "Preso no pelotão"
+				"en": "Tied, holding",
+				"es": "Empatada, firme",
+				"pt": "Empatada, firme"
 			},
 			"Bruna": {
-				"en": "Scoreless but hanging",
-				"es": "Sin exactos, aguantando",
-				"pt": "Sem acerto, resistindo"
+				"en": "No exact yet",
+				"es": "Sin exacto aún",
+				"pt": "Sem exato ainda"
+			},
+			"Adriano": {
+				"en": "Three-way tie",
+				"es": "Triple empate",
+				"pt": "Empate triplo"
+			},
+			"Deborah": {
+				"en": "Three-way tie",
+				"es": "Triple empate",
+				"pt": "Empate triplo"
+			},
+			"Renan": {
+				"en": "Three-way tie",
+				"es": "Triple empate",
+				"pt": "Empate triplo"
 			},
 			"Eudaldo": {
-				"en": "Flying under radar",
-				"es": "Pasando desapercibido",
-				"pt": "Passando despercebido"
+				"en": "Late charge",
+				"es": "Remontando tarde",
+				"pt": "Arrancada tardia"
 			},
 			"Joe": {
-				"en": "Surging from below",
-				"es": "Remontando fuerte",
-				"pt": "Subindo forte"
+				"en": "Shock result hero",
+				"es": "Héroe del marcador",
+				"pt": "Herói do placar"
 			},
 			"Gabriel": {
-				"en": "Losing ground fast",
-				"es": "Perdiendo terreno",
-				"pt": "Perdendo terreno"
+				"en": "Fading away",
+				"es": "Desvaneciéndose",
+				"pt": "Sumindo no fim"
 			}
 		},
-		"titlesSignature": "[[\"Rachael\",112],[\"Caio\",110],[\"Nilton\",95],[\"Tiago\",84],[\"Marcio\",63],[\"Adriano\",55],[\"Deborah\",55],[\"Rafaella\",55],[\"Renan\",55],[\"Bruna\",53],[\"Eudaldo\",53],[\"Joe\",53],[\"Gabriel\",40]]",
+		"titlesSignature": "[[\"Caio\",118],[\"Rachael\",112],[\"Nilton\",103],[\"Tiago\",92],[\"Marcio\",63],[\"Rafaella\",63],[\"Bruna\",61],[\"Adriano\",55],[\"Deborah\",55],[\"Renan\",55],[\"Eudaldo\",53],[\"Joe\",53],[\"Gabriel\",40]]",
 		"recapSignature": "[[\"Rachael\",102],[\"Caio\",100],[\"Nilton\",85],[\"Tiago\",74],[\"Marcio\",53],[\"Adriano\",45],[\"Deborah\",45],[\"Rafaella\",45],[\"Renan\",45],[\"Bruna\",43],[\"Eudaldo\",43],[\"Joe\",43],[\"Gabriel\",30]]"
 	},
-	"generatedAt": "2026-06-14T17:40:26.966Z"
+	"generatedAt": "2026-06-14T17:55:20.076Z"
 }
