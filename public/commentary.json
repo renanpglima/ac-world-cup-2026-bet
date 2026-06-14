@@ -38,74 +38,74 @@
 			"pt": "Rachael lidera com folga com 82 pontos depois de uma rodada brilhante de 25, enquanto Caio e Nilton estao empatados em 75 numa briga acirrada pelo segundo lugar — mas Nilton subiu dois degraus enquanto Caio ficou zerado na rodada. Tiago ocupa um solitario quarto lugar com 64 pontos, e Marcio foi a grande revelacao da rodada, disparando sete posicoes ate o quinto lugar com uma rodada perfeita. La embaixo, Gabriel e Eudaldo estao ficando sem rodadas para reagir, mas o campeonato ainda tem muito a oferecer."
 		},
 		"titles": {
-			"Rachael": {
-				"en": "Leading the pack",
-				"es": "Líder del grupo",
-				"pt": "Na frente de todos"
-			},
 			"Caio": {
-				"en": "Slipping at the top",
-				"es": "Resbalando arriba",
-				"pt": "Escorregando no topo"
+				"en": "Exact machine",
+				"es": "Máquina de exactos",
+				"pt": "Máquina de exatos"
+			},
+			"Rachael": {
+				"en": "Closing the gap",
+				"es": "Acortando distancia",
+				"pt": "Fechando a diferença"
 			},
 			"Nilton": {
-				"en": "Surging up fast",
-				"es": "Subiendo con fuerza",
+				"en": "Climbing fast",
+				"es": "Subiendo rápido",
 				"pt": "Subindo rápido"
 			},
 			"Tiago": {
-				"en": "Holding steady",
-				"es": "Manteniéndose firme",
-				"pt": "Segurando a posição"
-			},
-			"Marcio": {
-				"en": "Best comeback today",
-				"es": "Mejor remontada hoy",
-				"pt": "Maior recuperação hoje"
-			},
-			"Joe": {
-				"en": "Stuck in neutral",
-				"es": "Atascado sin avanzar",
-				"pt": "Travado no lugar"
-			},
-			"Adriano": {
-				"en": "Losing ground fast",
+				"en": "Losing ground",
 				"es": "Perdiendo terreno",
 				"pt": "Perdendo terreno"
 			},
+			"Marcio": {
+				"en": "Rocket launch",
+				"es": "Despegue cohete",
+				"pt": "Decolagem explosiva"
+			},
+			"Adriano": {
+				"en": "Stuck in place",
+				"es": "Sin avanzar",
+				"pt": "Parado no lugar"
+			},
 			"Deborah": {
-				"en": "Falling back slowly",
-				"es": "Retrocediendo despacio",
-				"pt": "Caindo aos poucos"
+				"en": "Stuck in place",
+				"es": "Sin avanzar",
+				"pt": "Parada no lugar"
 			},
 			"Rafaella": {
-				"en": "Stalled out again",
-				"es": "Parada otra vez",
-				"pt": "Travada de novo"
+				"en": "Stuck in place",
+				"es": "Sin avanzar",
+				"pt": "Parada no lugar"
 			},
 			"Renan": {
-				"en": "Fading in pack",
-				"es": "Desapareciendo en grupo",
-				"pt": "Sumindo no grupo"
+				"en": "Stuck in place",
+				"es": "Sin avanzar",
+				"pt": "Parado no lugar"
 			},
 			"Bruna": {
-				"en": "Hanging by thread",
-				"es": "Colgando de un hilo",
-				"pt": "Por um fio"
+				"en": "Fading out",
+				"es": "Desvaneciéndose",
+				"pt": "Sumindo no mapa"
+			},
+			"Eudaldo": {
+				"en": "Hanging on",
+				"es": "Aguantando el tipo",
+				"pt": "Se segurando"
 			},
 			"Gabriel": {
 				"en": "Deep in trouble",
-				"es": "En serios problemas",
+				"es": "En problemas serios",
 				"pt": "Em apuros"
 			},
-			"Eudaldo": {
-				"en": "Chasing from last",
-				"es": "Remontando desde el fondo",
-				"pt": "Correndo de trás"
+			"Joe": {
+				"en": "Last place blues",
+				"es": "Blues del último",
+				"pt": "Lanterna acesa"
 			}
 		},
-		"titlesSignature": "[[\"Rachael\",82],[\"Caio\",75],[\"Nilton\",75],[\"Tiago\",64],[\"Marcio\",43],[\"Joe\",37],[\"Adriano\",35],[\"Deborah\",35],[\"Rafaella\",35],[\"Renan\",35],[\"Bruna\",33],[\"Gabriel\",20],[\"Eudaldo\",18]]",
+		"titlesSignature": "[[\"Caio\",100],[\"Rachael\",92],[\"Nilton\",85],[\"Tiago\",74],[\"Marcio\",53],[\"Adriano\",45],[\"Deborah\",45],[\"Rafaella\",45],[\"Renan\",45],[\"Bruna\",43],[\"Eudaldo\",43],[\"Gabriel\",30],[\"Joe\",25]]",
 		"recapSignature": "[[\"Rachael\",82],[\"Caio\",75],[\"Nilton\",75],[\"Tiago\",64],[\"Marcio\",43],[\"Adriano\",35],[\"Deborah\",35],[\"Rafaella\",35],[\"Renan\",35],[\"Bruna\",33],[\"Joe\",25],[\"Gabriel\",20],[\"Eudaldo\",18]]"
 	},
-	"generatedAt": "2026-06-14T01:05:21.176Z"
+	"generatedAt": "2026-06-14T01:35:24.742Z"
 }
