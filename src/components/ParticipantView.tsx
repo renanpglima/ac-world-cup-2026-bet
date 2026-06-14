@@ -27,10 +27,10 @@ export function ParticipantView({
 
 	return (
 		<div className="space-y-4">
-			<div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
-				<div className="flex items-center gap-5">
+			<div className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/5 px-5 py-5">
+				<div className="flex items-center gap-3 sm:gap-5">
 					<Avatar
-						className="h-32 w-32 rounded-2xl text-4xl sm:h-64 sm:w-64"
+						className="h-16 w-16 rounded-2xl text-2xl sm:h-64 sm:w-64 sm:text-4xl"
 						name={participant.name}
 					/>
 
