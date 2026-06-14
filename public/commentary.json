@@ -49,73 +49,73 @@
 		},
 		"titles": {
 			"Rachael": {
-				"en": "New leader",
-				"es": "Nueva líder",
-				"pt": "Nova líder"
+				"en": "On the rise",
+				"es": "En ascenso",
+				"pt": "Em ascensão"
 			},
 			"Caio": {
-				"en": "Slipping away",
-				"es": "Perdiendo terreno",
-				"pt": "Escorregando"
+				"en": "Slipping at the top",
+				"es": "Resbalando arriba",
+				"pt": "Escorregando no topo"
 			},
 			"Nilton": {
 				"en": "Holding steady",
-				"es": "Firme en tercero",
-				"pt": "Segurando posição"
+				"es": "Firme en su lugar",
+				"pt": "Segurando a posição"
 			},
 			"Tiago": {
-				"en": "Fading back",
-				"es": "Perdiendo fuelle",
-				"pt": "Caindo no ritmo"
+				"en": "Gap is growing",
+				"es": "La brecha crece",
+				"pt": "A distância aumenta"
 			},
 			"Marcio": {
-				"en": "Mid-table drift",
-				"es": "Estancado a medias",
-				"pt": "Estagnado no meio"
+				"en": "Mid-pack survivor",
+				"es": "Sobreviviente del grupo",
+				"pt": "Sobrevivendo no meio"
 			},
 			"Adriano": {
-				"en": "Stuck in sixth",
-				"es": "Atascado en sexto",
-				"pt": "Preso no sexto"
+				"en": "Stuck in traffic",
+				"es": "Atascado en el grupo",
+				"pt": "Preso no pelotão"
 			},
 			"Deborah": {
-				"en": "Stuck in sixth",
-				"es": "Atascada en sexto",
-				"pt": "Presa no sexto"
+				"en": "Stuck in traffic",
+				"es": "Atascada en el grupo",
+				"pt": "Presa no pelotão"
 			},
 			"Rafaella": {
-				"en": "Stuck in sixth",
-				"es": "Atascada en sexto",
-				"pt": "Presa no sexto"
+				"en": "Stuck in traffic",
+				"es": "Atascada en el grupo",
+				"pt": "Presa no pelotão"
 			},
 			"Renan": {
-				"en": "Stuck in sixth",
-				"es": "Atascado en sexto",
-				"pt": "Preso no sexto"
+				"en": "Stuck in traffic",
+				"es": "Atascado en el grupo",
+				"pt": "Preso no pelotão"
 			},
 			"Bruna": {
-				"en": "Scoreless streak",
-				"es": "Sin puntos exactos",
-				"pt": "Sem acertos"
+				"en": "Scoreless but hanging",
+				"es": "Sin exactos, aguantando",
+				"pt": "Sem acerto, resistindo"
 			},
 			"Eudaldo": {
-				"en": "Hanging in there",
-				"es": "Aguantando el tipo",
-				"pt": "Resistindo"
+				"en": "Flying under radar",
+				"es": "Pasando desapercibido",
+				"pt": "Passando despercebido"
 			},
 			"Joe": {
-				"en": "Surging hard",
-				"es": "Subiendo fuerte",
+				"en": "Surging from below",
+				"es": "Remontando fuerte",
 				"pt": "Subindo forte"
 			},
 			"Gabriel": {
-				"en": "Falling behind",
-				"es": "Quedándose atrás",
-				"pt": "Ficando para trás"
+				"en": "Losing ground fast",
+				"es": "Perdiendo terreno",
+				"pt": "Perdendo terreno"
 			}
 		},
-		"titlesSignature": "[[\"Rachael\",102],[\"Caio\",100],[\"Nilton\",85],[\"Tiago\",74],[\"Marcio\",53],[\"Adriano\",45],[\"Deborah\",45],[\"Rafaella\",45],[\"Renan\",45],[\"Bruna\",43],[\"Eudaldo\",43],[\"Joe\",43],[\"Gabriel\",30]]",
+		"titlesSignature": "[[\"Rachael\",112],[\"Caio\",110],[\"Nilton\",95],[\"Tiago\",84],[\"Marcio\",63],[\"Adriano\",55],[\"Deborah\",55],[\"Rafaella\",55],[\"Renan\",55],[\"Bruna\",53],[\"Eudaldo\",53],[\"Joe\",53],[\"Gabriel\",40]]",
 		"recapSignature": "[[\"Rachael\",102],[\"Caio\",100],[\"Nilton\",85],[\"Tiago\",74],[\"Marcio\",53],[\"Adriano\",45],[\"Deborah\",45],[\"Rafaella\",45],[\"Renan\",45],[\"Bruna\",43],[\"Eudaldo\",43],[\"Joe\",43],[\"Gabriel\",30]]"
 	},
-	"generatedAt": "2026-06-14T17:25:22.480Z"
+	"generatedAt": "2026-06-14T17:40:26.966Z"
 }
