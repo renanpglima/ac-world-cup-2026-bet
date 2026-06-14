@@ -250,7 +250,11 @@ export default function App() {
 				)}
 
 				{activeBettor ? (
-					<ParticipantView games={games} participant={activeBettor} />
+					<ParticipantView
+						games={games}
+						participant={activeBettor}
+						participants={participants}
+					/>
 				) : tab === 'matches' ? (
 					<MatchesView
 						cards={cards}

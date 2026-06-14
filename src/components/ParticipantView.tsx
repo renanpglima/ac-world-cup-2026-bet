@@ -1,15 +1,29 @@
+import {useMemo} from 'react';
+
+import {buildParticipantStats} from '../lib/participantStats';
 import {scoreParticipant} from '../lib/ranking';
 import type {Game, Participant} from '../lib/types';
 import {Avatar} from './Avatar';
 import {MatchRow} from './MatchRow';
+import {ParticipantStatsPanel} from './ParticipantStatsPanel';
 
 interface ParticipantViewProps {
 	games: Game[];
 	participant: Participant;
+	participants: Participant[];
 }
 
-export function ParticipantView({games, participant}: ParticipantViewProps) {
+export function ParticipantView({
+	games,
+	participant,
+	participants,
+}: ParticipantViewProps) {
 	const {exactCount, scored, total} = scoreParticipant(participant, games);
+
+	const stats = useMemo(
+		() => buildParticipantStats(participant, participants, games),
+		[participant, participants, games]
+	);
 
 	return (
 		<div className="space-y-4">
@@ -21,11 +35,29 @@ export function ParticipantView({games, participant}: ParticipantViewProps) {
 					/>
 
 					<div>
-						<h2 className="font-display text-2xl font-bold text-white sm:text-3xl">
-							{participant.name}
-						</h2>
+						<div className="flex flex-wrap items-center gap-2">
+							<h2 className="font-display text-2xl font-bold text-white sm:text-3xl">
+								{participant.name}
+							</h2>
 
-						<p className="text-sm text-slate-400">
+							<span className="rounded-full bg-white/10 px-2 py-0.5 font-display text-sm font-bold text-slate-200">
+								#{stats.rank}
+							</span>
+
+							{stats.movement > 0 && (
+								<span className="text-xs font-semibold text-emerald-400">
+									▲{stats.movement}
+								</span>
+							)}
+
+							{stats.movement < 0 && (
+								<span className="text-xs font-semibold text-rose-400">
+									▼{-stats.movement}
+								</span>
+							)}
+						</div>
+
+						<p className="mt-1 text-sm text-slate-400">
 							{exactCount} exact score{exactCount === 1 ? '' : 's'}
 						</p>
 					</div>
@@ -41,6 +73,11 @@ export function ParticipantView({games, participant}: ParticipantViewProps) {
 					</p>
 				</div>
 			</div>
+
+			<ParticipantStatsPanel
+				playerCount={participants.length}
+				stats={stats}
+			/>
 
 			<div className="overflow-x-auto rounded-2xl border border-white/10 bg-white/5">
 				<table className="w-full min-w-[640px] text-left">
