@@ -54,73 +54,73 @@
 		},
 		"titles": {
 			"Rachael": {
-				"en": "New leader",
-				"es": "Nueva líder",
-				"pt": "Nova líder"
+				"en": "Dominant leader",
+				"es": "Líder dominante",
+				"pt": "Líder dominante"
 			},
 			"Caio": {
-				"en": "Slipping fast",
-				"es": "Cayendo rápido",
-				"pt": "Caindo rápido"
-			},
-			"Nilton": {
-				"en": "Holding steady",
-				"es": "Firme en tercero",
-				"pt": "Segurando a posição"
+				"en": "Exact score king",
+				"es": "Rey de exactas",
+				"pt": "Rei das exatas"
 			},
 			"Tiago": {
-				"en": "Fading back",
-				"es": "Perdiendo terreno",
-				"pt": "Perdendo fôlego"
+				"en": "Chasing the top",
+				"es": "Persiguiendo el top",
+				"pt": "Caçando o topo"
 			},
-			"Marcio": {
-				"en": "Mid-pack grind",
-				"es": "Resistiendo en medio",
-				"pt": "Na luta do meio"
-			},
-			"Adriano": {
-				"en": "Four-way tie",
-				"es": "Empate a cuatro",
-				"pt": "Quádruplo empate"
-			},
-			"Deborah": {
-				"en": "Four-way tie",
-				"es": "Empate a cuatro",
-				"pt": "Quádruplo empate"
-			},
-			"Rafaella": {
-				"en": "Four-way tie",
-				"es": "Empate a cuatro",
-				"pt": "Quádruplo empate"
-			},
-			"Renan": {
-				"en": "Four-way tie",
-				"es": "Empate a cuatro",
-				"pt": "Quádruplo empate"
-			},
-			"Bruna": {
-				"en": "No exact hits",
-				"es": "Sin aciertos exactos",
-				"pt": "Sem acertos exatos"
+			"Nilton": {
+				"en": "One step behind",
+				"es": "A un paso",
+				"pt": "Um passo atrás"
 			},
 			"Eudaldo": {
-				"en": "Surviving the pack",
-				"es": "Aguantando el grupo",
-				"pt": "Sobrevivendo no grupo"
+				"en": "Stuck in fifth",
+				"es": "Atascado en quinto",
+				"pt": "Preso no quinto"
 			},
 			"Joe": {
-				"en": "Surging hard",
-				"es": "Escalando posiciones",
-				"pt": "Subindo forte"
+				"en": "Tied for fifth",
+				"es": "Empatado en quinto",
+				"pt": "Empatado no quinto"
+			},
+			"Marcio": {
+				"en": "Just off the pack",
+				"es": "Rozando el grupo",
+				"pt": "Quase no grupo"
+			},
+			"Adriano": {
+				"en": "Lost in the crowd",
+				"es": "Perdido en el grupo",
+				"pt": "Perdido no grupo"
+			},
+			"Deborah": {
+				"en": "Holding steady",
+				"es": "Manteniéndose firme",
+				"pt": "Segurando firme"
+			},
+			"Rafaella": {
+				"en": "Pack survivor",
+				"es": "Sobreviviente del grupo",
+				"pt": "Sobrevivente do grupo"
+			},
+			"Renan": {
+				"en": "Treading water",
+				"es": "Sin avanzar",
+				"pt": "Patinando no lugar"
+			},
+			"Bruna": {
+				"en": "No exact scores",
+				"es": "Sin exactas",
+				"pt": "Sem placar exato"
 			},
 			"Gabriel": {
-				"en": "Dropping off",
-				"es": "Quedándose atrás",
-				"pt": "Ficando para trás"
+				"en": "Needs a comeback",
+				"es": "Necesita remontar",
+				"pt": "Precisa reagir"
 			}
 		},
-		"titlesSignature": "[[\"Rachael\",117],[\"Caio\",110],[\"Nilton\",95],[\"Tiago\",84],[\"Marcio\",63],[\"Adriano\",55],[\"Deborah\",55],[\"Rafaella\",55],[\"Renan\",55],[\"Bruna\",53],[\"Eudaldo\",53],[\"Joe\",53],[\"Gabriel\",40]]",
+		"titlesSignature": "[[\"Rachael\",129],[\"Caio\",110],[\"Tiago\",96],[\"Nilton\",95],[\"Eudaldo\",65],[\"Joe\",65],[\"Marcio\",63],[\"Adriano\",55],[\"Deborah\",55],[\"Rafaella\",55],[\"Renan\",55],[\"Bruna\",53],[\"Gabriel\",40]]",
 		"recapSignature": "[[\"Rachael\",117],[\"Caio\",110],[\"Nilton\",95],[\"Tiago\",84],[\"Marcio\",63],[\"Adriano\",55],[\"Deborah\",55],[\"Rafaella\",55],[\"Renan\",55],[\"Bruna\",53],[\"Eudaldo\",53],[\"Joe\",53],[\"Gabriel\",40]]"
 	},
-	"generatedAt": "2026-06-14T19:00:48.777Z"
+	"generatedAt": "2026-06-14T20:05:22.545Z"
 }
