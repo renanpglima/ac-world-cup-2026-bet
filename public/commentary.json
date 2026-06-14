@@ -49,73 +49,73 @@
 		},
 		"titles": {
 			"Rachael": {
-				"en": "Surging to the top",
-				"es": "Escala a lo alto",
-				"pt": "Disparou na liderança"
+				"en": "Lone leader",
+				"es": "Líder en solitario",
+				"pt": "Líder isolada"
 			},
 			"Caio": {
-				"en": "Leader under pressure",
-				"es": "Líder bajo presión",
-				"pt": "Líder sob pressão"
-			},
-			"Nilton": {
-				"en": "Steady in third",
-				"es": "Sólido en tercero",
-				"pt": "Firme em terceiro"
-			},
-			"Tiago": {
-				"en": "Holding fourth",
-				"es": "Aguantando el cuarto",
-				"pt": "Segurando o quarto"
-			},
-			"Marcio": {
-				"en": "Stuck in neutral",
-				"es": "Sin moverse",
-				"pt": "Parado no tempo"
-			},
-			"Eudaldo": {
-				"en": "Treading water",
-				"es": "Sin avanzar",
-				"pt": "Patinando no lugar"
-			},
-			"Joe": {
-				"en": "Rocket launch",
-				"es": "Despegue total",
-				"pt": "Decolou de vez"
-			},
-			"Adriano": {
-				"en": "Slipping back",
-				"es": "Perdiendo terreno",
-				"pt": "Caindo nas posições"
-			},
-			"Deborah": {
-				"en": "Losing ground",
-				"es": "Cediendo posiciones",
-				"pt": "Perdendo terreno"
-			},
-			"Renan": {
-				"en": "Falling behind",
-				"es": "Quedándose atrás",
-				"pt": "Ficando para trás"
-			},
-			"Rafaella": {
-				"en": "Dropping fast",
+				"en": "Slipping fast",
 				"es": "Cayendo rápido",
 				"pt": "Caindo rápido"
 			},
+			"Nilton": {
+				"en": "Holding steady",
+				"es": "Firme en su sitio",
+				"pt": "Segurando posição"
+			},
+			"Tiago": {
+				"en": "Safe in fourth",
+				"es": "Seguro en cuarto",
+				"pt": "Estável em quarto"
+			},
+			"Marcio": {
+				"en": "Mid-pack grind",
+				"es": "Luchando en el medio",
+				"pt": "Na luta pelo meio"
+			},
+			"Joe": {
+				"en": "Rocket launcher",
+				"es": "Cohete imparable",
+				"pt": "Foguete em alta"
+			},
+			"Eudaldo": {
+				"en": "Holding on",
+				"es": "Resistiendo",
+				"pt": "Segurando firme"
+			},
+			"Adriano": {
+				"en": "Lost ground",
+				"es": "Perdiendo terreno",
+				"pt": "Perdeu terreno"
+			},
+			"Deborah": {
+				"en": "Lost ground",
+				"es": "Perdiendo terreno",
+				"pt": "Perdeu terreno"
+			},
+			"Rafaella": {
+				"en": "Lost ground",
+				"es": "Perdiendo terreno",
+				"pt": "Perdeu terreno"
+			},
+			"Renan": {
+				"en": "Lost ground",
+				"es": "Perdiendo terreno",
+				"pt": "Perdeu terreno"
+			},
 			"Bruna": {
-				"en": "No exact scores",
-				"es": "Sin plenos",
+				"en": "No exact hits",
+				"es": "Sin aciertos exactos",
 				"pt": "Sem acertos exatos"
 			},
 			"Gabriel": {
-				"en": "Fighting for survival",
-				"es": "Luchando por sobrevivir",
-				"pt": "Lutando para sobreviver"
+				"en": "Chasing the pack",
+				"es": "A la caza del grupo",
+				"pt": "Caçando o pelotão"
 			}
 		},
-		"titlesSignature": "[[\"Rachael\",112],[\"Caio\",110],[\"Nilton\",95],[\"Tiago\",84],[\"Marcio\",68],[\"Eudaldo\",61],[\"Joe\",61],[\"Adriano\",60],[\"Deborah\",60],[\"Renan\",60],[\"Rafaella\",55],[\"Bruna\",53],[\"Gabriel\",48]]",
+		"titlesSignature": "[[\"Rachael\",120],[\"Caio\",110],[\"Nilton\",95],[\"Tiago\",84],[\"Marcio\",63],[\"Eudaldo\",58],[\"Joe\",58],[\"Adriano\",55],[\"Deborah\",55],[\"Rafaella\",55],[\"Renan\",55],[\"Bruna\",53],[\"Gabriel\",45]]",
 		"recapSignature": "[[\"Rachael\",102],[\"Caio\",100],[\"Nilton\",85],[\"Tiago\",74],[\"Marcio\",53],[\"Adriano\",45],[\"Deborah\",45],[\"Rafaella\",45],[\"Renan\",45],[\"Bruna\",43],[\"Eudaldo\",43],[\"Joe\",43],[\"Gabriel\",30]]"
 	},
-	"generatedAt": "2026-06-14T18:35:26.281Z"
+	"generatedAt": "2026-06-14T18:45:30.847Z"
 }
