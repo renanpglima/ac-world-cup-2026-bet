@@ -74,73 +74,73 @@
 		},
 		"titles": {
 			"Rachael": {
-				"en": "Runaway leader",
-				"es": "Líder destacada",
-				"pt": "Líder isolada"
+				"en": "Running away with it",
+				"es": "Escapándose sola",
+				"pt": "Abrindo vantagem"
 			},
 			"Caio": {
-				"en": "Sharp eye",
-				"es": "Ojo certero",
-				"pt": "Olho clínico"
-			},
-			"Nilton": {
-				"en": "Closing in fast",
-				"es": "Pisando los talones",
-				"pt": "Chegando forte"
+				"en": "Exact score machine",
+				"es": "Máquina de exactos",
+				"pt": "Craque dos exatos"
 			},
 			"Tiago": {
-				"en": "Breathing down necks",
-				"es": "Muy cerca del top",
-				"pt": "No limite do pódio"
+				"en": "Hunting the top",
+				"es": "Cazando el liderato",
+				"pt": "De olho no topo"
+			},
+			"Nilton": {
+				"en": "Steady in fourth",
+				"es": "Sólido en cuarto",
+				"pt": "Firme em quarto"
 			},
 			"Joe": {
-				"en": "Holding steady",
-				"es": "Manteniéndose firme",
-				"pt": "Segurando posição"
+				"en": "Chasing the pack",
+				"es": "Persiguiendo al grupo",
+				"pt": "No encalço do grupo"
 			},
 			"Bruna": {
-				"en": "No exact scores",
-				"es": "Sin plenos acertados",
-				"pt": "Zero placares exatos"
+				"en": "Stuck in sixth",
+				"es": "Atascada en sexto",
+				"pt": "Travada em sexto"
 			},
 			"Eudaldo": {
-				"en": "Tied, pushing hard",
-				"es": "Empatado, insistiendo",
-				"pt": "Empatado, insistindo"
+				"en": "Tied, wants more",
+				"es": "Empatado, quiere más",
+				"pt": "Empatado, quer mais"
 			},
 			"Marcio": {
-				"en": "Midpack fighter",
-				"es": "Luchador del pelotón",
-				"pt": "Lutando no meio"
+				"en": "Falling behind",
+				"es": "Quedándose rezagado",
+				"pt": "Ficando para trás"
 			},
 			"Adriano": {
-				"en": "Stuck in traffic",
-				"es": "Atascado en el grupo",
-				"pt": "Preso no grupo"
+				"en": "Four-way logjam",
+				"es": "Atasco a cuatro",
+				"pt": "Empate a quatro"
 			},
 			"Deborah": {
-				"en": "Needs a boost",
-				"es": "Necesita un empujón",
-				"pt": "Precisa acelerar"
+				"en": "Stuck in the pack",
+				"es": "Atascada en el grupo",
+				"pt": "Presa no pelotão"
 			},
 			"Rafaella": {
-				"en": "Tied, wants more",
-				"es": "Empatada, quiere más",
-				"pt": "Empatada, quer mais"
+				"en": "Lost in the tie",
+				"es": "Perdida en el empate",
+				"pt": "Perdida no empate"
 			},
 			"Renan": {
-				"en": "Tied, chasing up",
-				"es": "Empatado, subiendo",
-				"pt": "Empatado, buscando subir"
+				"en": "Needs a big move",
+				"es": "Necesita un salto",
+				"pt": "Precisa de um salto"
 			},
 			"Gabriel": {
-				"en": "Playing catch-up",
-				"es": "Recuperando terreno",
-				"pt": "Tentando recuperar"
+				"en": "Lost at the back",
+				"es": "Perdido en el fondo",
+				"pt": "Isolado na lanterna"
 			}
 		},
-		"titlesSignature": "[[\"Rachael\",139],[\"Caio\",110],[\"Nilton\",107],[\"Tiago\",106],[\"Joe\",88],[\"Bruna\",78],[\"Eudaldo\",78],[\"Marcio\",73],[\"Adriano\",65],[\"Deborah\",65],[\"Rafaella\",65],[\"Renan\",65],[\"Gabriel\",50]]",
+		"titlesSignature": "[[\"Rachael\",139],[\"Caio\",110],[\"Tiago\",106],[\"Nilton\",95],[\"Joe\",88],[\"Bruna\",78],[\"Eudaldo\",78],[\"Marcio\",73],[\"Adriano\",65],[\"Deborah\",65],[\"Rafaella\",65],[\"Renan\",65],[\"Gabriel\",50]]",
 		"recapSignature": "[[\"Rachael\",139],[\"Caio\",110],[\"Tiago\",106],[\"Nilton\",95],[\"Joe\",88],[\"Bruna\",78],[\"Eudaldo\",78],[\"Marcio\",73],[\"Adriano\",65],[\"Deborah\",65],[\"Rafaella\",65],[\"Renan\",65],[\"Gabriel\",50]]"
 	},
-	"generatedAt": "2026-06-15T19:05:34.990Z"
+	"generatedAt": "2026-06-15T19:20:37.825Z"
 }
