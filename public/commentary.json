@@ -64,13 +64,18 @@
 			"en": "Spain and Cabo Verde played out a 0-0 snooze-fest, and the entire pool collectively forgot that draws exist — thirteen players walked away with zero points from Match 13! Rachael holds the throne at 139, but even the queen got blanked today. At least nobody's alone in their misery… which is somehow both comforting and embarrassing.",
 			"es": "España y Cabo Verde nos regalaron un 0-0 de manual, y prácticamente todo el mundo en la quiniela se olvidó de que los empates también son una opción — ¡trece jugadores se fueron a cero en el partido 13! Rachael sigue líder con 139 puntos, pero ni ella se salvó del batacazo. Lo bueno de hundirse todos juntos es que nadie tiene que explicar nada...",
 			"pt": "Espanha e Cabo Verde fizeram um 0-0 digno de sonífero, e a bolão inteira esqueceu coletivamente que empate também é resultado — treze jogadores foram pra casa com zero pontos no Jogo 13! Rachael segura o trono com 139, mas nem ela escapou do vexame. O bom de errar junto é que ninguém precisa explicar nada pra ninguém…"
+		},
+		"14": {
+			"en": "Match 14 — Belgium 1-1 Egypt: Twelve people looked at this draw and said 'nope,' and paid the price with a big fat zero — including our own leader Rachael, who just handed Nilton a golden ticket! Speaking of Nilton, the man was ALONE in calling the right outcome AND nailed the exact scoreline for a full 25 points, rocketing up two spots on the board. Caio rounds out the podium but slipped a place — tough luck when the one guy who got it right is the same guy breathing down your neck!",
+			"es": "Partido 14 — Bélgica 1-1 Egipto: Doce personas miraron este empate, dijeron 'ni loco' y se llevaron un cero de regalo — incluyendo a nuestra líder Rachael, que acaba de ponerle la alfombra roja a Nilton. Hablando de Nilton, el tío fue el ÚNICO en acertar el resultado Y clavó el marcador exacto con 25 puntazos, subiendo dos puestos de un salto. Caio sigue en el podio pero bajó un escalón — mala suerte cuando el que lo clava es justo el que tienes pisándote los talones.",
+			"pt": "Jogo 14 — Bélgica 1-1 Egito: Doze pessoas olharam pra esse empate, torceram o nariz e foram premiadas com um zero redondo — incluindo a nossa líder Rachael, que de presente deu uma bela brecha pro Nilton! Por falar nele, o cara foi o ÚNICO a acertar o resultado e ainda cravou o placar exato, embolsando 25 pontos e subindo dois lugares na tabela. Caio segura o pódio mas escorregou uma posição — dói mais quando quem acertou tudo é justamente quem tá colado no seu pescoço!"
 		}
 	},
 	"leaderboard": {
 		"recap": {
-			"en": "Rachael is running away with this thing, sitting pretty at 139 points and a full 29 ahead of Caio in second — someone send her a trophy already. Tiago is right on Caio's heels at 106, so the battle for the runner-up spot is very much alive heading into the second half of the tournament. Meanwhile, Gabriel is bringing up the rear at 50 points, but with 12 matches still to play there is still plenty of time to make some noise.",
-			"es": "Rachael lleva el mando con autoridad desde los 139 puntos, aventajando a Caio en 29 — a este paso habrá que enmarcarle el trofeo. Tiago respira en la nuca de Caio con 106 puntos, así que la pelea por el segundo puesto promete mucha emoción en la recta final. En la parte baja, Gabriel acumula 50 puntos, aunque con la mitad del campeonato por delante todavía hay partido para todos.",
-			"pt": "Rachael está dominando a bolão com 139 pontos e 29 de vantagem sobre Caio — alguém já vai encomendar o troféu dela. Tiago está colado em Caio com 106 pontos, então a briga pelo vice-campeonato promete muito nos próximos jogos. Lá atrás, Gabriel está com 50 pontos, mas com 12 rodadas ainda por jogar, a virada não está descartada."
+			"en": "Rachael sits pretty at the top with 139 points, but Nilton is heating up after a 25-point matchday that vaulted him to second and has the gap down to 19 — this title race is far from over. Caio (110) and Tiago (106) are lurking just behind, keeping the pressure on the leaders heading into the second half of the pool. Meanwhile, Gabriel is having a rough ride at the back with 50 points, but there is still plenty of football left to turn things around.",
+			"es": "Rachael lidera con comodidad con 139 puntos, pero Nilton llega con fuerza tras sumar 25 en la ultima jornada y escalar al segundo puesto, dejando la diferencia en solo 19 puntos. Caio (110) y Tiago (106) acechan de cerca y mantienen viva la batalla por los puestos de honor. En la parte baja, Gabriel acumula 50 puntos y tiene trabajo por delante, aunque el torneo aun tiene mucho que ofrecer.",
+			"pt": "Rachael segura a lideranca com folga nos 139 pontos, mas Nilton chegou com tudo na ultima rodada, marcando 25 pontos e subindo para o segundo lugar, deixando a diferenca em apenas 19 pontos. Caio (110) e Tiago (106) estao bem proximos e prometem dar trabalho na segunda metade do bolao. La atras, Gabriel tem 50 pontos e precisa engatar uma sequencia, mas ainda tem muito futebol pela frente."
 		},
 		"titles": {
 			"Rachael": {
@@ -140,7 +145,7 @@
 			}
 		},
 		"titlesSignature": "[[\"Rachael\",139],[\"Nilton\",120],[\"Caio\",110],[\"Tiago\",106],[\"Joe\",88],[\"Bruna\",78],[\"Eudaldo\",78],[\"Marcio\",73],[\"Adriano\",65],[\"Deborah\",65],[\"Rafaella\",65],[\"Renan\",65],[\"Gabriel\",50]]",
-		"recapSignature": "[[\"Rachael\",139],[\"Caio\",110],[\"Tiago\",106],[\"Nilton\",95],[\"Joe\",88],[\"Bruna\",78],[\"Eudaldo\",78],[\"Marcio\",73],[\"Adriano\",65],[\"Deborah\",65],[\"Rafaella\",65],[\"Renan\",65],[\"Gabriel\",50]]"
+		"recapSignature": "[[\"Rachael\",139],[\"Nilton\",120],[\"Caio\",110],[\"Tiago\",106],[\"Joe\",88],[\"Bruna\",78],[\"Eudaldo\",78],[\"Marcio\",73],[\"Adriano\",65],[\"Deborah\",65],[\"Rafaella\",65],[\"Renan\",65],[\"Gabriel\",50]]"
 	},
-	"generatedAt": "2026-06-15T20:30:24.343Z"
+	"generatedAt": "2026-06-15T21:00:40.437Z"
 }
