@@ -1,5 +1,5 @@
 {
-	"fetchedAt": "2026-06-15T03:50:22.245Z",
+	"fetchedAt": "2026-06-15T03:55:15.434Z",
 	"games": [
 		{
 			"awayScore": 0,
@@ -139,7 +139,7 @@
 			"finished": false,
 			"timeElapsed": "90",
 			"group": "Group F",
-			"homeScore": 3,
+			"homeScore": 4,
 			"homeTeam": "Sweden",
 			"id": 400021474,
 			"localDate": "2026-06-15T02:00:00Z",
