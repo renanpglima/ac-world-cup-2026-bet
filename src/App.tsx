@@ -1,5 +1,6 @@
 import {useEffect, useMemo, useState} from 'react';
 
+import {HeadToHeadView} from './components/HeadToHeadView';
 import {Header} from './components/Header';
 import {Leaderboard} from './components/Leaderboard';
 import {MatchesView} from './components/MatchesView';
@@ -217,6 +218,16 @@ export default function App() {
 					</TabButton>
 
 					<TabButton
+						active={tab === 'h2h'}
+						onClick={() => setTab('h2h')}
+					>
+						⚔️ Head to Head
+						<span className="ml-1.5 inline-block rounded-full bg-amber-400 px-1.5 py-0.5 align-middle text-[9px] font-bold uppercase tracking-wide text-amber-950">
+							New
+						</span>
+					</TabButton>
+
+					<TabButton
 						active={tab === 'stats'}
 						onClick={() => setTab('stats')}
 					>
@@ -260,6 +271,12 @@ export default function App() {
 						cards={cards}
 						commentary={commentary}
 						whatIf={whatIf}
+					/>
+				) : tab === 'h2h' ? (
+					<HeadToHeadView
+						games={games}
+						participants={participants}
+						rows={rows}
 					/>
 				) : tab === 'stats' ? (
 					<StatsView
