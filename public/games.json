@@ -1,5 +1,5 @@
 {
-	"fetchedAt": "2026-06-15T02:45:18.592Z",
+	"fetchedAt": "2026-06-15T02:55:24.114Z",
 	"games": [
 		{
 			"awayScore": 0,
@@ -137,7 +137,7 @@
 			"awayScore": 1,
 			"awayTeam": "Tunisia",
 			"finished": false,
-			"timeElapsed": "45",
+			"timeElapsed": "1",
 			"group": "Group F",
 			"homeScore": 2,
 			"homeTeam": "Sweden",
