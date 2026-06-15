@@ -64,73 +64,73 @@
 		},
 		"titles": {
 			"Rachael": {
-				"en": "Commanding the lead",
-				"es": "Dominando la cima",
-				"pt": "Dominando a liderança"
+				"en": "Holding the crown",
+				"es": "Aferrada a la cima",
+				"pt": "Segurando a coroa"
 			},
 			"Caio": {
-				"en": "Losing ground fast",
-				"es": "Perdiendo terreno",
-				"pt": "Perdendo terreno rápido"
-			},
-			"Tiago": {
-				"en": "Climbing with fire",
-				"es": "Subiendo con fuerza",
-				"pt": "Subindo com garra"
+				"en": "Hot on her heels",
+				"es": "Pisándole los talones",
+				"pt": "Colado na líder"
 			},
 			"Nilton": {
-				"en": "Slipping one spot",
-				"es": "Cediendo un puesto",
-				"pt": "Escorregando uma posição"
+				"en": "Chasing the top two",
+				"es": "Acechando el podio",
+				"pt": "De olho no top 2"
+			},
+			"Tiago": {
+				"en": "Fading from the hunt",
+				"es": "Perdiendo el ritmo",
+				"pt": "Perdendo o fôlego"
 			},
 			"Eudaldo": {
-				"en": "Surging from nowhere",
-				"es": "Remontada explosiva",
-				"pt": "Disparando do nada"
+				"en": "Hanging in there",
+				"es": "Aguantando el tipo",
+				"pt": "Se segurando"
 			},
 			"Joe": {
-				"en": "Surging from nowhere",
-				"es": "Remontada explosiva",
-				"pt": "Disparando do nada"
+				"en": "Stuck in sixth",
+				"es": "Atascado en sexto",
+				"pt": "Parado no sexto"
 			},
 			"Bruna": {
-				"en": "Fading badly",
-				"es": "Desvaneciéndose",
-				"pt": "Afundando rápido"
+				"en": "Surging up the table",
+				"es": "Escalando posiciones",
+				"pt": "Subindo na tabela"
 			},
 			"Marcio": {
-				"en": "Stuck in mud",
-				"es": "Sin despegar",
-				"pt": "Emperrado no lugar"
+				"en": "Sliding back slowly",
+				"es": "Retrocediendo despacio",
+				"pt": "Escorregando devagar"
 			},
 			"Adriano": {
-				"en": "Falling behind",
-				"es": "Quedándose atrás",
-				"pt": "Ficando para trás"
+				"en": "Tied and stalled",
+				"es": "Empatado y frenado",
+				"pt": "Empatado e parado"
 			},
 			"Deborah": {
-				"en": "Falling behind",
-				"es": "Quedándose atrás",
-				"pt": "Ficando para trás"
+				"en": "Tied and stalled",
+				"es": "Empatada y frenada",
+				"pt": "Empatada e parada"
 			},
 			"Rafaella": {
-				"en": "Falling behind",
-				"es": "Quedándose atrás",
-				"pt": "Ficando para trás"
+				"en": "Tied and stalled",
+				"es": "Empatada y frenada",
+				"pt": "Empatada e parada"
 			},
 			"Renan": {
-				"en": "Falling behind",
-				"es": "Quedándose atrás",
-				"pt": "Ficando para trás"
+				"en": "Tied and stalled",
+				"es": "Empatado y frenado",
+				"pt": "Empatado e parado"
 			},
 			"Gabriel": {
-				"en": "Lost in last",
-				"es": "Perdido al fondo",
-				"pt": "Perdido na lanterna"
+				"en": "Lost in the back",
+				"es": "Perdido en el fondo",
+				"pt": "Perdido lá atrás"
 			}
 		},
-		"titlesSignature": "[[\"Rachael\",129],[\"Caio\",110],[\"Tiago\",96],[\"Nilton\",95],[\"Eudaldo\",78],[\"Joe\",78],[\"Bruna\",68],[\"Marcio\",63],[\"Adriano\",55],[\"Deborah\",55],[\"Rafaella\",55],[\"Renan\",55],[\"Gabriel\",40]]",
+		"titlesSignature": "[[\"Rachael\",129],[\"Caio\",122],[\"Nilton\",107],[\"Tiago\",96],[\"Eudaldo\",90],[\"Joe\",78],[\"Bruna\",68],[\"Marcio\",63],[\"Adriano\",55],[\"Deborah\",55],[\"Rafaella\",55],[\"Renan\",55],[\"Gabriel\",40]]",
 		"recapSignature": "[[\"Rachael\",129],[\"Caio\",110],[\"Tiago\",96],[\"Nilton\",95],[\"Eudaldo\",78],[\"Joe\",78],[\"Bruna\",68],[\"Marcio\",63],[\"Adriano\",55],[\"Deborah\",55],[\"Rafaella\",55],[\"Renan\",55],[\"Gabriel\",40]]"
 	},
-	"generatedAt": "2026-06-15T01:05:43.793Z"
+	"generatedAt": "2026-06-15T02:05:22.698Z"
 }
