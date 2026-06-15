@@ -5,14 +5,16 @@ import {buildLeaderboardWithMovement, scoreParticipant} from './ranking';
 import {buildPointsTimeline} from './timeline';
 import type {Game, Participant} from './types';
 
-// The six scoring tiers, highest first, each with a color for the breakdown.
+// The six scoring tiers, highest first. Colors mirror TIER_STYLES (the chips
+// in the Rules and on match cards) so the breakdown reads the same: 25 amber,
+// 18 emerald, 15 teal, 12 sky, 10 indigo, 0 rose.
 export const SCORE_TIERS = [
-	{color: '#34d399', label: 'Exact', points: 25},
-	{color: '#2dd4bf', label: 'Winner + goals', points: 18},
-	{color: '#38bdf8', label: 'Winner + diff', points: 15},
-	{color: '#a78bfa', label: 'Right draw', points: 12},
-	{color: '#fbbf24', label: 'Winner', points: 10},
-	{color: '#64748b', label: 'Miss', points: 0},
+	{color: '#fcd34d', label: 'Exact', points: 25},
+	{color: '#6ee7b7', label: 'Winner + goals', points: 18},
+	{color: '#5eead4', label: 'Winner + diff', points: 15},
+	{color: '#7dd3fc', label: 'Right draw', points: 12},
+	{color: '#a5b4fc', label: 'Winner', points: 10},
+	{color: '#fb7185', label: 'Miss', points: 0},
 ];
 
 export interface ParticipantStats {
