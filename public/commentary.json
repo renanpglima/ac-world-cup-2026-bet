@@ -64,73 +64,73 @@
 		},
 		"titles": {
 			"Rachael": {
-				"en": "Untouchable leader",
-				"es": "Líder intratable",
-				"pt": "Líder intocável"
-			},
-			"Tiago": {
-				"en": "Chasing the top",
-				"es": "Persiguiendo el liderato",
-				"pt": "Caçando o topo"
+				"en": "Runaway leader",
+				"es": "Líder destacada",
+				"pt": "Líder isolada"
 			},
 			"Caio": {
 				"en": "Most exact scores",
-				"es": "Más resultados exactos",
-				"pt": "Mais placares exatos"
+				"es": "Más aciertos exactos",
+				"pt": "Mais acertos exatos"
 			},
-			"Nilton": {
-				"en": "Solid in fourth",
-				"es": "Sólido en cuarto",
-				"pt": "Sólido em quarto"
-			},
-			"Bruna": {
-				"en": "Climbing up fast",
-				"es": "Subiendo rápido",
-				"pt": "Subindo rápido"
+			"Tiago": {
+				"en": "Chasing the top",
+				"es": "Persiguiendo al líder",
+				"pt": "Caçando o topo"
 			},
 			"Joe": {
-				"en": "Tied for fifth",
-				"es": "Empatado en quinto",
-				"pt": "Empatado em quinto"
+				"en": "Solid mid-pack",
+				"es": "Sólido en el grupo",
+				"pt": "Sólido no pelotão"
 			},
-			"Eudaldo": {
-				"en": "Slipping down",
-				"es": "Perdiendo terreno",
-				"pt": "Escorregando"
+			"Nilton": {
+				"en": "Breathing down necks",
+				"es": "Pisando los talones",
+				"pt": "No encalço do top 4"
 			},
 			"Marcio": {
-				"en": "Dropped a spot",
-				"es": "Bajó un puesto",
-				"pt": "Caiu uma posição"
-			},
-			"Rafaella": {
-				"en": "Holding steady",
-				"es": "Aguantando el tipo",
-				"pt": "Segurando firme"
+				"en": "Needs more exact",
+				"es": "Necesita más exactos",
+				"pt": "Precisa de mais exatos"
 			},
 			"Adriano": {
-				"en": "Needs a push",
-				"es": "Necesita un empujón",
-				"pt": "Precisa de um empurrão"
+				"en": "Three-way tie",
+				"es": "Triple empate",
+				"pt": "Empate triplo"
 			},
 			"Deborah": {
-				"en": "Needs a push",
-				"es": "Necesita un empujón",
-				"pt": "Precisa de um empurrão"
+				"en": "Three-way tie",
+				"es": "Triple empate",
+				"pt": "Empate triplo"
 			},
 			"Renan": {
-				"en": "Needs a push",
-				"es": "Necesita un empujón",
-				"pt": "Precisa de um empurrão"
+				"en": "Three-way tie",
+				"es": "Triple empate",
+				"pt": "Empate triplo"
+			},
+			"Bruna": {
+				"en": "Late surge",
+				"es": "Remontando fuerte",
+				"pt": "Chegando forte"
+			},
+			"Eudaldo": {
+				"en": "Stuck in neutral",
+				"es": "Estancado",
+				"pt": "Estagnado"
+			},
+			"Rafaella": {
+				"en": "Sliding back",
+				"es": "Perdiendo terreno",
+				"pt": "Perdendo posição"
 			},
 			"Gabriel": {
-				"en": "Still scoreless",
-				"es": "Sin puntos exactos",
-				"pt": "Sem acertos exatos"
+				"en": "Must accelerate",
+				"es": "Necesita acelerar",
+				"pt": "Precisa acelerar"
 			}
 		},
-		"titlesSignature": "[[\"Rachael\",144],[\"Tiago\",121],[\"Caio\",110],[\"Nilton\",95],[\"Bruna\",93],[\"Joe\",93],[\"Eudaldo\",78],[\"Marcio\",78],[\"Rafaella\",70],[\"Adriano\",65],[\"Deborah\",65],[\"Renan\",65],[\"Gabriel\",50]]",
+		"titlesSignature": "[[\"Rachael\",147],[\"Caio\",110],[\"Tiago\",106],[\"Joe\",96],[\"Nilton\",95],[\"Marcio\",81],[\"Adriano\",80],[\"Deborah\",80],[\"Renan\",80],[\"Bruna\",78],[\"Eudaldo\",78],[\"Rafaella\",73],[\"Gabriel\",65]]",
 		"recapSignature": "[[\"Rachael\",129],[\"Caio\",110],[\"Tiago\",96],[\"Nilton\",95],[\"Eudaldo\",78],[\"Joe\",78],[\"Bruna\",68],[\"Marcio\",63],[\"Adriano\",55],[\"Deborah\",55],[\"Rafaella\",55],[\"Renan\",55],[\"Gabriel\",40]]"
 	},
-	"generatedAt": "2026-06-15T02:10:24.238Z"
+	"generatedAt": "2026-06-15T02:30:28.794Z"
 }
