@@ -4,6 +4,7 @@ import {Avatar} from './Avatar';
 const MEDALS = ['🥇', '🥈', '🥉'];
 
 interface LeaderboardProps {
+	live?: boolean;
 	onSelect: (name: string) => void;
 	recap?: string;
 	rows: LeaderboardRow[];
@@ -11,6 +12,7 @@ interface LeaderboardProps {
 }
 
 export function Leaderboard({
+	live = false,
 	onSelect,
 	recap,
 	rows,
@@ -70,26 +72,26 @@ export function Leaderboard({
 												{row.name}
 											</span>
 
-											{(row.movement ?? 0) > 0 && (
+											{!live && (row.movement ?? 0) > 0 && (
 												<span className="text-xs text-emerald-400">
 													▲
 												</span>
 											)}
 
-											{(row.movement ?? 0) < 0 && (
+											{!live && (row.movement ?? 0) < 0 && (
 												<span className="text-xs text-rose-400">
 													▼
 												</span>
 											)}
 
-											{titles[row.name] && (
+											{!live && titles[row.name] && (
 												<span className="hidden truncate text-xs text-slate-500 sm:inline">
 													{titles[row.name]}
 												</span>
 											)}
 										</span>
 
-										{titles[row.name] && (
+										{!live && titles[row.name] && (
 											<span className="block truncate text-xs text-slate-500 sm:hidden">
 												{titles[row.name]}
 											</span>

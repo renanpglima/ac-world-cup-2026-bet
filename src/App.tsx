@@ -271,6 +271,7 @@ export default function App() {
 					<RulesView />
 				) : (
 					<Leaderboard
+						live={liveGames.length > 0}
 						onSelect={selectBettor}
 						recap={liveGames.length === 0 ? boardRecap : undefined}
 						rows={rows}
