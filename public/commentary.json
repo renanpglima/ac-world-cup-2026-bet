@@ -94,68 +94,68 @@
 				"pt": "Líder isolada"
 			},
 			"Nilton": {
-				"en": "Chasing hard",
-				"es": "Pisando los talones",
-				"pt": "Na cola da líder"
+				"en": "Closing fast",
+				"es": "Cerrando fuerte",
+				"pt": "Chegando forte"
 			},
 			"Caio": {
-				"en": "Staying in touch",
-				"es": "Manteniéndose cerca",
-				"pt": "Mantendo contato"
+				"en": "Gaining ground",
+				"es": "Ganando terreno",
+				"pt": "Ganhando terreno"
 			},
 			"Tiago": {
-				"en": "Lurking in fourth",
-				"es": "Acechando desde cuarto",
-				"pt": "Espreitando em quarto"
+				"en": "Hanging tough",
+				"es": "Resistiendo firme",
+				"pt": "Segurando bem"
 			},
 			"Bruna": {
-				"en": "Midpack grinder",
-				"es": "Resistiendo en mitad",
-				"pt": "Sobrevivendo no meio"
+				"en": "Climbing up",
+				"es": "Escalando posiciones",
+				"pt": "Subindo na tabela"
 			},
 			"Joe": {
-				"en": "Steady at sixth",
-				"es": "Firme en sexto",
-				"pt": "Firme em sexto"
+				"en": "Sliding back",
+				"es": "Perdiendo terreno",
+				"pt": "Perdendo posição"
 			},
 			"Marcio": {
-				"en": "Hanging on",
-				"es": "Aguantando el tipo",
-				"pt": "Segurando a posição"
+				"en": "Making moves",
+				"es": "Moviéndose arriba",
+				"pt": "Avançando posições"
 			},
 			"Eudaldo": {
-				"en": "Needs a run",
-				"es": "Necesita un empujón",
-				"pt": "Precisa acelerar"
+				"en": "Losing ground",
+				"es": "Bajando puestos",
+				"pt": "Caindo na tabela"
 			},
 			"Adriano": {
-				"en": "Four-way logjam",
-				"es": "Atasco cuádruple",
-				"pt": "Empate em quatro"
+				"en": "Stuck in place",
+				"es": "Sin avanzar",
+				"pt": "Parado no lugar"
 			},
 			"Deborah": {
-				"en": "Stuck in the pack",
-				"es": "Atrapada en el grupo",
-				"pt": "Presa no grupo"
+				"en": "Stuck in place",
+				"es": "Sin avanzar",
+				"pt": "Parada no lugar"
 			},
 			"Rafaella": {
-				"en": "Level with rivals",
-				"es": "Igualada con rivales",
-				"pt": "Empatada com rivais"
+				"en": "Treading water",
+				"es": "Estancada ahí",
+				"pt": "Marcando passo"
 			},
 			"Renan": {
-				"en": "Needs to break free",
-				"es": "Debe despegarse ya",
-				"pt": "Precisa se soltar"
+				"en": "Treading water",
+				"es": "Estancado ahí",
+				"pt": "Marcando passo"
 			},
 			"Gabriel": {
-				"en": "Playing catch-up",
-				"es": "Remontando desde atrás",
-				"pt": "Tentando se recuperar"
+				"en": "Fading away",
+				"es": "Quedándose atrás",
+				"pt": "Ficando para trás"
 			}
 		},
-		"titlesSignature": "[[\"Rachael\",139],[\"Nilton\",132],[\"Caio\",122],[\"Tiago\",118],[\"Bruna\",90],[\"Joe\",88],[\"Marcio\",85],[\"Eudaldo\",78],[\"Adriano\",65],[\"Deborah\",65],[\"Rafaella\",65],[\"Renan\",65],[\"Gabriel\",50]]",
+		"titlesSignature": "[[\"Rachael\",149],[\"Nilton\",142],[\"Caio\",132],[\"Tiago\",128],[\"Bruna\",105],[\"Joe\",98],[\"Marcio\",95],[\"Eudaldo\",93],[\"Adriano\",80],[\"Deborah\",80],[\"Rafaella\",75],[\"Renan\",75],[\"Gabriel\",65]]",
 		"recapSignature": "[[\"Rachael\",139],[\"Nilton\",132],[\"Caio\",122],[\"Tiago\",118],[\"Bruna\",90],[\"Joe\",88],[\"Marcio\",85],[\"Eudaldo\",78],[\"Adriano\",65],[\"Deborah\",65],[\"Rafaella\",65],[\"Renan\",65],[\"Gabriel\",50]]"
 	},
-	"generatedAt": "2026-06-16T03:05:42.017Z"
+	"generatedAt": "2026-06-16T20:35:34.542Z"
 }
