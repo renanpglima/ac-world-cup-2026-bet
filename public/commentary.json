@@ -84,73 +84,73 @@
 		},
 		"titles": {
 			"Rachael": {
-				"en": "Holding the crown",
-				"es": "Reina del marcador",
-				"pt": "Segurando a coroa"
+				"en": "Untouchable leader",
+				"es": "Líder inalcanzable",
+				"pt": "Líder intocável"
 			},
 			"Nilton": {
-				"en": "Hot on her heels",
-				"es": "Pisándole los talones",
-				"pt": "Colado na líder"
+				"en": "Best exact scorer",
+				"es": "Rey de exactos",
+				"pt": "Rei dos exatos"
 			},
 			"Caio": {
-				"en": "Chasing the top",
-				"es": "A por el podio",
-				"pt": "De olho no topo"
+				"en": "Chasing hard",
+				"es": "Pisando los talones",
+				"pt": "Na cola do topo"
 			},
 			"Tiago": {
-				"en": "Lurking in fourth",
-				"es": "Al acecho en cuarto",
-				"pt": "Rondando o top 3"
-			},
-			"Bruna": {
-				"en": "Fading fast",
-				"es": "Perdiendo terreno",
-				"pt": "Caindo no esquecimento"
+				"en": "Solid fourth",
+				"es": "Cuarto firme",
+				"pt": "Quarto sólido"
 			},
 			"Joe": {
-				"en": "Hanging in there",
-				"es": "Resistiendo en sexto",
-				"pt": "Se segurando"
+				"en": "Closing the gap",
+				"es": "Acortando distancias",
+				"pt": "Chegando por trás"
 			},
-			"Marcio": {
-				"en": "Just behind the pack",
-				"es": "Justo fuera del grupo",
-				"pt": "Fora do grupo"
+			"Bruna": {
+				"en": "Scoreless so far",
+				"es": "Sin exactos aún",
+				"pt": "Sem exatos ainda"
 			},
 			"Eudaldo": {
-				"en": "Slipping away",
-				"es": "Alejándose del grupo",
-				"pt": "Se distanciando"
+				"en": "Tied but sharper",
+				"es": "Empatado y preciso",
+				"pt": "Empatado e preciso"
+			},
+			"Marcio": {
+				"en": "Holding steady",
+				"es": "Aguantando el tipo",
+				"pt": "Segurando a posição"
 			},
 			"Adriano": {
-				"en": "Stuck in the pack",
-				"es": "Atascado en el pelotón",
-				"pt": "Preso no pelotão"
+				"en": "Four-way logjam",
+				"es": "Atasco a cuatro",
+				"pt": "Empate a quatro"
 			},
 			"Deborah": {
-				"en": "Tied for ninth",
-				"es": "Empatada en novena",
-				"pt": "Empatada em nono"
+				"en": "Stuck in the pack",
+				"es": "Perdida en el grupo",
+				"pt": "Perdida no pelotão"
 			},
 			"Rafaella": {
 				"en": "Fighting for ground",
-				"es": "Peleando su lugar",
+				"es": "Peleando terreno",
 				"pt": "Brigando por espaço"
 			},
 			"Renan": {
-				"en": "Deadlocked mid-table",
-				"es": "Estancado a mitad",
-				"pt": "Travado no meio"
+				"en": "Needs a big week",
+				"es": "Necesita reaccionar",
+				"pt": "Precisa reagir"
 			},
 			"Gabriel": {
-				"en": "Dead last",
-				"es": "Farolillo rojo",
-				"pt": "Lanterna da turma"
+				"en": "Trailing the field",
+				"es": "Último y lejos",
+				"pt": "Lanterna do grupo"
 			}
 		},
-		"titlesSignature": "[[\"Rachael\",139],[\"Nilton\",132],[\"Caio\",122],[\"Tiago\",118],[\"Bruna\",90],[\"Joe\",88],[\"Marcio\",85],[\"Eudaldo\",78],[\"Adriano\",65],[\"Deborah\",65],[\"Rafaella\",65],[\"Renan\",65],[\"Gabriel\",50]]",
+		"titlesSignature": "[[\"Rachael\",139],[\"Nilton\",120],[\"Caio\",110],[\"Tiago\",106],[\"Joe\",103],[\"Bruna\",78],[\"Eudaldo\",78],[\"Marcio\",73],[\"Adriano\",65],[\"Deborah\",65],[\"Rafaella\",65],[\"Renan\",65],[\"Gabriel\",50]]",
 		"recapSignature": "[[\"Rachael\",139],[\"Nilton\",120],[\"Caio\",110],[\"Tiago\",106],[\"Joe\",88],[\"Bruna\",78],[\"Eudaldo\",78],[\"Marcio\",73],[\"Adriano\",65],[\"Deborah\",65],[\"Rafaella\",65],[\"Renan\",65],[\"Gabriel\",50]]"
 	},
-	"generatedAt": "2026-06-16T01:05:22.353Z"
+	"generatedAt": "2026-06-16T01:15:28.028Z"
 }
