@@ -83,74 +83,74 @@
 			"pt": "Rachael segura a lideranca com folga nos 139 pontos, mas Nilton chegou com tudo na ultima rodada, marcando 25 pontos e subindo para o segundo lugar, deixando a diferenca em apenas 19 pontos. Caio (110) e Tiago (106) estao bem proximos e prometem dar trabalho na segunda metade do bolao. La atras, Gabriel tem 50 pontos e precisa engatar uma sequencia, mas ainda tem muito futebol pela frente."
 		},
 		"titles": {
-			"Nilton": {
-				"en": "Commanding the lead",
-				"es": "Lidera con autoridad",
-				"pt": "Dono da liderança"
-			},
 			"Rachael": {
-				"en": "Chasing the top",
-				"es": "Acechando al líder",
-				"pt": "Colada no topo"
+				"en": "Runaway leader",
+				"es": "Líder destacada",
+				"pt": "Líder isolada"
+			},
+			"Nilton": {
+				"en": "Best exact scores",
+				"es": "Mejor marcador exacto",
+				"pt": "Rei dos placares exatos"
 			},
 			"Caio": {
-				"en": "Breathing down necks",
-				"es": "Pisando los talones",
-				"pt": "No pescoço dos líderes"
+				"en": "Chasing the top",
+				"es": "A la caza del líder",
+				"pt": "Caçando a liderança"
 			},
 			"Tiago": {
-				"en": "Fighting for podium",
-				"es": "Peleando el podio",
-				"pt": "Brigando pelo pódio"
-			},
-			"Bruna": {
-				"en": "Gap to close",
-				"es": "Brecha por cerrar",
-				"pt": "Distância a recuperar"
-			},
-			"Marcio": {
-				"en": "Midfield grind",
-				"es": "Batalla en el medio",
-				"pt": "Na batalha do meio"
+				"en": "Solid fourth",
+				"es": "Cuarto sólido",
+				"pt": "Quarto firme"
 			},
 			"Joe": {
-				"en": "Holding steady",
-				"es": "Aguantando el ritmo",
-				"pt": "Segurando a posição"
+				"en": "Knocking on top five",
+				"es": "Pegado al top cinco",
+				"pt": "Colado no top cinco"
+			},
+			"Bruna": {
+				"en": "Zero exact scores",
+				"es": "Sin aciertos exactos",
+				"pt": "Sem placar exato"
 			},
 			"Eudaldo": {
-				"en": "Needs a push",
-				"es": "Necesita acelerar",
-				"pt": "Precisa acelerar"
+				"en": "Midfield contender",
+				"es": "Candidato del medio",
+				"pt": "Candidato do meio"
+			},
+			"Marcio": {
+				"en": "Fading away",
+				"es": "Perdiendo terreno",
+				"pt": "Perdendo terreno"
 			},
 			"Adriano": {
-				"en": "Stuck in a tie",
-				"es": "Atascado en empate",
-				"pt": "Preso no empate"
+				"en": "Stuck in ninth",
+				"es": "Atascado en noveno",
+				"pt": "Preso no nono"
 			},
 			"Deborah": {
-				"en": "Stuck in a tie",
-				"es": "Atascada en empate",
-				"pt": "Presa no empate"
+				"en": "Stuck in ninth",
+				"es": "Atascada en noveno",
+				"pt": "Presa no nono"
 			},
 			"Rafaella": {
-				"en": "Stuck in a tie",
-				"es": "Atascada en empate",
-				"pt": "Presa no empate"
+				"en": "Stuck in ninth",
+				"es": "Atascada en noveno",
+				"pt": "Presa no nono"
 			},
 			"Renan": {
-				"en": "Stuck in a tie",
-				"es": "Atascado en empate",
-				"pt": "Preso no empate"
+				"en": "Stuck in ninth",
+				"es": "Atascado en noveno",
+				"pt": "Preso no nono"
 			},
 			"Gabriel": {
-				"en": "Lantern rouge",
-				"es": "Farolillo rojo",
-				"pt": "Lanterna do bolão"
+				"en": "Trailing the pack",
+				"es": "Al fondo del grupo",
+				"pt": "Na lanterna"
 			}
 		},
-		"titlesSignature": "[[\"Nilton\",145],[\"Rachael\",139],[\"Caio\",135],[\"Tiago\",131],[\"Bruna\",103],[\"Marcio\",98],[\"Joe\",88],[\"Eudaldo\",78],[\"Adriano\",65],[\"Deborah\",65],[\"Rafaella\",65],[\"Renan\",65],[\"Gabriel\",50]]",
+		"titlesSignature": "[[\"Rachael\",139],[\"Nilton\",120],[\"Caio\",110],[\"Tiago\",106],[\"Joe\",103],[\"Bruna\",78],[\"Eudaldo\",78],[\"Marcio\",73],[\"Adriano\",65],[\"Deborah\",65],[\"Rafaella\",65],[\"Renan\",65],[\"Gabriel\",50]]",
 		"recapSignature": "[[\"Rachael\",139],[\"Nilton\",120],[\"Caio\",110],[\"Tiago\",106],[\"Joe\",88],[\"Bruna\",78],[\"Eudaldo\",78],[\"Marcio\",73],[\"Adriano\",65],[\"Deborah\",65],[\"Rafaella\",65],[\"Renan\",65],[\"Gabriel\",50]]"
 	},
-	"generatedAt": "2026-06-16T01:40:26.328Z"
+	"generatedAt": "2026-06-16T02:25:23.867Z"
 }
