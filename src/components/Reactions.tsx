@@ -10,6 +10,15 @@ export const REACTIONS = [
 	{emoji: '😂', label: 'Laugh'},
 	{emoji: '😢', label: 'Sad'},
 	{emoji: '🤡', label: 'Clown'},
+	{emoji: '👀', label: 'Eyes'},
+	{emoji: '🚀', label: 'Rocket'},
+	{emoji: '🏆', label: 'Trophy'},
+	{emoji: '🔦', label: 'Flashlight'},
+	{emoji: '🐢', label: 'Turtle'},
+	{emoji: '💀', label: 'Skull'},
+	{emoji: '🥶', label: 'Ice cold'},
+	{emoji: '🐌', label: 'Snail'},
+	{emoji: '🤏', label: 'Pinch'},
 ];
 
 export function Reactions({
@@ -81,7 +90,7 @@ export function Reactions({
 				</button>
 
 				{open && (
-					<div className="absolute left-full top-1/2 z-20 ml-1 flex -translate-y-1/2 gap-0.5 rounded-full border border-white/10 bg-slate-800 p-1 shadow-xl">
+					<div className="absolute left-full top-1/2 z-20 ml-1 flex w-52 -translate-y-1/2 flex-wrap gap-0.5 rounded-2xl border border-white/10 bg-slate-800 p-1.5 shadow-xl">
 						{REACTIONS.map((reaction) => (
 							<button
 								aria-label={reaction.label}
