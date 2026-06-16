@@ -118,7 +118,7 @@ function MatchCardArticle({
 }) {
 	return (
 		<article
-			className={`rounded-2xl border bg-white/5 p-4 ${
+			className={`group flex flex-col rounded-2xl border bg-white/5 p-4 ${
 				card.status === 'live'
 					? 'border-emerald-400/40 lg:col-span-2'
 					: 'border-white/10'
@@ -229,7 +229,7 @@ function MatchCardArticle({
 				</div>
 			)}
 
-			<div className="mt-3 border-t border-white/5 pt-2.5">
+			<div className="mt-auto border-t border-white/5 pt-2.5">
 				<Reactions
 					counts={matchReactions.counts[String(card.matchNo)] ?? {}}
 					mine={matchReactions.mine[String(card.matchNo)] ?? []}

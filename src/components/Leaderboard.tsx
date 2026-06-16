@@ -58,7 +58,7 @@ export function Leaderboard({
 					<tbody>
 						{rows.map((row) => (
 							<tr
-								className="cursor-pointer border-b border-white/5 transition-colors last:border-0 hover:bg-white/10"
+								className="group cursor-pointer border-b border-white/5 transition-colors last:border-0 hover:bg-white/10"
 								key={row.name}
 								onClick={() => onSelect(row.name)}
 							>

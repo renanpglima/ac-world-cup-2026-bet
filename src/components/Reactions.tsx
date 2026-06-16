@@ -139,7 +139,11 @@ export function Reactions({
 
 			<button
 				aria-label="Add reaction"
-				className="flex h-6 w-6 items-center justify-center rounded-full bg-white/5 text-sm text-slate-400 transition-colors hover:bg-white/10 hover:text-slate-200"
+				className={`flex h-6 w-6 items-center justify-center rounded-full bg-white/5 text-sm text-slate-400 transition hover:bg-white/10 hover:text-slate-200 ${
+					open
+						? 'opacity-100'
+						: 'opacity-100 sm:opacity-0 sm:group-hover:opacity-100'
+				}`}
 				onClick={togglePicker}
 				ref={buttonRef}
 			>
