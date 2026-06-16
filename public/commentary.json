@@ -94,39 +94,34 @@
 		},
 		"titles": {
 			"Rachael": {
-				"en": "Holding the top",
-				"es": "Líder firme",
-				"pt": "Segurando o topo"
+				"en": "Untouchable leader",
+				"es": "Líder intratable",
+				"pt": "Líder intocável"
 			},
 			"Caio": {
-				"en": "Closing the gap",
-				"es": "Recortando distancia",
-				"pt": "Fechando a diferença"
-			},
-			"Tiago": {
-				"en": "Slipping slightly",
-				"es": "Cediendo terreno",
-				"pt": "Escorregando um pouco"
+				"en": "Charging hard",
+				"es": "Imparable",
+				"pt": "Vindo com tudo"
 			},
 			"Nilton": {
-				"en": "Sharp but falling",
-				"es": "Preciso pero bajando",
-				"pt": "Preciso mas caindo"
+				"en": "Steady contender",
+				"es": "Firme en el podio",
+				"pt": "Sólido no pódio"
 			},
-			"Rafaella": {
-				"en": "Surging hard",
-				"es": "Subiendo fuerte",
-				"pt": "Disparando forte"
+			"Tiago": {
+				"en": "Slipping away",
+				"es": "Perdiendo terreno",
+				"pt": "Perdendo espaço"
 			},
 			"Marcio": {
-				"en": "Climbing steadily",
-				"es": "Subiendo con paso firme",
-				"pt": "Subindo firme"
+				"en": "Surging up",
+				"es": "Escalando posiciones",
+				"pt": "Subindo forte"
 			},
 			"Bruna": {
-				"en": "Losing ground",
-				"es": "Perdiendo terreno",
-				"pt": "Perdendo terreno"
+				"en": "Holding on",
+				"es": "Aguantando el tipo",
+				"pt": "Segurando a posição"
 			},
 			"Joe": {
 				"en": "Treading water",
@@ -134,33 +129,38 @@
 				"pt": "Patinando no lugar"
 			},
 			"Renan": {
-				"en": "Heating up",
-				"es": "Calentando motores",
-				"pt": "Esquentando o motor"
+				"en": "Big round, midfield",
+				"es": "Gran jornada, zona media",
+				"pt": "Boa rodada, meio de tabela"
 			},
-			"Eudaldo": {
-				"en": "Fading back",
-				"es": "Retrocediendo",
-				"pt": "Regredindo"
+			"Rafaella": {
+				"en": "Rising fast",
+				"es": "Subiendo rápido",
+				"pt": "Subindo rápido"
 			},
 			"Adriano": {
-				"en": "Stuck in neutral",
-				"es": "Estancado",
-				"pt": "Travado no meio"
+				"en": "Falling behind",
+				"es": "Quedándose atrás",
+				"pt": "Ficando para trás"
 			},
 			"Deborah": {
-				"en": "Tied and stalled",
-				"es": "Empatada y parada",
-				"pt": "Empatada e parada"
+				"en": "Tied and sliding",
+				"es": "Empatado y cayendo",
+				"pt": "Empatada e caindo"
+			},
+			"Eudaldo": {
+				"en": "Staying the course",
+				"es": "Manteniéndose firme",
+				"pt": "Mantendo o rumo"
 			},
 			"Gabriel": {
-				"en": "Chasing the pack",
-				"es": "Persiguiendo al grupo",
-				"pt": "Correndo atrás"
+				"en": "Stuck at the bottom",
+				"es": "Anclado abajo",
+				"pt": "Preso na lanterna"
 			}
 		},
-		"titlesSignature": "[[\"Rachael\",164],[\"Caio\",157],[\"Tiago\",153],[\"Nilton\",150],[\"Rafaella\",115],[\"Marcio\",113],[\"Bruna\",110],[\"Joe\",108],[\"Renan\",100],[\"Eudaldo\",88],[\"Adriano\",85],[\"Deborah\",85],[\"Gabriel\",70]]",
+		"titlesSignature": "[[\"Rachael\",172],[\"Caio\",157],[\"Nilton\",150],[\"Tiago\",143],[\"Marcio\",121],[\"Bruna\",118],[\"Joe\",116],[\"Renan\",108],[\"Rafaella\",105],[\"Adriano\",93],[\"Deborah\",93],[\"Eudaldo\",88],[\"Gabriel\",78]]",
 		"recapSignature": "[[\"Rachael\",154],[\"Nilton\",150],[\"Caio\",147],[\"Tiago\",128],[\"Marcio\",103],[\"Bruna\",100],[\"Joe\",98],[\"Rafaella\",90],[\"Renan\",90],[\"Eudaldo\",88],[\"Adriano\",75],[\"Deborah\",75],[\"Gabriel\",60]]"
 	},
-	"generatedAt": "2026-06-16T22:33:50.168Z"
+	"generatedAt": "2026-06-16T22:46:42.945Z"
 }
