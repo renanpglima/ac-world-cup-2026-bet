@@ -84,73 +84,73 @@
 		},
 		"titles": {
 			"Rachael": {
-				"en": "Untouchable leader",
-				"es": "Líder inalcanzable",
-				"pt": "Líder intocável"
+				"en": "Holding the crown",
+				"es": "Reina del marcador",
+				"pt": "Segurando a coroa"
 			},
 			"Nilton": {
-				"en": "Surging fast",
-				"es": "Escalando veloz",
-				"pt": "Subindo rápido"
+				"en": "Hot on her heels",
+				"es": "Pisándole los talones",
+				"pt": "Colado na líder"
 			},
 			"Caio": {
-				"en": "Slipping back",
-				"es": "Perdiendo terreno",
-				"pt": "Perdendo espaço"
+				"en": "Chasing the top",
+				"es": "A por el podio",
+				"pt": "De olho no topo"
 			},
 			"Tiago": {
-				"en": "Holding fourth",
-				"es": "Firme en cuarto",
-				"pt": "Segurando o quarto"
-			},
-			"Joe": {
-				"en": "Stuck in fifth",
-				"es": "Atascado en quinto",
-				"pt": "Parado no quinto"
+				"en": "Lurking in fourth",
+				"es": "Al acecho en cuarto",
+				"pt": "Rondando o top 3"
 			},
 			"Bruna": {
-				"en": "No exact hits",
-				"es": "Sin aciertos exactos",
-				"pt": "Sem acertos exatos"
+				"en": "Fading fast",
+				"es": "Perdiendo terreno",
+				"pt": "Caindo no esquecimento"
 			},
-			"Eudaldo": {
-				"en": "Tied and waiting",
-				"es": "Empatado, esperando",
-				"pt": "Empatado e aguardando"
-			},
-			"Marcio": {
-				"en": "Barely hanging on",
-				"es": "Aguantando a duras penas",
+			"Joe": {
+				"en": "Hanging in there",
+				"es": "Resistiendo en sexto",
 				"pt": "Se segurando"
 			},
+			"Marcio": {
+				"en": "Just behind the pack",
+				"es": "Justo fuera del grupo",
+				"pt": "Fora do grupo"
+			},
+			"Eudaldo": {
+				"en": "Slipping away",
+				"es": "Alejándose del grupo",
+				"pt": "Se distanciando"
+			},
 			"Adriano": {
-				"en": "Lost in the pack",
-				"es": "Perdido en el grupo",
-				"pt": "Perdido no grupo"
+				"en": "Stuck in the pack",
+				"es": "Atascado en el pelotón",
+				"pt": "Preso no pelotão"
 			},
 			"Deborah": {
-				"en": "Needs a miracle",
-				"es": "Necesita un milagro",
-				"pt": "Precisa de um milagre"
+				"en": "Tied for ninth",
+				"es": "Empatada en novena",
+				"pt": "Empatada em nono"
 			},
 			"Rafaella": {
-				"en": "Fading quietly",
-				"es": "Desvaneciéndose",
-				"pt": "Sumindo quietinha"
+				"en": "Fighting for ground",
+				"es": "Peleando su lugar",
+				"pt": "Brigando por espaço"
 			},
 			"Renan": {
-				"en": "Stuck in ninth",
-				"es": "Atascado en noveno",
-				"pt": "Parado no nono"
+				"en": "Deadlocked mid-table",
+				"es": "Estancado a mitad",
+				"pt": "Travado no meio"
 			},
 			"Gabriel": {
-				"en": "Long shot",
-				"es": "Última esperanza",
-				"pt": "Esperança remota"
+				"en": "Dead last",
+				"es": "Farolillo rojo",
+				"pt": "Lanterna da turma"
 			}
 		},
-		"titlesSignature": "[[\"Rachael\",139],[\"Nilton\",120],[\"Caio\",110],[\"Tiago\",106],[\"Joe\",88],[\"Bruna\",78],[\"Eudaldo\",78],[\"Marcio\",73],[\"Adriano\",65],[\"Deborah\",65],[\"Rafaella\",65],[\"Renan\",65],[\"Gabriel\",50]]",
+		"titlesSignature": "[[\"Rachael\",139],[\"Nilton\",132],[\"Caio\",122],[\"Tiago\",118],[\"Bruna\",90],[\"Joe\",88],[\"Marcio\",85],[\"Eudaldo\",78],[\"Adriano\",65],[\"Deborah\",65],[\"Rafaella\",65],[\"Renan\",65],[\"Gabriel\",50]]",
 		"recapSignature": "[[\"Rachael\",139],[\"Nilton\",120],[\"Caio\",110],[\"Tiago\",106],[\"Joe\",88],[\"Bruna\",78],[\"Eudaldo\",78],[\"Marcio\",73],[\"Adriano\",65],[\"Deborah\",65],[\"Rafaella\",65],[\"Renan\",65],[\"Gabriel\",50]]"
 	},
-	"generatedAt": "2026-06-16T00:10:28.246Z"
+	"generatedAt": "2026-06-16T01:05:22.353Z"
 }
