@@ -143,6 +143,23 @@ describe('buildLeaderboard', () => {
 
 		expect(rows[0].exactCount).toBe(1);
 	});
+
+	it('exposes provisional live points alongside the total', () => {
+		const liveGame = makeGame({homeScore: 2, timeElapsed: '70'});
+
+		const rows = buildLeaderboard([makeParticipant('Ana', 2, 0)], [liveGame]);
+
+		expect(rows[0].total).toBe(25);
+		expect(rows[0].livePoints).toBe(25);
+	});
+
+	it('reports zero live points when nothing is live', () => {
+		const rows = buildLeaderboard([makeParticipant('Ana', 2, 1)], [
+			FINISHED_2_1,
+		]);
+
+		expect(rows[0].livePoints).toBe(0);
+	});
 });
 
 describe('buildLeaderboardWithMovement', () => {

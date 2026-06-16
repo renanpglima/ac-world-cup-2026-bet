@@ -104,8 +104,17 @@ export function Leaderboard({
 								{row.exactCount}
 							</td>
 
-							<td className="px-3 py-3 text-right font-display text-lg font-bold text-amber-400 sm:px-4">
-								{row.total}
+							<td className="whitespace-nowrap px-3 py-3 text-right font-display text-lg font-bold text-amber-400 sm:px-4">
+								{row.livePoints > 0 ? (
+									<>
+										{row.total - row.livePoints}{' '}
+										<span className="animate-pulse text-emerald-400">
+											+{row.livePoints}
+										</span>
+									</>
+								) : (
+									row.total
+								)}
 							</td>
 						</tr>
 					))}

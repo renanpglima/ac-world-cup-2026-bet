@@ -62,6 +62,7 @@ export function scoreParticipant(
 
 export interface LeaderboardRow {
 	exactCount: number;
+	livePoints: number;
 	movement?: number;
 	name: string;
 	rank: number;
@@ -91,6 +92,9 @@ export function buildLeaderboard(
 
 		return {
 			exactCount: score.exactCount,
+			livePoints: score.scored
+				.filter((item) => item.status === 'live')
+				.reduce((sum, item) => sum + (item.points ?? 0), 0),
 			name: score.participant.name,
 			rank,
 			total: score.total,
