@@ -1,5 +1,5 @@
 {
-	"fetchedAt": "2026-06-16T19:15:26.817Z",
+	"fetchedAt": "2026-06-16T19:20:13.389Z",
 	"games": [
 		{
 			"awayScore": 0,
@@ -197,7 +197,7 @@
 			"awayScore": 0,
 			"awayTeam": "Senegal",
 			"finished": false,
-			"timeElapsed": "12",
+			"timeElapsed": "17",
 			"group": "Group I",
 			"homeScore": 0,
 			"homeTeam": "France",
