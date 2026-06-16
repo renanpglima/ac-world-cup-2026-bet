@@ -1,5 +1,5 @@
 {
-	"fetchedAt": "2026-06-16T00:02:06.926Z",
+	"fetchedAt": "2026-06-16T00:10:19.121Z",
 	"games": [
 		{
 			"awayScore": 0,
@@ -172,8 +172,8 @@
 		{
 			"awayScore": 1,
 			"awayTeam": "Uruguay",
-			"finished": false,
-			"timeElapsed": "90",
+			"finished": true,
+			"timeElapsed": "finished",
 			"group": "Group H",
 			"homeScore": 1,
 			"homeTeam": "Saudi Arabia",
