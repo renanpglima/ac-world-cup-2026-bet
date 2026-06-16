@@ -1,10 +1,11 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 
 import {HeadToHeadView} from './components/HeadToHeadView';
 import {Header} from './components/Header';
 import {Leaderboard} from './components/Leaderboard';
 import {MatchesView} from './components/MatchesView';
 import {ParticipantView} from './components/ParticipantView';
+import {ReactionBurst} from './components/ReactionBurst';
 import {RulesView} from './components/RulesView';
 import {StatsView} from './components/StatsView';
 import {fetchCommentary} from './lib/commentary';
@@ -16,11 +17,26 @@ import {buildMatchCards} from './lib/matches';
 import {loadParticipants} from './lib/predictions';
 import {buildLeaderboardWithMovement} from './lib/ranking';
 import {buildPointsTimeline} from './lib/timeline';
+import {useReactions} from './lib/useReactions';
 import {buildWhatIf} from './lib/whatif';
 import type {GamesFile} from './lib/types';
 
 const REFRESH_INTERVAL_MS =
 	Number(import.meta.env.VITE_REFRESH_INTERVAL_MS) || 3_600_000;
+
+
+const LOADING_MESSAGES = [
+	'Mowing the pitch…',
+	'Inflating the ball…',
+	'Sorting the leaderboard…',
+	'Studying the rules…',
+	'Lining up the predictions…',
+	'Waking up the commentator…',
+	'Counting up the points…',
+	'Polishing the trophy…',
+	'Reviewing the VAR…',
+	'Tallying the bets…',
+];
 
 function TabButton({
 	active,
@@ -54,12 +70,57 @@ export default function App() {
 	const [commentary, setCommentary] = useState<Record<number, string>>({});
 	const [fetchFailed, setFetchFailed] = useState(false);
 	const [gamesFile, setGamesFile] = useState<GamesFile | null>(null);
+	const [loading, setLoading] = useState(true);
+	const [loadingMessage, setLoadingMessage] = useState(() =>
+		Math.floor(Math.random() * LOADING_MESSAGES.length)
+	);
 	const [tab, setTab] = useState('leaderboard');
+
+	const {counts, mine, toggle} = useReactions();
+	const [bursts, setBursts] = useState<Array<{emoji: string; id: number}>>(
+		[]
+	);
+	const burstId = useRef(0);
 
 	const selectBettor = (name: string) => {
 		setBettor(name);
 		setTab('bets');
 	};
+
+	const react = (name: string, emoji: string) => {
+		const adding = !(mine[name] ?? []).includes(emoji);
+
+		if (adding) {
+			const id = (burstId.current += 1);
+
+			setBursts((current) => [...current, {emoji, id}]);
+			setTimeout(
+				() =>
+					setBursts((current) =>
+						current.filter((burst) => burst.id !== id)
+					),
+				2000
+			);
+		}
+
+		toggle(name, emoji);
+	};
+
+	useEffect(() => {
+		if (!loading) {
+			return undefined;
+		}
+
+		const id = setInterval(
+			() =>
+				setLoadingMessage(
+					(index) => (index + 1) % LOADING_MESSAGES.length
+				),
+			1300
+		);
+
+		return () => clearInterval(id);
+	}, [loading]);
 
 	useEffect(() => {
 		let active = true;
@@ -109,6 +170,9 @@ export default function App() {
 						])
 					)
 				);
+			}
+			if (active) {
+				setLoading(false);
 			}
 		};
 
@@ -190,9 +254,25 @@ export default function App() {
 				) ?? participants[0])
 			: undefined;
 
+	if (loading) {
+		return (
+			<div className="flex min-h-screen items-center justify-center bg-slate-950 font-sans">
+				<div className="flex flex-col items-center gap-4">
+					<span className="animate-bounce text-5xl">⚽</span>
+
+					<p className="text-sm font-medium text-slate-400">
+						{LOADING_MESSAGES[loadingMessage]}
+					</p>
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div className="min-h-screen bg-slate-950 font-sans">
 			<Header liveGames={liveGames} statusText={statusText} />
+
+			<ReactionBurst bursts={bursts} />
 
 			<main className="mx-auto max-w-5xl px-4 py-6">
 				<nav className="mb-6 flex flex-col gap-1.5 sm:flex-row sm:flex-wrap">
@@ -289,7 +369,10 @@ export default function App() {
 				) : (
 					<Leaderboard
 						live={liveGames.length > 0}
+						myReactions={mine}
+						onReact={react}
 						onSelect={selectBettor}
+						reactions={counts}
 						recap={liveGames.length === 0 ? boardRecap : undefined}
 						rows={rows}
 						titles={boardTitles}
