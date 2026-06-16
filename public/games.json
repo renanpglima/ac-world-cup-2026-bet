@@ -1,5 +1,5 @@
 {
-	"fetchedAt": "2026-06-16T01:05:13.744Z",
+	"fetchedAt": "2026-06-16T01:10:19.500Z",
 	"games": [
 		{
 			"awayScore": 0,
@@ -185,7 +185,7 @@
 			"awayScore": 0,
 			"awayTeam": "New Zealand",
 			"finished": false,
-			"timeElapsed": "1",
+			"timeElapsed": "6",
 			"group": "Group G",
 			"homeScore": 0,
 			"homeTeam": "IR Iran",
