@@ -3,7 +3,6 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [master]
-  workflow_call:
   workflow_dispatch:
 
 permissions:
@@ -13,9 +12,7 @@ permissions:
 
 jobs:
   deploy:
-    # Job-level (not workflow-level) concurrency: top-level concurrency is
-    # ignored when this workflow runs via workflow_call (from
-    # update-scores.yml), and the job level covers every trigger path.
+    # Job-level concurrency so it applies on every trigger path.
     concurrency:
       cancel-in-progress: true
       group: pages
