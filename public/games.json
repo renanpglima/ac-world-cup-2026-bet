@@ -1,5 +1,5 @@
 {
-	"fetchedAt": "2026-06-17T04:10:24.164Z",
+	"fetchedAt": "2026-06-17T04:15:17.876Z",
 	"games": [
 		{
 			"awayScore": 0,
@@ -233,7 +233,7 @@
 			"awayScore": 0,
 			"awayTeam": "Jordan",
 			"finished": false,
-			"timeElapsed": "7",
+			"timeElapsed": "12",
 			"group": "Group J",
 			"homeScore": 0,
 			"homeTeam": "Austria",
