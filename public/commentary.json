@@ -98,74 +98,74 @@
 			"pt": "Rachael lidera com folga com 164 pontos em 18 rodadas, mas Caio cola nela com 157 apos subir uma posicao nesta rodada, enquanto Nilton escorrega para o terceiro lugar com 150 apos uma rodada em branco. Tiago e Marcio pressionam do quarto e quinto lugares, mas a diferenca ja e consideravel. La embaixo, Gabriel da sinais de vida com 10 pontos na rodada, mas seus 70 pontos no total exigem uma recuperacao heroica para chegar na metade de cima da tabela."
 		},
 		"titles": {
+			"Nilton": {
+				"en": "Hanging on top",
+				"es": "Aferrado al liderato",
+				"pt": "Segurando a liderança"
+			},
 			"Rachael": {
-				"en": "Lone leader",
-				"es": "Líder en solitario",
-				"pt": "Líder isolada"
+				"en": "Breathing down neck",
+				"es": "Pisándole los talones",
+				"pt": "No seu pescoço"
 			},
 			"Caio": {
-				"en": "Exact score machine",
-				"es": "Máquina de exactos",
-				"pt": "Máquina de exatos"
-			},
-			"Nilton": {
-				"en": "Slipping at third",
-				"es": "Perdiendo terreno",
-				"pt": "Escorregando no pódio"
+				"en": "Closing the gap",
+				"es": "Recortando distancias",
+				"pt": "Chegando por trás"
 			},
 			"Tiago": {
-				"en": "Chasing the top",
-				"es": "Persiguiendo el top",
-				"pt": "Na caça do topo"
-			},
-			"Renan": {
-				"en": "Surging up fast",
-				"es": "Subiendo fuerte",
-				"pt": "Subindo rápido"
-			},
-			"Marcio": {
-				"en": "Staying in touch",
-				"es": "Sin soltar el tren",
-				"pt": "Se mantendo perto"
+				"en": "Chasing the podium",
+				"es": "A por el podio",
+				"pt": "De olho no pódio"
 			},
 			"Bruna": {
-				"en": "Zero exacts, still scoring",
-				"es": "Sin exactos, suma igual",
-				"pt": "Sem exatos, somando"
+				"en": "Fading midpack",
+				"es": "Perdida en el grupo",
+				"pt": "Sumindo no pelotão"
 			},
 			"Joe": {
-				"en": "Steady in eighth",
-				"es": "Firme en octavo",
-				"pt": "Firme em oitavo"
-			},
-			"Adriano": {
-				"en": "Climbing the ranks",
-				"es": "Escalando posiciones",
-				"pt": "Subindo no ranking"
+				"en": "Steady climber",
+				"es": "Escalando con calma",
+				"pt": "Subindo firme"
 			},
 			"Rafaella": {
-				"en": "Climbing the ranks",
-				"es": "Escalando posiciones",
-				"pt": "Subindo no ranking"
+				"en": "Keeping pace",
+				"es": "Mantiene el ritmo",
+				"pt": "Mantendo o ritmo"
 			},
-			"Eudaldo": {
-				"en": "Dropped two spots",
-				"es": "Bajó dos puestos",
-				"pt": "Caiu duas posições"
+			"Marcio": {
+				"en": "Lurking behind",
+				"es": "Acechando desde atrás",
+				"pt": "Espreitando por trás"
 			},
 			"Deborah": {
-				"en": "Holding on tight",
-				"es": "Aguantando el ritmo",
-				"pt": "Se segurando firme"
+				"en": "Tied and hungry",
+				"es": "Empatadas y con hambre",
+				"pt": "Empatada e motivada"
+			},
+			"Renan": {
+				"en": "Tied and hungry",
+				"es": "Empatado y con hambre",
+				"pt": "Empatado e motivado"
+			},
+			"Eudaldo": {
+				"en": "Left behind",
+				"es": "Quedándose rezagado",
+				"pt": "Ficando para trás"
+			},
+			"Adriano": {
+				"en": "Still in the fight",
+				"es": "Todavía en la batalla",
+				"pt": "Ainda na luta"
 			},
 			"Gabriel": {
-				"en": "Fighting from below",
-				"es": "Peleando desde abajo",
-				"pt": "Lutando lá de baixo"
+				"en": "Still in the fight",
+				"es": "Todavía en la batalla",
+				"pt": "Ainda na luta"
 			}
 		},
-		"titlesSignature": "[[\"Rachael\",189],[\"Caio\",175],[\"Nilton\",160],[\"Tiago\",148],[\"Renan\",125],[\"Marcio\",123],[\"Bruna\",120],[\"Joe\",118],[\"Adriano\",110],[\"Rafaella\",110],[\"Eudaldo\",106],[\"Deborah\",95],[\"Gabriel\",80]]",
+		"titlesSignature": "[[\"Nilton\",175],[\"Rachael\",174],[\"Caio\",167],[\"Tiago\",163],[\"Bruna\",135],[\"Joe\",133],[\"Rafaella\",125],[\"Marcio\",123],[\"Deborah\",110],[\"Renan\",110],[\"Eudaldo\",98],[\"Adriano\",95],[\"Gabriel\",95]]",
 		"recapSignature": "[[\"Rachael\",164],[\"Caio\",157],[\"Nilton\",150],[\"Tiago\",138],[\"Marcio\",113],[\"Bruna\",110],[\"Joe\",108],[\"Rafaella\",100],[\"Renan\",100],[\"Eudaldo\",88],[\"Adriano\",85],[\"Deborah\",85],[\"Gabriel\",70]]"
 	},
-	"generatedAt": "2026-06-17T02:25:28.773Z"
+	"generatedAt": "2026-06-17T02:40:25.317Z"
 }
