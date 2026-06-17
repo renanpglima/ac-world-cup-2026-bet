@@ -9,6 +9,7 @@ import {ParticipantView} from './components/ParticipantView';
 import {ReactionBurst} from './components/ReactionBurst';
 import {RulesView} from './components/RulesView';
 import {StatsView} from './components/StatsView';
+import {trackEvent} from './lib/analytics';
 import {buildEvolution} from './lib/evolution';
 import {getMatchStatus} from './lib/games';
 import {detectLocale, localize, stripEmoji} from './lib/locale';
@@ -122,6 +123,13 @@ export default function App() {
 	const selectBettor = (name: string) => {
 		setBettor(name);
 		setTab('bets');
+	};
+
+	// Track tab navigation in GA4 — one named event per tab so each shows its
+	// own click count in the Events report (e.g. tab_leaderboard, tab_matches).
+	const selectTab = (id: string) => {
+		trackEvent(`tab_${id}`);
+		setTab(id);
 	};
 
 	const fireBurst = (emoji: string) => {
@@ -301,35 +309,41 @@ export default function App() {
 			<ReactionBurst bursts={bursts} />
 
 			{showGoal && (
-				<GoalOverlay key={goalKey} onDismiss={() => setShowGoal(false)} />
+				<GoalOverlay
+					key={goalKey}
+					onDismiss={() => {
+						trackEvent('goal_celebration_click');
+						setShowGoal(false);
+					}}
+				/>
 			)}
 
 			<main className="mx-auto max-w-5xl px-4 py-6">
 				<nav className="mb-6 flex flex-col gap-1.5 sm:flex-row sm:flex-wrap">
 					<TabButton
 						active={tab === 'leaderboard'}
-						onClick={() => setTab('leaderboard')}
+						onClick={() => selectTab('leaderboard')}
 					>
 						🏆 Leaderboard
 					</TabButton>
 
 					<TabButton
 						active={tab === 'matches'}
-						onClick={() => setTab('matches')}
+						onClick={() => selectTab('matches')}
 					>
 						⚽ Matches
 					</TabButton>
 
 					<TabButton
 						active={tab === 'bets'}
-						onClick={() => setTab('bets')}
+						onClick={() => selectTab('bets')}
 					>
 						🎯 Bets
 					</TabButton>
 
 					<TabButton
 						active={tab === 'h2h'}
-						onClick={() => setTab('h2h')}
+						onClick={() => selectTab('h2h')}
 					>
 						⚔️ Head to Head
 						<span className="ml-1.5 inline-block rounded-full bg-amber-400 px-1.5 py-0.5 align-middle text-[9px] font-bold uppercase tracking-wide text-amber-950">
@@ -339,14 +353,14 @@ export default function App() {
 
 					<TabButton
 						active={tab === 'stats'}
-						onClick={() => setTab('stats')}
+						onClick={() => selectTab('stats')}
 					>
 						📊 Stats
 					</TabButton>
 
 					<TabButton
 						active={tab === 'rules'}
-						onClick={() => setTab('rules')}
+						onClick={() => selectTab('rules')}
 					>
 						📜 Rules
 					</TabButton>
