@@ -1,5 +1,6 @@
 import {useEffect, useMemo, useRef, useState} from 'react';
 
+import {GoalOverlay} from './components/GoalOverlay';
 import {HeadToHeadView} from './components/HeadToHeadView';
 import {Header} from './components/Header';
 import {Leaderboard} from './components/Leaderboard';
@@ -113,6 +114,10 @@ export default function App() {
 	);
 	const burstId = useRef(0);
 
+	const [goalKey, setGoalKey] = useState(0);
+	const [showGoal, setShowGoal] = useState(false);
+	const prevScores = useRef<Map<number, string> | null>(null);
+
 	const selectBettor = (name: string) => {
 		setBettor(name);
 		setTab('bets');
@@ -164,6 +169,42 @@ export default function App() {
 
 		return () => clearInterval(id);
 	}, [loading]);
+
+	// Fire the goal celebration when a push raises any match's score. The first
+	// snapshot only seeds the baseline — nothing to compare against yet.
+	useEffect(() => {
+		if (!gamesFile) {
+			return;
+		}
+
+		const current = new Map(
+			gamesFile.games.map((game) => [
+				game.id,
+				`${game.homeScore}-${game.awayScore}`,
+			])
+		);
+
+		if (prevScores.current) {
+			const goal = gamesFile.games.some((game) => {
+				const previous = prevScores.current?.get(game.id);
+
+				if (!previous) {
+					return false;
+				}
+
+				const [home, away] = previous.split('-').map(Number);
+
+				return game.homeScore > home || game.awayScore > away;
+			});
+
+			if (goal) {
+				setGoalKey((key) => key + 1);
+				setShowGoal(true);
+			}
+		}
+
+		prevScores.current = current;
+	}, [gamesFile]);
 
 	const games = gamesFile?.games ?? [];
 
@@ -252,6 +293,10 @@ export default function App() {
 			<Header liveGames={liveGames} statusText={statusText} />
 
 			<ReactionBurst bursts={bursts} />
+
+			{showGoal && (
+				<GoalOverlay key={goalKey} onDismiss={() => setShowGoal(false)} />
+			)}
 
 			<main className="mx-auto max-w-5xl px-4 py-6">
 				<nav className="mb-6 flex flex-col gap-1.5 sm:flex-row sm:flex-wrap">
