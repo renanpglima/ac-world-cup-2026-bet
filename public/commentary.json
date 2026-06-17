@@ -103,74 +103,74 @@
 			"pt": "Nilton chega ao topo com uma rodada monstruosa de 25 pontos e abre apenas um pontinho de vantagem sobre Rachael numa briga pelo título que esta apertadissima. Caio e Tiago espreitam em terceiro e quarto, prontos para baguncar a festa se os lideres tropeçarem. Enquanto isso, Deborah e Gabriel sao as grandes surpresas positivas da rodada, subindo firme na tabela e deixando todo mundo de olho aberto."
 		},
 		"titles": {
-			"Caio": {
-				"en": "Alone at the top",
-				"es": "Solo en la cima",
-				"pt": "Sozinho no topo"
-			},
 			"Nilton": {
-				"en": "Storming the lead",
-				"es": "Asaltando el liderato",
-				"pt": "Avançando forte"
-			},
-			"Tiago": {
-				"en": "Tied, rising fast",
-				"es": "Empatado y subiendo",
-				"pt": "Empatado e voando"
+				"en": "King of the pool",
+				"es": "Rey del grupo",
+				"pt": "Rei da bolão"
 			},
 			"Rachael": {
-				"en": "Slipping from top",
-				"es": "Perdiendo terreno",
-				"pt": "Escorregando do topo"
+				"en": "Steady runner-up",
+				"es": "Sólida subcampeona",
+				"pt": "Vice consistente"
 			},
-			"Bruna": {
-				"en": "Climbing with fire",
-				"es": "Subiendo con fuerza",
-				"pt": "Subindo com garra"
+			"Caio": {
+				"en": "Chasing the top",
+				"es": "Persiguiendo el liderato",
+				"pt": "Na cola do líder"
 			},
-			"Marcio": {
-				"en": "Holding steady mid",
-				"es": "Firme en el medio",
-				"pt": "Segurando posição"
+			"Tiago": {
+				"en": "Closing the gap",
+				"es": "Recortando distancia",
+				"pt": "Chegando por dentro"
 			},
 			"Joe": {
-				"en": "Knocking on door",
-				"es": "Llamando a la puerta",
-				"pt": "Batendo na porta"
+				"en": "Mid-pack fighter",
+				"es": "Luchador del pelotón",
+				"pt": "Guerreiro do meio"
+			},
+			"Bruna": {
+				"en": "Holding strong",
+				"es": "Aguantando el tipo",
+				"pt": "Segurando firme"
 			},
 			"Rafaella": {
-				"en": "Consistent contender",
-				"es": "Contendiente constante",
-				"pt": "Consistente na briga"
+				"en": "Right on her heels",
+				"es": "Pisando los talones",
+				"pt": "Colada atrás"
+			},
+			"Marcio": {
+				"en": "Needs a boost",
+				"es": "Necesita un empujón",
+				"pt": "Precisa acelerar"
 			},
 			"Deborah": {
-				"en": "Surging from behind",
-				"es": "Remontando con fuerza",
-				"pt": "Avançando por trás"
+				"en": "Rising fast",
+				"es": "Subiendo fuerte",
+				"pt": "Subindo rápido"
 			},
 			"Renan": {
-				"en": "Treading water",
-				"es": "Sin avanzar",
-				"pt": "Patinando no lugar"
+				"en": "Tied, stagnant",
+				"es": "Empatado, estancado",
+				"pt": "Empatado, parado"
 			},
 			"Eudaldo": {
-				"en": "Losing ground fast",
-				"es": "Cediendo posiciones",
+				"en": "Slipping back",
+				"es": "Perdiendo posiciones",
 				"pt": "Perdendo terreno"
 			},
 			"Adriano": {
-				"en": "Stuck in neutral",
-				"es": "Atascado sin avanzar",
-				"pt": "Travado no lugar"
+				"en": "Fading out",
+				"es": "Desvaneciéndose",
+				"pt": "Sumindo no mapa"
 			},
 			"Gabriel": {
-				"en": "Late charge incoming",
-				"es": "Remontada en marcha",
-				"pt": "Chegando por trás"
+				"en": "Climbing quietly",
+				"es": "Subiendo en silencio",
+				"pt": "Subindo quietinho"
 			}
 		},
-		"titlesSignature": "[[\"Caio\",192],[\"Nilton\",175],[\"Tiago\",175],[\"Rachael\",174],[\"Bruna\",135],[\"Marcio\",135],[\"Joe\",133],[\"Rafaella\",125],[\"Deborah\",110],[\"Renan\",110],[\"Eudaldo\",98],[\"Adriano\",95],[\"Gabriel\",95]]",
+		"titlesSignature": "[[\"Nilton\",200],[\"Rachael\",184],[\"Caio\",167],[\"Tiago\",163],[\"Joe\",148],[\"Bruna\",145],[\"Rafaella\",140],[\"Marcio\",123],[\"Deborah\",120],[\"Renan\",120],[\"Eudaldo\",108],[\"Adriano\",105],[\"Gabriel\",105]]",
 		"recapSignature": "[[\"Nilton\",175],[\"Rachael\",174],[\"Caio\",167],[\"Tiago\",163],[\"Bruna\",135],[\"Joe\",133],[\"Rafaella\",125],[\"Marcio\",123],[\"Deborah\",110],[\"Renan\",110],[\"Eudaldo\",98],[\"Adriano\",95],[\"Gabriel\",95]]"
 	},
-	"generatedAt": "2026-06-17T04:05:29.232Z"
+	"generatedAt": "2026-06-17T04:25:36.457Z"
 }
