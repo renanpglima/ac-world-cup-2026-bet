@@ -212,6 +212,9 @@ export default function App() {
 			});
 
 			if (goal) {
+				// Impression: a celebration is being shown. Pair with
+				// goal_celebration_click for a click-through rate.
+				trackEvent('goal_celebration_shown');
 				setGoalKey((key) => key + 1);
 				setShowGoal(true);
 			}
