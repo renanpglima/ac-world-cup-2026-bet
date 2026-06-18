@@ -31,7 +31,6 @@ import {buildPointsTimeline} from './lib/timeline';
 import {useCommentary} from './lib/useCommentary';
 import {useGames} from './lib/useGames';
 import {useMatchReactions, useReactions} from './lib/useReactions';
-import {buildWhatIf} from './lib/whatif';
 
 const LOADING_MESSAGES = [
 	'Mowing the pitch…',
@@ -229,19 +228,6 @@ export default function App() {
 		[participants, games]
 	);
 
-	const whatIf = useMemo(
-		() =>
-			Object.fromEntries(
-				cards
-					.filter((card) => card.status === 'live')
-					.map((card) => [
-						card.matchNo,
-						buildWhatIf(participants, games, card.matchNo),
-					])
-			),
-		[cards, participants, games]
-	);
-
 	const liveGames = useMemo(
 		() =>
 			cards
@@ -346,9 +332,10 @@ export default function App() {
 							<MatchesView
 								cards={cards}
 								commentary={commentary}
+								games={games}
 								matchReactions={matchReactions}
 								onMatchReact={reactMatch}
-								whatIf={whatIf}
+								participants={participants}
 							/>
 						}
 						path="/matches"

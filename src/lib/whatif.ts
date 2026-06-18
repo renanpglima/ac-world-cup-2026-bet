@@ -21,11 +21,18 @@ export interface WhatIfScenario {
 	score: string;
 }
 
-export function buildWhatIf(
+export interface WhatIfContext {
+	r1: number;
+	r2: number;
+	team1: string;
+	team2: string;
+}
+
+function fixtureAndGame(
 	participants: Participant[],
 	games: Game[],
 	matchNo: number
-): WhatIfScenario[] {
+): {fixture: Prediction; game: Game} | null {
 	let fixture: Prediction | undefined;
 
 	for (const participant of participants) {
@@ -39,14 +46,57 @@ export function buildWhatIf(
 	}
 
 	if (!fixture) {
-		return [];
+		return null;
 	}
 
 	const game = findGameForPrediction(fixture, games);
 
-	if (!game || getMatchStatus(game) !== 'live') {
+	return game ? {fixture, game} : null;
+}
+
+// The live fixture's teams and current score (team1 orientation), or null when
+// the match isn't live or has no pool prediction.
+export function liveWhatIfContext(
+	participants: Participant[],
+	games: Game[],
+	matchNo: number
+): WhatIfContext | null {
+	const found = fixtureAndGame(participants, games, matchNo);
+
+	if (!found || getMatchStatus(found.game) !== 'live') {
+		return null;
+	}
+
+	const {r1, r2} = realScoreFor(found.fixture, found.game);
+
+	return {r1, r2, team1: found.fixture.team1, team2: found.fixture.team2};
+}
+
+// Who moves (and how) if the match ended `team1 r1 – r2 team2`, measured
+// against the current standings.
+export function simulateWhatIf(
+	participants: Participant[],
+	games: Game[],
+	matchNo: number,
+	r1: number,
+	r2: number
+): WhatIfMover[] {
+	const found = fixtureAndGame(participants, games, matchNo);
+
+	if (!found) {
 		return [];
 	}
+
+	const {fixture, game} = found;
+
+	const team1IsHome =
+		normalizeTeamName(fixture.team1) === normalizeTeamName(game.homeTeam);
+
+	const simGame = team1IsHome
+		? {...game, awayScore: r2, homeScore: r1}
+		: {...game, awayScore: r1, homeScore: r2};
+
+	const simGames = games.map((item) => (item === game ? simGame : item));
 
 	const baseline = new Map(
 		buildLeaderboard(participants, games).map((row) => [
@@ -55,47 +105,59 @@ export function buildWhatIf(
 		])
 	);
 
-	const team1IsHome =
-		normalizeTeamName(fixture.team1) === normalizeTeamName(game.homeTeam);
+	return buildLeaderboard(participants, simGames)
+		.map((row) => {
+			const before = baseline.get(row.name);
 
-	const bumps = [
+			return {
+				name: row.name,
+				pointsDelta: row.total - (before?.total ?? 0),
+				rankAfter: row.rank,
+				rankBefore: before?.rank ?? row.rank,
+				totalAfter: row.total,
+			};
+		})
+		.sort(
+			(a, b) =>
+				Math.abs(b.pointsDelta) - Math.abs(a.pointsDelta) ||
+				a.name.localeCompare(b.name)
+		);
+}
+
+// The two "one more goal" scenarios (kept for any non-interactive use/tests).
+export function buildWhatIf(
+	participants: Participant[],
+	games: Game[],
+	matchNo: number
+): WhatIfScenario[] {
+	const ctx = liveWhatIfContext(participants, games, matchNo);
+
+	if (!ctx) {
+		return [];
+	}
+
+	return [
 		{
-			label: fixture.team1,
-			simGame: team1IsHome
-				? {...game, homeScore: game.homeScore + 1}
-				: {...game, awayScore: game.awayScore + 1},
+			label: ctx.team1,
+			movers: simulateWhatIf(
+				participants,
+				games,
+				matchNo,
+				ctx.r1 + 1,
+				ctx.r2
+			),
+			score: `${ctx.r1 + 1}–${ctx.r2}`,
 		},
 		{
-			label: fixture.team2,
-			simGame: team1IsHome
-				? {...game, awayScore: game.awayScore + 1}
-				: {...game, homeScore: game.homeScore + 1},
+			label: ctx.team2,
+			movers: simulateWhatIf(
+				participants,
+				games,
+				matchNo,
+				ctx.r1,
+				ctx.r2 + 1
+			),
+			score: `${ctx.r1}–${ctx.r2 + 1}`,
 		},
 	];
-
-	return bumps.map(({label, simGame}) => {
-		const simGames = games.map((item) => (item === game ? simGame : item));
-
-		const {r1, r2} = realScoreFor(fixture, simGame);
-
-		const movers = buildLeaderboard(participants, simGames)
-			.map((row) => {
-				const before = baseline.get(row.name);
-
-				return {
-					name: row.name,
-					pointsDelta: row.total - (before?.total ?? 0),
-					rankAfter: row.rank,
-					rankBefore: before?.rank ?? row.rank,
-					totalAfter: row.total,
-				};
-			})
-			.sort(
-				(a, b) =>
-					Math.abs(b.pointsDelta) - Math.abs(a.pointsDelta) ||
-					a.name.localeCompare(b.name)
-			);
-
-		return {label, movers, score: `${r1}–${r2}`};
-	});
 }

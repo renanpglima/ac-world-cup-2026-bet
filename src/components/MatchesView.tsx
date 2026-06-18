@@ -2,8 +2,8 @@ import {useState} from 'react';
 
 import {kickoffDate} from '../lib/kickoff';
 import type {MatchCard} from '../lib/matches';
+import type {Game, Participant} from '../lib/types';
 import type {ReactionsApi} from '../lib/useReactions';
-import type {WhatIfScenario} from '../lib/whatif';
 import {Avatar} from './Avatar';
 import {Flag} from './Flag';
 import {Reactions} from './Reactions';
@@ -13,9 +13,10 @@ import {WhatIfPanel} from './WhatIfPanel';
 interface MatchesViewProps {
 	cards: MatchCard[];
 	commentary: Record<number, string>;
+	games: Game[];
 	matchReactions: ReactionsApi;
 	onMatchReact: (matchNo: number, emoji: string) => void;
-	whatIf: Record<number, WhatIfScenario[]>;
+	participants: Participant[];
 }
 
 interface DayGroup {
@@ -106,15 +107,17 @@ function predictionGroups(entries: MatchCard['entries']): PredictionGroup[] {
 function MatchCardArticle({
 	card,
 	commentary,
+	games,
 	matchReactions,
 	onMatchReact,
-	whatIf,
+	participants,
 }: {
 	card: MatchCard;
 	commentary: Record<number, string>;
+	games: Game[];
 	matchReactions: ReactionsApi;
 	onMatchReact: (matchNo: number, emoji: string) => void;
-	whatIf: Record<number, WhatIfScenario[]>;
+	participants: Participant[];
 }) {
 	return (
 		<article
@@ -214,7 +217,11 @@ function MatchCardArticle({
 			</table>
 
 			{card.status === 'live' && (
-				<WhatIfPanel scenarios={whatIf[card.matchNo] ?? []} />
+				<WhatIfPanel
+					games={games}
+					matchNo={card.matchNo}
+					participants={participants}
+				/>
 			)}
 
 			{commentary[card.matchNo] && (
@@ -243,17 +250,19 @@ function MatchCardArticle({
 function MatchSection({
 	commentary,
 	emptyLabel,
+	games,
 	groups,
 	matchReactions,
 	onMatchReact,
-	whatIf,
+	participants,
 }: {
 	commentary: Record<number, string>;
 	emptyLabel: string;
+	games: Game[];
 	groups: DayGroup[];
 	matchReactions: ReactionsApi;
 	onMatchReact: (matchNo: number, emoji: string) => void;
-	whatIf: Record<number, WhatIfScenario[]>;
+	participants: Participant[];
 }) {
 	if (groups.length === 0) {
 		return (
@@ -276,10 +285,11 @@ function MatchSection({
 							<MatchCardArticle
 								card={card}
 								commentary={commentary}
+								games={games}
 								key={card.matchNo}
 								matchReactions={matchReactions}
 								onMatchReact={onMatchReact}
-								whatIf={whatIf}
+								participants={participants}
 							/>
 						))}
 					</div>
@@ -336,9 +346,10 @@ function SubTab({
 export function MatchesView({
 	cards,
 	commentary,
+	games,
 	matchReactions,
 	onMatchReact,
-	whatIf,
+	participants,
 }: MatchesViewProps) {
 	const upcoming = cards.filter((card) => card.status !== 'finished');
 	const finished = cards.filter((card) => card.status === 'finished');
@@ -382,10 +393,11 @@ export function MatchesView({
 						? 'No finished matches yet — results show up here.'
 						: 'No upcoming matches.'
 				}
+				games={games}
 				groups={groups}
 				matchReactions={matchReactions}
 				onMatchReact={onMatchReact}
-				whatIf={whatIf}
+				participants={participants}
 			/>
 		</div>
 	);
