@@ -5,67 +5,59 @@ import {liveWhatIfContext, simulateWhatIf, type WhatIfMover} from '../lib/whatif
 import {Avatar} from './Avatar';
 import {Flag} from './Flag';
 
-function ordinal(rank: number): string {
-	const mod100 = rank % 100;
+const MEDALS = ['🥇', '🥈', '🥉'];
 
-	if (mod100 >= 11 && mod100 <= 13) {
-		return `${rank}th`;
-	}
-
-	const suffix =
-		rank % 10 === 1
-			? 'st'
-			: rank % 10 === 2
-				? 'nd'
-				: rank % 10 === 3
-					? 'rd'
-					: 'th';
-
-	return `${rank}${suffix}`;
-}
-
-function MoverRow({mover}: {mover: WhatIfMover}) {
-	const gained = mover.pointsDelta > 0;
+function StandingRow({mover}: {mover: WhatIfMover}) {
+	const currentTotal = mover.totalAfter - mover.pointsDelta;
 	const moved = mover.rankAfter !== mover.rankBefore;
 	const up = mover.rankAfter < mover.rankBefore;
-	const newLeader = mover.rankAfter === 1 && mover.rankBefore !== 1;
+	const gained = mover.pointsDelta > 0;
 
 	return (
-		<div className="flex items-center gap-2 px-2 py-1.5 odd:bg-white/5">
+		<div className="flex items-center gap-2 px-2 py-1.5 text-xs odd:bg-white/5">
+			<span className="flex w-8 shrink-0 items-center justify-center gap-0.5 font-display font-bold text-slate-300">
+				{mover.rankAfter <= 3 ? MEDALS[mover.rankAfter - 1] : mover.rankAfter}
+
+				{moved && (
+					<span
+						className={`text-[9px] ${
+							up ? 'text-emerald-400' : 'text-rose-400'
+						}`}
+					>
+						{up ? '▲' : '▼'}
+					</span>
+				)}
+			</span>
+
 			<Avatar
 				className="h-5 w-5 shrink-0 rounded-full text-[8px]"
 				name={mover.name}
 			/>
 
-			<span className="flex min-w-0 flex-1 items-center gap-1 truncate text-xs font-medium text-slate-200">
+			<span className="min-w-0 flex-1 truncate font-medium text-slate-200">
 				{mover.name}
+			</span>
 
-				{newLeader && (
-					<span aria-label="New leader" title="New leader">
-						👑
+			<span className="w-8 shrink-0 text-right text-slate-500">
+				{currentTotal}
+			</span>
+
+			<span className="flex w-16 shrink-0 items-center justify-end gap-1">
+				<span className="font-display font-bold text-white">
+					{mover.totalAfter}
+				</span>
+
+				{mover.pointsDelta !== 0 && (
+					<span
+						className={`text-[10px] font-semibold ${
+							gained ? 'text-emerald-400' : 'text-rose-400'
+						}`}
+					>
+						{gained ? '+' : ''}
+						{mover.pointsDelta}
 					</span>
 				)}
 			</span>
-
-			<span
-				className={`font-display text-xs font-bold ${
-					gained ? 'text-emerald-300' : 'text-rose-300'
-				}`}
-			>
-				{gained ? '+' : ''}
-				{mover.pointsDelta}
-			</span>
-
-			{moved && (
-				<span
-					className={`flex items-center gap-0.5 whitespace-nowrap text-[10px] font-semibold ${
-						up ? 'text-emerald-400' : 'text-rose-400'
-					}`}
-				>
-					{up ? '▲' : '▼'} {ordinal(mover.rankBefore)}→
-					{ordinal(mover.rankAfter)}
-				</span>
-			)}
 		</div>
 	);
 }
@@ -133,21 +125,23 @@ export function WhatIfPanel({
 	const [add1, setAdd1] = useState(1);
 	const [add2, setAdd2] = useState(0);
 
-	// Defer the (relatively heavy) recompute so the +/- taps stay instant; the
-	// movers catch up a tick later, with a loading state in between.
+	// Defer the recompute so the +/- taps stay instant; the standings catch up a
+	// tick later, with a loading state in between.
 	const deferredAdd1 = useDeferredValue(add1);
 	const deferredAdd2 = useDeferredValue(add2);
 
-	const movers = useMemo(
+	const standings = useMemo(
 		() =>
 			live
-				? simulateWhatIf(
-						participants,
-						games,
-						matchNo,
-						baseR1 + deferredAdd1,
-						baseR2 + deferredAdd2
-					).filter((mover) => mover.pointsDelta !== 0)
+				? [
+						...simulateWhatIf(
+							participants,
+							games,
+							matchNo,
+							baseR1 + deferredAdd1,
+							baseR2 + deferredAdd2
+						),
+					].sort((a, b) => a.rankAfter - b.rankAfter)
 				: [],
 		[
 			live,
@@ -217,15 +211,23 @@ export function WhatIfPanel({
 					pending ? 'opacity-40' : ''
 				}`}
 			>
-				{movers.length === 0 ? (
-					<p className="text-xs text-slate-500">Nobody moves 😴</p>
-				) : (
-					<div className="overflow-hidden rounded-lg">
-						{movers.map((mover) => (
-							<MoverRow key={mover.name} mover={mover} />
-						))}
-					</div>
-				)}
+				<div className="flex items-center gap-2 px-2 pb-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+					<span className="w-8 shrink-0 text-center">#</span>
+
+					<span className="w-5 shrink-0" />
+
+					<span className="flex-1">Participant</span>
+
+					<span className="w-8 shrink-0 text-right">Now</span>
+
+					<span className="w-16 shrink-0 text-right">Points</span>
+				</div>
+
+				<div className="overflow-hidden rounded-lg">
+					{standings.map((mover) => (
+						<StandingRow key={mover.name} mover={mover} />
+					))}
+				</div>
 			</div>
 		</div>
 	);
