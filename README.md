@@ -18,6 +18,9 @@ and the current page's name shows above its content:
 - **⚽ Matches** (`/matches`) — one card per game, grouped by the viewer's
   local day: kickoff time, live score, everyone's predictions ranked by points,
   and the what-if panel while the match is live.
+- **🗂️ Groups** (`/groups`) — the 12 group-stage tables (P · W · D · L · GD ·
+  Pts), computed from the games, with the qualifying top two highlighted. Only
+  finished matches count.
 - **🎯 Bets** (`/bets/:id`, e.g. `/bets/adriano`) — a participant's 72
   predictions with real scores, status, and per-match points color-coded by
   tier. Pick a participant from the menu's **Bets** dropdown; each is
