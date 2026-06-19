@@ -135,9 +135,13 @@ export default function App() {
 		initAnalyticsCloud();
 	}, []);
 
-	// A page view per route — GA4 and Analytics Cloud — on the first view and
-	// every navigation.
+	// Title the page after the current route, then send the page view (GA4 and
+	// Analytics Cloud) so the reported title matches.
 	useEffect(() => {
+		document.title = `AC World Cup 2026 BET - ${
+			currentNavItem(location.pathname).label
+		}`;
+
 		trackPageView(location.pathname);
 		acPageView(location.pathname, document.title);
 	}, [location.pathname]);
