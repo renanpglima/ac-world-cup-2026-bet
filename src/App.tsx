@@ -23,7 +23,7 @@ import {ReactionBurst} from './components/ReactionBurst';
 import {RulesView} from './components/RulesView';
 import {StatsView} from './components/StatsView';
 import {trackEvent, trackPageView} from './lib/analytics';
-import {acPageView, acTrack, initAnalyticsCloud} from './lib/analyticsCloud';
+import {acPage, acTrack, initAnalyticsCloud} from './lib/analyticsCloud';
 import {buildEvolution} from './lib/evolution';
 import {getMatchStatus} from './lib/games';
 import {detectLocale, localize, stripEmoji} from './lib/locale';
@@ -145,8 +145,8 @@ export default function App() {
 		document.title = `AC World Cup 2026 BET - ${currentNavItem(page).label}`;
 
 		trackPageView(page);
-		acPageView(page, document.title);
-		acTrack('pageLoaded', {page, title: document.title});
+		acPage('pageViewed', {page, title: document.title});
+		acPage('pageLoaded', {page, title: document.title});
 
 		if (page.startsWith('/bets/')) {
 			acTrack('participant_opened', {
@@ -155,7 +155,7 @@ export default function App() {
 		}
 
 		return () => {
-			acTrack('pageUnloaded', {page});
+			acPage('pageUnloaded', {page});
 		};
 	}, [location.pathname]);
 

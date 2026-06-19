@@ -89,14 +89,13 @@ export function initAnalyticsCloud(): void {
 	document.head.appendChild(script);
 }
 
-// The standard AC page view for a client route.
-export function acPageView(page: string, title?: string): void {
-	runOrQueue(() =>
-		window.Analytics?.send('pageViewed', 'Page', {
-			page,
-			...(title ? {title} : {}),
-		})
-	);
+// A "Page" application event — pageViewed / pageLoaded / pageUnloaded — sent as
+// Analytics.send('Page', <eventId>, <properties>).
+export function acPage(
+	eventId: string,
+	properties?: Record<string, unknown>
+): void {
+	runOrQueue(() => window.Analytics?.send('Page', eventId, properties));
 }
 
 // A custom event — mirrors the GA custom events.
