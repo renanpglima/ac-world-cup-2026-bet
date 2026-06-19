@@ -1,5 +1,4 @@
 import type {OnlineUser} from '../lib/usePresence';
-import {Avatar} from './Avatar';
 import {PresenceBar} from './PresenceBar';
 
 interface HeaderProps {
@@ -10,8 +9,9 @@ interface HeaderProps {
 	statusText: string;
 }
 
-// The "you" control: avatar + name once identified, an invite to identify when
-// anonymous. Either way it opens the picker.
+// Shown only while anonymous — an invite to identify. Once identified there's
+// no change control (clear localStorage to re-identify); the viewer's avatar
+// already appears in the presence bar.
 function IdentityButton({
 	name,
 	onClick,
@@ -20,17 +20,7 @@ function IdentityButton({
 	onClick: () => void;
 }) {
 	if (name) {
-		return (
-			<button
-				className="flex shrink-0 items-center gap-1.5 rounded-full bg-white/5 py-0.5 pl-0.5 pr-2.5 text-xs font-medium text-slate-200 transition hover:bg-white/10"
-				onClick={onClick}
-				title="Change who you are"
-			>
-				<Avatar className="h-6 w-6 rounded-full" name={name} />
-
-				{name}
-			</button>
-		);
+		return null;
 	}
 
 	return (
