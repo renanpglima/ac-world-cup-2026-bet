@@ -1,10 +1,13 @@
+import type {ParticipantStats} from '../lib/participantStats';
 import type {LeaderboardRow} from '../lib/ranking';
 import {Avatar} from './Avatar';
+import {LeaderCard} from './LeaderCard';
 import {Reactions} from './Reactions';
 
 const MEDALS = ['🥇', '🥈', '🥉'];
 
 interface LeaderboardProps {
+	leader?: {name: string; stats: ParticipantStats};
 	live?: boolean;
 	myReactions?: Record<string, string[]>;
 	onReact?: (name: string, emoji: string) => void;
@@ -16,6 +19,7 @@ interface LeaderboardProps {
 }
 
 export function Leaderboard({
+	leader,
 	live = false,
 	myReactions = {},
 	onReact,
@@ -27,6 +31,8 @@ export function Leaderboard({
 }: LeaderboardProps) {
 	return (
 		<div className="space-y-4">
+			{leader && <LeaderCard name={leader.name} stats={leader.stats} />}
+
 			{recap && (
 				<div className="flex gap-2 rounded-2xl border border-emerald-400/20 bg-emerald-400/5 px-4 py-3">
 					<span aria-hidden className="text-sm">
