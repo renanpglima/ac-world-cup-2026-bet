@@ -1,6 +1,6 @@
 // Liferay Analytics Cloud tracking. Mirrors the AC config from the page set up
 // for this app at /web/ac-world-cup-2026-bet (DEV SDK + internal publisher).
-// The SDK loads once; pageViews are sent per client route.
+// The SDK loads once; pageViews and custom events are sent per client route.
 
 const SDK_URL = 'https://analytics-js-dev-cdn.liferay.com';
 
@@ -37,13 +37,18 @@ declare global {
 
 let started = false;
 let ready = false;
-let pendingPage: {page: string; title?: string} | null = null;
 
-function sendPageView(page: string, title?: string): void {
-	window.Analytics?.send('pageViewed', 'Page', {
-		page,
-		...(title ? {title} : {}),
-	});
+// Calls made before the SDK finishes loading are queued (in order) and flushed
+// on load, so nothing — including the first pageLoaded — is lost.
+const pending: Array<() => void> = [];
+
+function runOrQueue(fn: () => void): void {
+	if (ready) {
+		fn();
+	}
+	else {
+		pending.push(fn);
+	}
 }
 
 // Inject the AC SDK once and configure it. Call on app start.
@@ -76,33 +81,28 @@ export function initAnalyticsCloud(): void {
 
 		ready = true;
 
-		if (pendingPage) {
-			sendPageView(pendingPage.page, pendingPage.title);
-			pendingPage = null;
+		while (pending.length) {
+			pending.shift()?.();
 		}
 	};
 
 	document.head.appendChild(script);
 }
 
-// A page view for a client route. Queued until the SDK finishes loading, so the
-// first view (fired before onload) isn't lost.
+// The standard AC page view for a client route.
 export function acPageView(page: string, title?: string): void {
-	if (ready) {
-		sendPageView(page, title);
-	}
-	else {
-		pendingPage = {page, title};
-	}
+	runOrQueue(() =>
+		window.Analytics?.send('pageViewed', 'Page', {
+			page,
+			...(title ? {title} : {}),
+		})
+	);
 }
 
-// A custom event — mirrors the GA custom events. No-op until the SDK is ready
-// (these fire on user actions, well after load).
+// A custom event — mirrors the GA custom events.
 export function acTrack(
 	eventId: string,
 	properties?: Record<string, unknown>
 ): void {
-	if (ready) {
-		window.Analytics?.track(eventId, properties);
-	}
+	runOrQueue(() => window.Analytics?.track(eventId, properties));
 }

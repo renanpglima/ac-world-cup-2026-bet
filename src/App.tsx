@@ -136,20 +136,27 @@ export default function App() {
 	}, []);
 
 	// Title the page after the current route, then send the page view (GA4 and
-	// Analytics Cloud) so the reported title matches.
+	// Analytics Cloud) so the reported title matches. On navigation, the cleanup
+	// fires pageUnloaded for the page being left, then this body fires
+	// pageLoaded for the page being entered.
 	useEffect(() => {
-		document.title = `AC World Cup 2026 BET - ${
-			currentNavItem(location.pathname).label
-		}`;
+		const page = location.pathname;
 
-		trackPageView(location.pathname);
-		acPageView(location.pathname, document.title);
+		document.title = `AC World Cup 2026 BET - ${currentNavItem(page).label}`;
 
-		if (location.pathname.startsWith('/bets/')) {
+		trackPageView(page);
+		acPageView(page, document.title);
+		acTrack('pageLoaded', {page, title: document.title});
+
+		if (page.startsWith('/bets/')) {
 			acTrack('participant_opened', {
-				participant: location.pathname.slice('/bets/'.length),
+				participant: page.slice('/bets/'.length),
 			});
 		}
+
+		return () => {
+			acTrack('pageUnloaded', {page});
+		};
 	}, [location.pathname]);
 
 	const fireBurst = (emoji: string) => {
