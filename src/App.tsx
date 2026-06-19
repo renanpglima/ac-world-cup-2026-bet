@@ -23,7 +23,7 @@ import {ReactionBurst} from './components/ReactionBurst';
 import {RulesView} from './components/RulesView';
 import {StatsView} from './components/StatsView';
 import {trackEvent, trackPageView} from './lib/analytics';
-import {acPageView, initAnalyticsCloud} from './lib/analyticsCloud';
+import {acPageView, acTrack, initAnalyticsCloud} from './lib/analyticsCloud';
 import {buildEvolution} from './lib/evolution';
 import {getMatchStatus} from './lib/games';
 import {detectLocale, localize, stripEmoji} from './lib/locale';
@@ -241,6 +241,7 @@ export default function App() {
 				// Impression: a celebration is being shown. Pair with
 				// goal_celebration_click for a click-through rate.
 				trackEvent('goal_celebration_shown');
+				acTrack('goal_celebration_shown');
 				setGoalKey((key) => key + 1);
 				setShowGoal(true);
 			}
@@ -438,6 +439,7 @@ export default function App() {
 					key={goalKey}
 					onDismiss={() => {
 						trackEvent('goal_celebration_click');
+						acTrack('goal_celebration_click');
 						setShowGoal(false);
 					}}
 				/>

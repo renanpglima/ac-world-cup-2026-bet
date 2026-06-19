@@ -26,6 +26,7 @@ interface AnalyticsSDK {
 		applicationId: string,
 		properties?: Record<string, unknown>
 	) => void;
+	track: (eventId: string, properties?: Record<string, unknown>) => void;
 }
 
 declare global {
@@ -92,5 +93,16 @@ export function acPageView(page: string, title?: string): void {
 	}
 	else {
 		pendingPage = {page, title};
+	}
+}
+
+// A custom event — mirrors the GA custom events. No-op until the SDK is ready
+// (these fire on user actions, well after load).
+export function acTrack(
+	eventId: string,
+	properties?: Record<string, unknown>
+): void {
+	if (ready) {
+		window.Analytics?.track(eventId, properties);
 	}
 }
