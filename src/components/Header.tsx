@@ -41,7 +41,7 @@ export function Header({
 	statusText,
 }: HeaderProps) {
 	return (
-		<header className="border-b border-white/10 bg-gradient-to-r from-emerald-950 via-slate-950 to-emerald-950">
+		<header className="border-b border-white/10 bg-gradient-to-r from-emerald-950 via-slate-950 to-emerald-950 pt-[env(safe-area-inset-top)]">
 			<div className="mx-auto max-w-5xl px-4 py-8">
 				<div className="flex items-start justify-between gap-3">
 					<div className="min-w-0">
