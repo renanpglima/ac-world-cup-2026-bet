@@ -144,6 +144,12 @@ export default function App() {
 
 		trackPageView(location.pathname);
 		acPageView(location.pathname, document.title);
+
+		if (location.pathname.startsWith('/bets/')) {
+			acTrack('participant_opened', {
+				participant: location.pathname.slice('/bets/'.length),
+			});
+		}
 	}, [location.pathname]);
 
 	const fireBurst = (emoji: string) => {
@@ -178,6 +184,7 @@ export default function App() {
 	const react = (name: string, emoji: string) => {
 		if (!(mine[name] ?? []).includes(emoji)) {
 			fireBurst(emoji);
+			acTrack('player_reaction', {emoji, player: name});
 		}
 
 		toggle(name, emoji);
@@ -188,6 +195,7 @@ export default function App() {
 
 		if (!(matchReactions.mine[key] ?? []).includes(emoji)) {
 			fireBurst(emoji);
+			acTrack('match_reaction', {emoji, matchNo});
 		}
 
 		matchReactions.toggle(key, emoji);
@@ -411,6 +419,11 @@ export default function App() {
 				<IdentityPrompt
 					onChoose={(name) => {
 						identity.choose(name);
+
+						if (name) {
+							acTrack('identified', {name});
+						}
+
 						setIdentityOpen(false);
 					}}
 					onClose={() => setIdentityOpen(false)}
@@ -476,7 +489,10 @@ export default function App() {
 								leader={leader}
 								live={liveGames.length > 0}
 								myReactions={mine}
-								onHype={hype}
+								onHype={(rx, ry) => {
+									hype(rx, ry);
+									acTrack('leader_trophy', {leader: leaderName});
+								}}
 								onReact={react}
 								onSelect={(name) =>
 									navigate(`/bets/${name.toLowerCase()}`)

@@ -1,5 +1,6 @@
 import {useDeferredValue, useMemo, useState} from 'react';
 
+import {acTrack} from '../lib/analyticsCloud';
 import type {Game, Participant} from '../lib/types';
 import {liveWhatIfContext, simulateWhatIf, type WhatIfMover} from '../lib/whatif';
 import {Avatar} from './Avatar';
@@ -211,16 +212,28 @@ export function WhatIfPanel({
 			<div className="space-y-1.5">
 				<TeamControl
 					canSubtract={add1 > 0}
-					onAdd={() => setAdd1((value) => value + 1)}
-					onSubtract={() => setAdd1((value) => Math.max(0, value - 1))}
+					onAdd={() => {
+						setAdd1((value) => value + 1);
+						acTrack('whatif_adjusted', {matchNo});
+					}}
+					onSubtract={() => {
+						setAdd1((value) => Math.max(0, value - 1));
+						acTrack('whatif_adjusted', {matchNo});
+					}}
 					score={ctx.r1 + add1}
 					team={ctx.team1}
 				/>
 
 				<TeamControl
 					canSubtract={add2 > 0}
-					onAdd={() => setAdd2((value) => value + 1)}
-					onSubtract={() => setAdd2((value) => Math.max(0, value - 1))}
+					onAdd={() => {
+						setAdd2((value) => value + 1);
+						acTrack('whatif_adjusted', {matchNo});
+					}}
+					onSubtract={() => {
+						setAdd2((value) => Math.max(0, value - 1));
+						acTrack('whatif_adjusted', {matchNo});
+					}}
 					score={ctx.r2 + add2}
 					team={ctx.team2}
 				/>
