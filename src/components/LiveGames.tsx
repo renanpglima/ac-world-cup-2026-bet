@@ -1,3 +1,5 @@
+import type {CheerCounts, CheerSide} from '../lib/useCheers';
+import {CheerCount} from './CheerCount';
 import {Flag} from './Flag';
 import {StatusChip} from './StatusChip';
 
@@ -10,10 +12,18 @@ export interface LiveGame {
 	timeElapsed?: string;
 }
 
-// The live-scores bar below the header: one entry per live match — the green
-// LIVE + minute badge (same StatusChip used in the Matches tab) sits to the
-// left, above the box, and the box holds the big flag · score vs score · flag.
-export function LiveGames({games}: {games: LiveGame[]}) {
+// The live-scores bar below the header. Tap a flag to cheer a team (+1, shared
+// live with everyone); the 🔥 counter sits on each flag's outer side and the
+// leading team's flame is alive.
+export function LiveGames({
+	cheers,
+	games,
+	onCheer,
+}: {
+	cheers: CheerCounts;
+	games: LiveGame[];
+	onCheer: (matchNo: number, side: CheerSide) => void;
+}) {
 	if (games.length === 0) {
 		return null;
 	}
@@ -21,41 +31,70 @@ export function LiveGames({games}: {games: LiveGame[]}) {
 	return (
 		<div className="border-b border-white/10 bg-emerald-950/30">
 			<div className="mx-auto flex max-w-5xl flex-wrap justify-center gap-4 px-4 py-4">
-				{games.map((game) => (
-					<div className="w-full sm:w-80" key={game.matchNo}>
-						<StatusChip status="live" timeElapsed={game.timeElapsed} />
+				{games.map((game) => {
+					const tally = cheers[game.matchNo] ?? {};
 
-						<article className="mt-2 flex items-center justify-center gap-3 rounded-2xl border border-emerald-400/30 bg-emerald-400/5 p-4">
-							<div className="flex min-w-0 flex-1 flex-col items-center gap-1.5">
-								<Flag className="h-8 w-12" team={game.team1} />
+					return (
+						<div className="w-full sm:w-96" key={game.matchNo}>
+							<StatusChip
+								status="live"
+								timeElapsed={game.timeElapsed}
+							/>
 
-								<span className="max-w-full truncate text-xs font-medium text-slate-300">
-									{game.team1}
+							<article className="mt-2 flex items-center justify-center gap-2 rounded-2xl p-4">
+								<CheerCount
+									className="mr-3 w-9 shrink-0 justify-start"
+									count={tally.team1 ?? 0}
+									live={(tally.team1 ?? 0) > (tally.team2 ?? 0)}
+								/>
+
+								<button
+									aria-label={`Cheer ${game.team1}`}
+									className="flex flex-1 cursor-pointer justify-center rounded-lg transition hover:scale-110 active:scale-95"
+									data-cheer={`${game.matchNo}-team1`}
+									onClick={() => onCheer(game.matchNo, 'team1')}
+								>
+									<Flag
+										className="h-14 w-20"
+										team={game.team1}
+										width={160}
+									/>
+								</button>
+
+								<span className="font-display text-5xl font-bold text-white">
+									{game.r1}
 								</span>
-							</div>
 
-							<span className="font-display text-4xl font-bold text-white">
-								{game.r1}
-							</span>
-
-							<span className="text-sm font-medium text-slate-500">
-								vs
-							</span>
-
-							<span className="font-display text-4xl font-bold text-white">
-								{game.r2}
-							</span>
-
-							<div className="flex min-w-0 flex-1 flex-col items-center gap-1.5">
-								<Flag className="h-8 w-12" team={game.team2} />
-
-								<span className="max-w-full truncate text-xs font-medium text-slate-300">
-									{game.team2}
+								<span className="text-sm font-medium text-slate-500">
+									vs
 								</span>
-							</div>
-						</article>
-					</div>
-				))}
+
+								<span className="font-display text-5xl font-bold text-white">
+									{game.r2}
+								</span>
+
+								<button
+									aria-label={`Cheer ${game.team2}`}
+									className="flex flex-1 cursor-pointer justify-center rounded-lg transition hover:scale-110 active:scale-95"
+									data-cheer={`${game.matchNo}-team2`}
+									onClick={() => onCheer(game.matchNo, 'team2')}
+								>
+									<Flag
+										className="h-14 w-20"
+										team={game.team2}
+										width={160}
+									/>
+								</button>
+
+								<CheerCount
+									className="ml-3 w-9 shrink-0 justify-end"
+									count={tally.team2 ?? 0}
+									live={(tally.team2 ?? 0) > (tally.team1 ?? 0)}
+								/>
+							</article>
+						</div>
+					);
+				})}
 			</div>
 		</div>
 	);
