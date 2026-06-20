@@ -1,5 +1,5 @@
 import type {MatchEntry} from '../lib/matches';
-import {teamColor} from '../lib/teamColors';
+import {poolBarColors} from '../lib/teamColors';
 
 const DRAW_COLOR = '#64748b';
 
@@ -37,8 +37,7 @@ export function BetSplitBar({
 		}
 	}
 
-	const color1 = teamColor(team1);
-	const color2 = teamColor(team2);
+	const {color1, color2} = poolBarColors(team1, team2);
 
 	const segments = [
 		{color: color1, count: backedTeam1},
