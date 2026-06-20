@@ -127,14 +127,27 @@ export function Reactions({
 			onClick={(event) => event.stopPropagation()}
 		>
 			{collapsible && active.length > 0 && (
-				<span className="flex items-center gap-1 rounded-full bg-white/5 px-2 py-0.5 text-xs sm:hidden">
-					<span className="flex items-center">
-						{active.slice(0, 4).map((reaction) => (
-							<span key={reaction.emoji}>{reaction.emoji}</span>
+				<span className="flex items-center gap-1.5 sm:hidden">
+					<span className="flex -space-x-1.5">
+						{active.slice(0, 5).map((reaction) => (
+							<span
+								className="flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-[11px] ring-2 ring-slate-900"
+								key={reaction.emoji}
+							>
+								{reaction.emoji}
+							</span>
 						))}
+
+						{active.length > 5 && (
+							<span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-[9px] font-bold text-slate-300 ring-2 ring-slate-900">
+								+{active.length - 5}
+							</span>
+						)}
 					</span>
 
-					<span className="font-medium text-slate-300">{total}</span>
+					<span className="text-xs font-medium text-slate-400">
+						{total}
+					</span>
 				</span>
 			)}
 
