@@ -14,6 +14,7 @@ import {auth, db, signedIn} from './firebase';
 
 export interface OnlineUser {
 	name: string | null;
+	photoURL: string | null;
 	uid: string;
 }
 
@@ -22,7 +23,7 @@ export interface OnlineUser {
 // The write is driven by `.info/connected`, so presence is re-announced every
 // time the socket reconnects (e.g. after the tab is backgrounded) — otherwise
 // the disconnect cleanup would drop the entry and it would never come back.
-export function usePresence(name: string | null): OnlineUser[] {
+export function usePresence(name: string | null, photoURL: string | null): OnlineUser[] {
 	const [uid, setUid] = useState<string | null>(null);
 	const [online, setOnline] = useState<OnlineUser[]>([]);
 
@@ -38,12 +39,13 @@ export function usePresence(name: string | null): OnlineUser[] {
 				const value =
 					(snapshot.val() as Record<
 						string,
-						{name?: string | null}
+						{name?: string | null; photoURL?: string | null}
 					>) ?? {};
 
 				setOnline(
 					Object.entries(value).map(([id, entry]) => ({
 						name: entry?.name ?? null,
+						photoURL: entry?.photoURL ?? null,
 						uid: id,
 					}))
 				);
@@ -68,7 +70,11 @@ export function usePresence(name: string | null): OnlineUser[] {
 			onDisconnect(node)
 				.remove()
 				.then(() =>
-					set(node, {at: serverTimestamp(), name: name ?? null})
+					set(node, {
+						at: serverTimestamp(),
+						name: name ?? null,
+						photoURL: photoURL ?? null,
+					})
 				)
 				.catch(() => undefined);
 		});
@@ -77,7 +83,7 @@ export function usePresence(name: string | null): OnlineUser[] {
 			unsubscribe();
 			remove(node);
 		};
-	}, [uid, name]);
+	}, [uid, name, photoURL]);
 
 	return online;
 }

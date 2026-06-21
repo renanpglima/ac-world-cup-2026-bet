@@ -147,7 +147,11 @@ export default function App() {
 		participants.find((p) => participantSlug(p.name) === myParticipantSlug)
 			?.name ?? null;
 
-	const online = usePresence(myParticipantName);
+	// Identified presence: pool name when claimed, else Google name; real photo
+	// when signed in.
+	const presenceName = myParticipantName ?? auth.profile?.name ?? null;
+	const presencePhoto = auth.profile?.photoURL ?? null;
+	const online = usePresence(presenceName, presencePhoto);
 	const {hype, last: leaderHype, loaded: hypeLoaded} = useLeaderHype();
 	const {celebrate, last: celebrateEvent, loaded: celebrateLoaded} =
 		useCelebrate();

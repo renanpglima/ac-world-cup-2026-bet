@@ -3,30 +3,39 @@ import {Avatar} from './Avatar';
 
 const MAX_AVATARS = 5;
 
-// The "who's online" cluster in the header: overlapping avatars of the
-// identified viewers (green-ringed = live), a "+N" for guests/overflow, and a
+// The "who's online" cluster: real Google photos (falling back to a name-based
+// avatar) for identified viewers, a "+N" for anonymous guests/overflow, and a
 // pulsing live count.
 export function PresenceBar({online}: {online: OnlineUser[]}) {
-	const names = [...new Set(online.filter((user) => user.name).map((user) => user.name as string))];
-	const guests = online.filter((user) => !user.name).length;
-	const total = names.length + guests;
+	const identified = online.filter((user) => user.name);
+	const guests = online.length - identified.length;
+	const total = online.length;
 
 	if (total === 0) {
 		return null;
 	}
 
-	const shown = names.slice(0, MAX_AVATARS);
-	const overflow = names.length - shown.length + guests;
+	const shown = identified.slice(0, MAX_AVATARS);
+	const overflow = identified.length - shown.length + guests;
 
 	return (
 		<div className="flex items-center gap-2">
 			<div className="flex -space-x-2">
-				{shown.map((name) => (
-					<span key={name} title={name}>
-						<Avatar
-							className="h-7 w-7 rounded-full ring-2 ring-emerald-500/70"
-							name={name}
-						/>
+				{shown.map((user) => (
+					<span key={user.uid} title={user.name ?? undefined}>
+						{user.photoURL ? (
+							<img
+								alt=""
+								className="h-7 w-7 rounded-full object-cover ring-2 ring-emerald-500/70"
+								referrerPolicy="no-referrer"
+								src={user.photoURL}
+							/>
+						) : (
+							<Avatar
+								className="h-7 w-7 rounded-full ring-2 ring-emerald-500/70"
+								name={user.name as string}
+							/>
+						)}
 					</span>
 				))}
 
