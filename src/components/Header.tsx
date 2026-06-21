@@ -1,43 +1,26 @@
 import type {OnlineUser} from '../lib/usePresence';
+import {AuthButton} from './AuthButton';
 import {PresenceBar} from './PresenceBar';
 
 interface HeaderProps {
-	identityName: string | null;
+	authName: string | null;
+	authPhotoURL: string | null;
 	online: OnlineUser[];
-	onIdentify: () => void;
 	onMenuClick: () => void;
+	onSignIn: () => void;
+	onSignOut: () => void;
+	signedIn: boolean;
 	statusText: string;
 }
 
-// Shown only while anonymous — an invite to identify. Once identified there's
-// no change control (clear localStorage to re-identify); the viewer's avatar
-// already appears in the presence bar.
-function IdentityButton({
-	name,
-	onClick,
-}: {
-	name: string | null;
-	onClick: () => void;
-}) {
-	if (name) {
-		return null;
-	}
-
-	return (
-		<button
-			className="shrink-0 rounded-full bg-white/5 px-3 py-1.5 text-xs font-medium text-slate-300 transition hover:bg-white/10 hover:text-white"
-			onClick={onClick}
-		>
-			👋 Who are you?
-		</button>
-	);
-}
-
 export function Header({
-	identityName,
+	authName,
+	authPhotoURL,
 	online,
-	onIdentify,
 	onMenuClick,
+	onSignIn,
+	onSignOut,
+	signedIn,
 	statusText,
 }: HeaderProps) {
 	return (
@@ -60,11 +43,14 @@ export function Header({
 					</div>
 
 					<div className="flex shrink-0 items-center gap-3">
-						{/* Desktop: identify + presence at the top-right. */}
+						{/* Desktop: auth + presence at the top-right. */}
 						<div className="hidden items-center gap-3 sm:flex">
-							<IdentityButton
-								name={identityName}
-								onClick={onIdentify}
+							<AuthButton
+								name={authName}
+								onSignIn={onSignIn}
+								onSignOut={onSignOut}
+								photoURL={authPhotoURL}
+								signedIn={signedIn}
 							/>
 
 							<PresenceBar online={online} />
@@ -93,9 +79,15 @@ export function Header({
 					</div>
 				</div>
 
-				{/* Mobile: identify + presence on their own row at the bottom. */}
+				{/* Mobile: auth + presence on their own row at the bottom. */}
 				<div className="mt-4 flex items-center justify-end gap-3 sm:hidden">
-					<IdentityButton name={identityName} onClick={onIdentify} />
+					<AuthButton
+						name={authName}
+						onSignIn={onSignIn}
+						onSignOut={onSignOut}
+						photoURL={authPhotoURL}
+						signedIn={signedIn}
+					/>
 
 					<PresenceBar online={online} />
 				</div>

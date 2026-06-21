@@ -7,10 +7,12 @@ import {NAV_ITEMS} from '../lib/nav';
 // "Bets" expands into the participant list. Picking an item navigates and
 // closes the drawer.
 export function NavDrawer({
+	isOwner,
 	onClose,
 	open,
 	participants,
 }: {
+	isOwner: boolean;
 	onClose: () => void;
 	open: boolean;
 	participants: string[];
@@ -136,6 +138,16 @@ export function NavDrawer({
 							)}
 						</NavLink>
 					)
+				)}
+
+				{isOwner && (
+					<NavLink
+						className={({isActive}) => itemClass(isActive)}
+						onClick={onClose}
+						to="/admin"
+					>
+						Admin
+					</NavLink>
 				)}
 			</aside>
 		</>

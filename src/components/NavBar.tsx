@@ -11,7 +11,13 @@ const itemClass = ({isActive}: {isActive: boolean}) =>
 
 // Horizontal top nav for web (hidden on mobile, where the header's hamburger
 // opens the drawer instead). Hovering "Bets" reveals the participant list.
-export function NavBar({participants}: {participants: string[]}) {
+export function NavBar({
+	isOwner,
+	participants,
+}: {
+	isOwner: boolean;
+	participants: string[];
+}) {
 	return (
 		<nav className="hidden border-b border-white/10 bg-slate-950 sm:block">
 			<div className="mx-auto flex max-w-5xl items-center gap-1 px-4">
@@ -54,6 +60,19 @@ export function NavBar({participants}: {participants: string[]}) {
 							{item.label}
 						</NavLink>
 					)
+				)}
+
+				{isOwner && (
+					<NavLink
+						className={({isActive}) =>
+							isActive
+								? 'border-b-2 border-emerald-400 pb-1 text-white'
+								: 'pb-1 text-slate-400 transition hover:text-white'
+						}
+						to="/admin"
+					>
+						Admin
+					</NavLink>
 				)}
 			</div>
 		</nav>

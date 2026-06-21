@@ -7,15 +7,18 @@ import {
 	useNavigate,
 } from 'react-router-dom';
 
+import {onValue, ref} from 'firebase/database';
+
+import {AdminView} from './components/AdminView';
 import {ArenaView} from './components/ArenaView';
 import {BetsView} from './components/BetsView';
 import {CelebrateOverlay} from './components/CelebrateOverlay';
 import {CheerBurstLayer} from './components/CheerBurst';
+import {ClaimPrompt} from './components/ClaimPrompt';
 import {GoalOverlay} from './components/GoalOverlay';
 import {GroupsView} from './components/GroupsView';
 import {HeadToHeadView} from './components/HeadToHeadView';
 import {Header} from './components/Header';
-import {IdentityPrompt} from './components/IdentityPrompt';
 import {Leaderboard} from './components/Leaderboard';
 import {ChatButton} from './components/ChatButton';
 import {ChatPanel} from './components/ChatPanel';
@@ -28,7 +31,9 @@ import {RulesView} from './components/RulesView';
 import {StatsView} from './components/StatsView';
 import {trackEvent, trackPageView} from './lib/analytics';
 import {acPage, acTrack, initAnalyticsCloud} from './lib/analyticsCloud';
+import {participantSlug} from './lib/auth';
 import {buildEvolution} from './lib/evolution';
+import {db} from './lib/firebase';
 import {getMatchStatus} from './lib/games';
 import {detectLocale, localize, stripEmoji} from './lib/locale';
 import {buildStats} from './lib/stats';
@@ -36,8 +41,10 @@ import {buildMatchCards} from './lib/matches';
 import {currentNavItem} from './lib/nav';
 import {buildParticipantStats} from './lib/participantStats';
 import {loadParticipants} from './lib/predictions';
+import {approvedParticipant, type Approval} from './lib/profiles';
 import {buildLeaderboardWithMovement} from './lib/ranking';
 import {buildPointsTimeline} from './lib/timeline';
+import {useAuth} from './lib/useAuth';
 import {useChatUnread} from './lib/useChatUnread';
 import {useCommentary} from './lib/useCommentary';
 import {type CheerCounts, useCheers} from './lib/useCheers';
@@ -73,6 +80,7 @@ export default function App() {
 	const [menuOpen, setMenuOpen] = useState(false);
 	const [identityOpen, setIdentityOpen] = useState(false);
 	const [chatOpen, setChatOpen] = useState(false);
+	const [claimOpen, setClaimOpen] = useState(false);
 
 	const {failed: fetchFailed, gamesFile} = useGames();
 	const {commentaryFile, ready: commentaryReady} = useCommentary();
@@ -122,7 +130,24 @@ export default function App() {
 	const {markRead: markChatRead, unread: chatUnread} = useChatUnread(
 		identity.name
 	);
-	const online = usePresence(identity.name);
+	const auth = useAuth();
+
+	// All approvals (small) so the signed-in viewer knows their linked participant.
+	const [approvals, setApprovals] = useState<Record<string, Approval>>({});
+	useEffect(
+		() =>
+			onValue(ref(db, 'approvals'), (snapshot) => {
+				setApprovals((snapshot.val() as Record<string, Approval>) ?? {});
+			}),
+		[]
+	);
+
+	const myParticipantSlug = approvedParticipant(approvals, auth.user?.uid ?? null);
+	const myParticipantName =
+		participants.find((p) => participantSlug(p.name) === myParticipantSlug)
+			?.name ?? null;
+
+	const online = usePresence(myParticipantName);
 	const {hype, last: leaderHype, loaded: hypeLoaded} = useLeaderHype();
 	const {celebrate, last: celebrateEvent, loaded: celebrateLoaded} =
 		useCelebrate();
@@ -373,6 +398,19 @@ export default function App() {
 		return () => clearTimeout(timer);
 	}, [celebrateEvent, celebrateLoaded]);
 
+	// Offer the claim prompt to a freshly signed-in user with no link yet.
+	useEffect(() => {
+		if (
+			!auth.isAnonymous &&
+			auth.user &&
+			auth.profile &&
+			!auth.profile.claim &&
+			!myParticipantSlug
+		) {
+			setClaimOpen(true);
+		}
+	}, [auth.isAnonymous, auth.user, auth.profile, myParticipantSlug]);
+
 	const games = gamesFile?.games ?? [];
 
 	const rows = useMemo(
@@ -462,34 +500,34 @@ export default function App() {
 	return (
 		<div className="min-h-screen bg-slate-950 font-sans">
 			<Header
-				identityName={identity.name}
+				authName={auth.profile?.name ?? null}
+				authPhotoURL={auth.profile?.photoURL ?? null}
 				online={online}
-				onIdentify={() => setIdentityOpen(true)}
 				onMenuClick={() => setMenuOpen(true)}
+				onSignIn={auth.signIn}
+				onSignOut={auth.signOut}
+				signedIn={!auth.isAnonymous && !!auth.user}
 				statusText={statusText}
 			/>
 
-			{identityOpen && (
-				<IdentityPrompt
-					onChoose={(name) => {
-						identity.choose(name);
-
-						if (name) {
-							acTrack('identified', {name});
-						}
-
-						setIdentityOpen(false);
+			{claimOpen && (
+				<ClaimPrompt
+					onClaim={(name) => {
+						auth.setClaim(participantSlug(name));
+						setClaimOpen(false);
 					}}
-					onClose={() => setIdentityOpen(false)}
+					onClose={() => setClaimOpen(false)}
 					participants={participants}
 				/>
 			)}
 
 			<NavBar
+				isOwner={auth.isOwner}
 				participants={participants.map((participant) => participant.name)}
 			/>
 
 			<NavDrawer
+				isOwner={auth.isOwner}
 				onClose={() => setMenuOpen(false)}
 				open={menuOpen}
 				participants={participants.map((participant) => participant.name)}
@@ -642,6 +680,13 @@ export default function App() {
 					/>
 
 					<Route element={<RulesView />} path="/rules" />
+
+					<Route
+						element={
+							auth.isOwner ? <AdminView /> : <Navigate replace to="/" />
+						}
+						path="/admin"
+					/>
 
 					<Route element={<Navigate replace to="/" />} path="*" />
 				</Routes>
