@@ -268,6 +268,10 @@ export default function App() {
 		remove(ref(db, `${dataPath('commentary')}/leaderboard/recap`));
 	};
 
+	const resetCheers = (matchNo: number) => {
+		remove(ref(db, `${dataPath('cheers')}/${matchNo}`));
+	};
+
 	useEffect(() => {
 		if (!loading) {
 			return undefined;
@@ -569,6 +573,7 @@ export default function App() {
 						team: side === 'team1' ? game?.team1 : game?.team2,
 					});
 				}}
+				onResetCheers={auth.isOwner ? resetCheers : undefined}
 			/>
 
 			<ReactionBurst bursts={bursts} />

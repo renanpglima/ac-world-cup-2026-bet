@@ -19,10 +19,12 @@ export function LiveGames({
 	cheers,
 	games,
 	onCheer,
+	onResetCheers,
 }: {
 	cheers: CheerCounts;
 	games: LiveGame[];
 	onCheer: (matchNo: number, side: CheerSide) => void;
+	onResetCheers?: (matchNo: number) => void;
 }) {
 	if (games.length === 0) {
 		return null;
@@ -92,10 +94,20 @@ export function LiveGames({
 									live={(tally.team2 ?? 0) > (tally.team1 ?? 0)}
 								/>
 							</article>
-							</div>
-						);
-					})}
-				</div>
+
+							{onResetCheers && (
+								<button
+									aria-label="Reset cheers for this match"
+									className="mt-1 w-full rounded-full bg-rose-500/15 py-0.5 text-[10px] font-medium text-rose-300 transition hover:bg-rose-500/30"
+									onClick={() => onResetCheers(game.matchNo)}
+								>
+									Reset cheers
+								</button>
+							)}
+						</div>
+					);
+				})}
 			</div>
-		);
+		</div>
+	);
 }
