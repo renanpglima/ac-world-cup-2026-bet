@@ -7,7 +7,7 @@ import {
 	useNavigate,
 } from 'react-router-dom';
 
-import {onValue, ref} from 'firebase/database';
+import {onValue, ref, remove} from 'firebase/database';
 
 import {AdminView} from './components/AdminView';
 import {ArenaView} from './components/ArenaView';
@@ -31,6 +31,7 @@ import {RulesView} from './components/RulesView';
 import {StatsView} from './components/StatsView';
 import {trackEvent, trackPageView} from './lib/analytics';
 import {acPage, acTrack, initAnalyticsCloud} from './lib/analyticsCloud';
+import {dataPath} from './lib/dataRoot';
 import {participantSlug} from './lib/auth';
 import {buildEvolution} from './lib/evolution';
 import {db} from './lib/firebase';
@@ -249,6 +250,14 @@ export default function App() {
 		}
 
 		matchReactions.toggle(key, emoji);
+	};
+
+	const clearPlayerReaction = (name: string, emoji: string) => {
+		remove(ref(db, `${dataPath('reactions')}/${name}/${emoji}`));
+	};
+
+	const clearMatchReaction = (matchNo: number, emoji: string) => {
+		remove(ref(db, `${dataPath('matches/reactions')}/${matchNo}/${emoji}`));
 	};
 
 	useEffect(() => {
@@ -587,6 +596,7 @@ export default function App() {
 								leader={leader}
 								live={liveGames.length > 0}
 								myReactions={mine}
+								onClearReaction={auth.isOwner ? clearPlayerReaction : undefined}
 								onHype={(rx, ry) => {
 									hype(rx, ry);
 									acTrack('leader_trophy', {leader: leaderName});
@@ -617,6 +627,7 @@ export default function App() {
 								commentary={commentary}
 								games={games}
 								matchReactions={matchReactions}
+								onClearMatchReaction={auth.isOwner ? clearMatchReaction : undefined}
 								onMatchReact={reactMatch}
 								participants={participants}
 							/>

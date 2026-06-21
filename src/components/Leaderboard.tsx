@@ -10,6 +10,7 @@ interface LeaderboardProps {
 	leader?: {name: string; stats: ParticipantStats};
 	live?: boolean;
 	myReactions?: Record<string, string[]>;
+	onClearReaction?: (name: string, emoji: string) => void;
 	onHype: (rx: number, ry: number) => void;
 	onReact?: (name: string, emoji: string) => void;
 	onSelect: (name: string) => void;
@@ -24,6 +25,7 @@ export function Leaderboard({
 	leader,
 	live = false,
 	myReactions = {},
+	onClearReaction,
 	onHype,
 	onReact,
 	onSelect,
@@ -134,6 +136,11 @@ export function Leaderboard({
 															collapsible
 															counts={reactions[row.name] ?? {}}
 															mine={myReactions[row.name] ?? []}
+															onClear={
+																onClearReaction
+																	? (emoji) => onClearReaction(row.name, emoji)
+																	: undefined
+															}
 															onReact={(emoji) => onReact(row.name, emoji)}
 														/>
 													</div>
@@ -147,6 +154,11 @@ export function Leaderboard({
 													collapsible
 													counts={reactions[row.name] ?? {}}
 													mine={myReactions[row.name] ?? []}
+													onClear={
+														onClearReaction
+															? (emoji) => onClearReaction(row.name, emoji)
+															: undefined
+													}
 													onReact={(emoji) => onReact(row.name, emoji)}
 												/>
 											</div>

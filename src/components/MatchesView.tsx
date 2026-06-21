@@ -21,6 +21,7 @@ interface MatchesViewProps {
 	commentary: Record<number, string>;
 	games: Game[];
 	matchReactions: ReactionsApi;
+	onClearMatchReaction?: (matchNo: number, emoji: string) => void;
 	onMatchReact: (matchNo: number, emoji: string) => void;
 	participants: Participant[];
 }
@@ -116,6 +117,7 @@ function MatchCardArticle({
 	commentary,
 	games,
 	matchReactions,
+	onClearMatchReaction,
 	onMatchReact,
 	participants,
 }: {
@@ -124,6 +126,7 @@ function MatchCardArticle({
 	commentary: Record<number, string>;
 	games: Game[];
 	matchReactions: ReactionsApi;
+	onClearMatchReaction?: (matchNo: number, emoji: string) => void;
 	onMatchReact: (matchNo: number, emoji: string) => void;
 	participants: Participant[];
 }) {
@@ -274,6 +277,11 @@ function MatchCardArticle({
 				<Reactions
 					counts={matchReactions.counts[String(card.matchNo)] ?? {}}
 					mine={matchReactions.mine[String(card.matchNo)] ?? []}
+					onClear={
+						onClearMatchReaction
+							? (emoji) => onClearMatchReaction(card.matchNo, emoji)
+							: undefined
+					}
 					onReact={(emoji) => onMatchReact(card.matchNo, emoji)}
 				/>
 			</div>
@@ -288,6 +296,7 @@ function MatchSection({
 	games,
 	groups,
 	matchReactions,
+	onClearMatchReaction,
 	onMatchReact,
 	participants,
 }: {
@@ -297,6 +306,7 @@ function MatchSection({
 	games: Game[];
 	groups: DayGroup[];
 	matchReactions: ReactionsApi;
+	onClearMatchReaction?: (matchNo: number, emoji: string) => void;
 	onMatchReact: (matchNo: number, emoji: string) => void;
 	participants: Participant[];
 }) {
@@ -325,6 +335,7 @@ function MatchSection({
 								games={games}
 								key={card.matchNo}
 								matchReactions={matchReactions}
+								onClearMatchReaction={onClearMatchReaction}
 								onMatchReact={onMatchReact}
 								participants={participants}
 							/>
@@ -386,6 +397,7 @@ export function MatchesView({
 	commentary,
 	games,
 	matchReactions,
+	onClearMatchReaction,
 	onMatchReact,
 	participants,
 }: MatchesViewProps) {
@@ -449,6 +461,7 @@ export function MatchesView({
 					games={games}
 					groups={groups}
 					matchReactions={matchReactions}
+					onClearMatchReaction={onClearMatchReaction}
 					onMatchReact={onMatchReact}
 					participants={participants}
 				/>
