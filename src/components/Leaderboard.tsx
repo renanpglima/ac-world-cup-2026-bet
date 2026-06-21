@@ -17,6 +17,7 @@ interface LeaderboardProps {
 	recap?: string;
 	rows: LeaderboardRow[];
 	titles?: Record<string, string>;
+	youName?: string | null;
 }
 
 export function Leaderboard({
@@ -30,6 +31,7 @@ export function Leaderboard({
 	recap,
 	rows,
 	titles = {},
+	youName = null,
 }: LeaderboardProps) {
 	return (
 		<div className="space-y-4">
@@ -70,9 +72,14 @@ export function Leaderboard({
 					</thead>
 
 					<tbody>
-						{rows.map((row) => (
+						{rows.map((row) => {
+						const isYou = row.name === youName;
+
+						return (
 							<tr
-								className="group cursor-pointer border-b border-white/5 transition-colors last:border-0 hover:bg-white/10"
+								className={`group cursor-pointer border-b border-white/5 transition-colors last:border-0 hover:bg-white/10 ${
+									isYou ? 'bg-emerald-400/10' : ''
+								}`}
 								key={row.name}
 								onClick={() => onSelect(row.name)}
 							>
@@ -93,6 +100,12 @@ export function Leaderboard({
 													<span className="truncate font-medium text-white">
 														{row.name}
 													</span>
+
+													{isYou && (
+														<span className="rounded-full bg-emerald-400/20 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-emerald-300">
+															you
+														</span>
+													)}
 
 													{!live && (row.movement ?? 0) > 0 && (
 														<span className="text-xs text-emerald-400">▲</span>
@@ -158,7 +171,8 @@ export function Leaderboard({
 									)}
 								</td>
 							</tr>
-						))}
+						);
+					})}
 					</tbody>
 				</table>
 			</div>

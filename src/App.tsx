@@ -603,6 +603,7 @@ export default function App() {
 								}
 								rows={rows}
 								titles={boardTitles}
+								youName={myParticipantName}
 							/>
 						}
 						path="/"
