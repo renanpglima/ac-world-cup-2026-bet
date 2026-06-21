@@ -1,3 +1,9 @@
+// ⚠️ FRAGMENT — NOT a complete ruleset. Do NOT `firebase deploy` this standalone:
+// it would replace the whole RTDB ruleset and wipe the existing rules for
+// games / commentary / reactions / cheers / presence / leaderHype / demo.
+// Merge ONLY the `profiles` and `approvals` blocks below into the current rules
+// in the Firebase console (Realtime Database → Rules), leaving the others intact.
+// Firebase rules accept these // comments; strict JSON.parse does not.
 {
 	"rules": {
 		"profiles": {
