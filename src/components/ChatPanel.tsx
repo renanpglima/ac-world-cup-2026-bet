@@ -3,7 +3,7 @@ import {useEffect, useRef, useState} from 'react';
 import {runChatCommand} from '../lib/chatCommands';
 import type {MatchCard} from '../lib/matches';
 import type {Game, Participant} from '../lib/types';
-import {useMatchChat} from '../lib/useMatchChat';
+import {useChat} from '../lib/useChat';
 import {Avatar} from './Avatar';
 
 function formatMessageTime(at: number, now: number): string {
@@ -32,29 +32,25 @@ function formatMessageTime(at: number, now: number): string {
 }
 
 interface Props {
-	card: MatchCard | null;
 	games: Game[];
 	identity: string | null;
-	matchLabel: string;
-	matchNo: number;
+	liveCard: MatchCard | null;
 	onCelebrate: (name: string) => void;
 	onClose: () => void;
 	onRequestIdentify: () => void;
 	participants: Participant[];
 }
 
-export function LiveChatPanel({
-	card,
+export function ChatPanel({
 	games,
 	identity,
-	matchLabel,
-	matchNo,
+	liveCard,
 	onCelebrate,
 	onClose,
 	onRequestIdentify,
 	participants,
 }: Props) {
-	const {messages, send} = useMatchChat(matchNo);
+	const {messages, send} = useChat();
 	const [draft, setDraft] = useState('');
 	const [ephemeral, setEphemeral] = useState<{id: number; text: string}[]>(
 		[]
@@ -77,9 +73,9 @@ export function LiveChatPanel({
 		}
 
 		const result = runChatCommand(draft, {
-			card,
+			card: liveCard,
 			games,
-			matchNo,
+			matchNo: liveCard?.matchNo ?? 0,
 			name: identity,
 			participants,
 		});
@@ -104,15 +100,14 @@ export function LiveChatPanel({
 
 	return (
 		<div className="fixed inset-y-0 right-0 z-50 flex w-80 flex-col border-l border-white/10 bg-slate-900 shadow-2xl md:w-96">
-			{/* Header */}
 			<div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
 				<div className="min-w-0">
 					<p className="text-[10px] font-semibold uppercase tracking-wider text-emerald-400">
-						Live Chat
+						Chat
 					</p>
 
 					<p className="truncate text-sm font-medium text-white">
-						{matchLabel}
+						Everyone online
 					</p>
 				</div>
 
@@ -125,7 +120,6 @@ export function LiveChatPanel({
 				</button>
 			</div>
 
-			{/* Messages */}
 			<div className="flex-1 space-y-3 overflow-y-auto p-4">
 				{messages.length === 0 ? (
 					<p className="pt-8 text-center text-sm text-slate-500">
@@ -195,7 +189,6 @@ export function LiveChatPanel({
 				<div ref={bottomRef} />
 			</div>
 
-			{/* Input or identity gate */}
 			{identity ? (
 				<div className="flex gap-2 border-t border-white/10 p-3">
 					<input

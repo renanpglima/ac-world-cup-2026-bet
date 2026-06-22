@@ -17,7 +17,8 @@ import {HeadToHeadView} from './components/HeadToHeadView';
 import {Header} from './components/Header';
 import {IdentityPrompt} from './components/IdentityPrompt';
 import {Leaderboard} from './components/Leaderboard';
-import {LiveChatPanel} from './components/LiveChatPanel';
+import {ChatButton} from './components/ChatButton';
+import {ChatPanel} from './components/ChatPanel';
 import {LiveGames} from './components/LiveGames';
 import {MatchesView} from './components/MatchesView';
 import {NavBar} from './components/NavBar';
@@ -70,7 +71,7 @@ export default function App() {
 	const location = useLocation();
 	const [menuOpen, setMenuOpen] = useState(false);
 	const [identityOpen, setIdentityOpen] = useState(false);
-	const [chatMatchNo, setChatMatchNo] = useState<number | null>(null);
+	const [chatOpen, setChatOpen] = useState(false);
 
 	const {failed: fetchFailed, gamesFile} = useGames();
 	const {commentaryFile, ready: commentaryReady} = useCommentary();
@@ -398,6 +399,9 @@ export default function App() {
 		[participants, games]
 	);
 
+	const liveCards = cards.filter((card) => card.status === 'live');
+	const liveCard = liveCards.length === 1 ? liveCards[0] : null;
+
 	const evolution = useMemo(
 		() => buildEvolution(participants, games),
 		[participants, games]
@@ -501,7 +505,6 @@ export default function App() {
 						team: side === 'team1' ? game?.team1 : game?.team2,
 					});
 				}}
-				onOpenChat={setChatMatchNo}
 			/>
 
 			<ReactionBurst bursts={bursts} />
@@ -639,33 +642,29 @@ export default function App() {
 				</Routes>
 			</main>
 
-			{chatMatchNo !== null && (() => {
-				const chatCard = cards.find((c) => c.matchNo === chatMatchNo);
+			{!chatOpen && <ChatButton onClick={() => setChatOpen(true)} />}
 
-				return chatCard ? (
-					<>
-						<div
-							className="fixed inset-0 z-40 bg-black/50"
-							onClick={() => setChatMatchNo(null)}
-						/>
+			{chatOpen && (
+				<>
+					<div
+						className="fixed inset-0 z-40 bg-black/50"
+						onClick={() => setChatOpen(false)}
+					/>
 
-						<LiveChatPanel
-							card={chatCard}
-							games={games}
-							identity={identity.name}
-							matchLabel={`${chatCard.team1} vs ${chatCard.team2}`}
-							matchNo={chatMatchNo}
-							onCelebrate={celebrate}
-							onClose={() => setChatMatchNo(null)}
-							onRequestIdentify={() => {
-								setChatMatchNo(null);
-								setIdentityOpen(true);
-							}}
-							participants={participants}
-						/>
-					</>
-				) : null;
-			})()}
+					<ChatPanel
+						games={games}
+						identity={identity.name}
+						liveCard={liveCard}
+						onCelebrate={celebrate}
+						onClose={() => setChatOpen(false)}
+						onRequestIdentify={() => {
+							setChatOpen(false);
+							setIdentityOpen(true);
+						}}
+						participants={participants}
+					/>
+				</>
+			)}
 		</div>
 	);
 }
