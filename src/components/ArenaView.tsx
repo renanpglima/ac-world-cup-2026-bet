@@ -60,6 +60,16 @@ export function ArenaView({
 	const ranked = sortScores(scores);
 	const ballStart = ball ? ballPositionAt(ball, Date.now() + offset) : null;
 
+	// Everyone present in the arena right now: me (if identified) plus the
+	// other players whose cursors are live.
+	const present = [
+		...new Set(
+			[identity, ...cursors.map((cursor) => cursor.name)].filter(
+				(entry): entry is string => Boolean(entry)
+			)
+		),
+	];
+
 	return (
 		<div>
 			<div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center text-sm text-slate-400 sm:hidden">
@@ -102,15 +112,37 @@ export function ArenaView({
 						ref={fieldRef}
 					>
 						{playerCount < MIN_PLAYERS && (
-							<div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-1 text-center">
-								<p className="text-lg font-semibold text-white">
-									Waiting for players…
-								</p>
+							<div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-4 px-4 text-center">
+								<div>
+									<p className="text-lg font-semibold text-white">
+										Waiting for players…
+									</p>
 
-								<p className="text-sm text-slate-400">
-									Need {MIN_PLAYERS} to kick off — {playerCount}/
-									{MIN_PLAYERS} here
-								</p>
+									<p className="text-sm text-slate-400">
+										Need {MIN_PLAYERS} to kick off —{' '}
+										{playerCount}/{MIN_PLAYERS} here
+									</p>
+								</div>
+
+								{present.length > 0 && (
+									<div className="flex flex-wrap items-center justify-center gap-2">
+										{present.map((name) => (
+											<span
+												className="flex items-center gap-1.5 rounded-full bg-white/10 py-0.5 pl-0.5 pr-2.5"
+												key={name}
+											>
+												<Avatar
+													className="h-6 w-6 rounded-full"
+													name={name}
+												/>
+
+												<span className="text-xs font-medium text-slate-200">
+													{name}
+												</span>
+											</span>
+										))}
+									</div>
+								)}
 							</div>
 						)}
 
