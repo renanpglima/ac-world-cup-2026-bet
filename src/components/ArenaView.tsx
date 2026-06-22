@@ -1,7 +1,7 @@
 // src/components/ArenaView.tsx
-import {type MouseEvent, useRef} from 'react';
+import {type MouseEvent, useEffect, useRef} from 'react';
 
-import {sortScores} from '../lib/arena';
+import {ballPositionAt, sortScores} from '../lib/arena';
 import {useArena} from '../lib/useArena';
 import {Avatar} from './Avatar';
 
@@ -12,8 +12,10 @@ export function ArenaView({
 	identity: string | null;
 	onRequestIdentify: () => void;
 }) {
-	const {ball, cursors, moveCursor, scores, tryClaim} = useArena(identity);
+	const {ball, cursors, moveCursor, offset, scores, tryClaim} =
+		useArena(identity);
 	const fieldRef = useRef<HTMLDivElement>(null);
+	const ballRef = useRef<HTMLSpanElement>(null);
 
 	const toFraction = (event: MouseEvent) => {
 		const rect = fieldRef.current?.getBoundingClientRect();
@@ -28,7 +30,35 @@ export function ArenaView({
 		};
 	};
 
+	// Animate the ball locally from the shared seed; every client computes the
+	// same bouncing path, so no per-frame writes are needed.
+	useEffect(() => {
+		if (!ball) {
+			return undefined;
+		}
+
+		let frame = 0;
+
+		const tick = () => {
+			const node = ballRef.current;
+
+			if (node) {
+				const position = ballPositionAt(ball, Date.now() + offset);
+
+				node.style.left = `${position.x * 100}%`;
+				node.style.top = `${position.y * 100}%`;
+			}
+
+			frame = requestAnimationFrame(tick);
+		};
+
+		frame = requestAnimationFrame(tick);
+
+		return () => cancelAnimationFrame(frame);
+	}, [ball, offset]);
+
 	const ranked = sortScores(scores);
+	const ballStart = ball ? ballPositionAt(ball, Date.now() + offset) : null;
 
 	return (
 		<div>
@@ -54,7 +84,7 @@ export function ArenaView({
 
 				<div className="flex gap-4">
 					<div
-						className="relative h-[70vh] flex-1 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-emerald-950/40 to-slate-950"
+						className="relative aspect-square h-[70vh] max-w-full shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-emerald-950/40 to-slate-950"
 						onClick={(event) => {
 							const point = toFraction(event);
 
@@ -71,10 +101,14 @@ export function ArenaView({
 						}}
 						ref={fieldRef}
 					>
-						{ball && !ball.claimedBy && (
+						{ball && ballStart && (
 							<span
 								className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 text-3xl drop-shadow-lg"
-								style={{left: `${ball.x * 100}%`, top: `${ball.y * 100}%`}}
+								ref={ballRef}
+								style={{
+									left: `${ballStart.x * 100}%`,
+									top: `${ballStart.y * 100}%`,
+								}}
 							>
 								⚽
 							</span>

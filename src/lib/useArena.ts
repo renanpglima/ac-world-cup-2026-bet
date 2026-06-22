@@ -12,7 +12,7 @@ import {
 } from 'firebase/database';
 import {useEffect, useRef, useState} from 'react';
 
-import {type Ball, isBallHit, nextBall} from './arena';
+import {type Ball, ballPositionAt, isBallHit, nextBall} from './arena';
 import {dataPath} from './dataRoot';
 import {auth, db, signedIn} from './firebase';
 
@@ -30,6 +30,7 @@ export function useArena(name: string | null): {
 	ball: Ball | null;
 	cursors: ArenaCursor[];
 	moveCursor: (x: number, y: number) => void;
+	offset: number;
 	scores: Record<string, number>;
 	tryClaim: (x: number, y: number) => void;
 } {
@@ -37,6 +38,7 @@ export function useArena(name: string | null): {
 	const [cursors, setCursors] = useState<ArenaCursor[]>([]);
 	const [ball, setBall] = useState<Ball | null>(null);
 	const [scores, setScores] = useState<Record<string, number>>({});
+	const [offset, setOffset] = useState(0);
 	const lastMove = useRef(0);
 
 	useEffect(() => {
@@ -44,6 +46,17 @@ export function useArena(name: string | null): {
 
 		return onAuthStateChanged(auth, (user) => setUid(user?.uid ?? null));
 	}, []);
+
+	// Server-clock offset, so every client agrees on the ball's position.
+	useEffect(
+		() =>
+			onValue(ref(db, '.info/serverTimeOffset'), (snapshot) => {
+				setOffset((snapshot.val() as number | null) ?? 0);
+			}),
+		[]
+	);
+
+	const serverNow = () => Date.now() + offset;
 
 	useEffect(
 		() =>
@@ -91,9 +104,9 @@ export function useArena(name: string | null): {
 		}
 
 		runTransaction(ref(db, dataPath('arena/ball')), (current: Ball | null) =>
-			current ?? nextBall(0)
+			current ?? nextBall(0, Date.now() + offset)
 		).catch(() => undefined);
-	}, [uid]);
+	}, [uid, offset]);
 
 	// Remove my cursor when I disconnect or leave the page.
 	useEffect(() => {
@@ -132,7 +145,12 @@ export function useArena(name: string | null): {
 	};
 
 	const tryClaim = (x: number, y: number) => {
-		if (!name || !ball || ball.claimedBy || !isBallHit(x, y, ball, HIT_RADIUS)) {
+		if (
+			!name ||
+			!ball ||
+			ball.claimedBy ||
+			!isBallHit(x, y, ballPositionAt(ball, serverNow()), HIT_RADIUS)
+		) {
 			return;
 		}
 
@@ -155,11 +173,11 @@ export function useArena(name: string | null): {
 					update(ref(db, dataPath('arena/scores')), {
 						[name]: increment(1),
 					});
-					set(ballRef, nextBall(claimedId));
+					set(ballRef, nextBall(claimedId, Date.now() + offset));
 				}
 			})
 			.catch(() => undefined);
 	};
 
-	return {ball, cursors, moveCursor, scores, tryClaim};
+	return {ball, cursors, moveCursor, offset, scores, tryClaim};
 }
