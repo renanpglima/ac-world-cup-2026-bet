@@ -1,6 +1,7 @@
 // src/components/ArenaView.tsx
 import {type MouseEvent, useEffect, useRef, useState} from 'react';
 
+import {acTrack} from '../lib/analyticsCloud';
 import {
 	BALL_EMOJI,
 	BALL_VALUES,
@@ -61,6 +62,10 @@ export function ArenaView({
 			y: (event.clientY - rect.top) / rect.height,
 		};
 	};
+
+	useEffect(() => {
+		acTrack('arena_opened');
+	}, []);
 
 	// Re-render once a tick so the countdown text updates.
 	useEffect(() => {
@@ -209,6 +214,41 @@ export function ArenaView({
 	const playing = phase === 'playing';
 	const startIn = Math.max(0, Math.ceil((startsAt - now) / 1000));
 
+	const roundResultRef = useRef({identity, present, ranked, scores});
+
+	roundResultRef.current = {identity, present, ranked, scores};
+
+	const prevPhaseRef = useRef(phase);
+
+	useEffect(() => {
+		const prev = prevPhaseRef.current;
+
+		prevPhaseRef.current = phase;
+
+		if (prev !== 'playing' || phase !== 'waiting') {
+			return;
+		}
+
+		const {
+			identity: name,
+			present: players,
+			ranked: standings,
+			scores: tally,
+		} = roundResultRef.current;
+
+		if (!name) {
+			return;
+		}
+
+		const rankIndex = standings.findIndex(([player]) => player === name);
+
+		acTrack('arena_round_finished', {
+			players: players.length,
+			rank: rankIndex >= 0 ? rankIndex + 1 : 0,
+			score: tally[name] ?? 0,
+		});
+	}, [phase]);
+
 	return (
 		<div>
 			<div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center text-sm text-slate-400 sm:hidden">
@@ -318,7 +358,13 @@ export function ArenaView({
 												? 'bg-white/10 text-slate-300 hover:bg-white/20'
 												: 'bg-emerald-500 text-white hover:bg-emerald-400'
 										}`}
-										onClick={toggleReady}
+										onClick={() => {
+											if (!isReady) {
+												acTrack('arena_ready');
+											}
+
+											toggleReady();
+										}}
 									>
 										{isReady ? 'Cancel ready' : 'READY'}
 									</button>

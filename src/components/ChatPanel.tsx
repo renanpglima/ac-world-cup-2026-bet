@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 
-import {runChatCommand} from '../lib/chatCommands';
+import {acTrack} from '../lib/analyticsCloud';
+import {parseChatInput, runChatCommand} from '../lib/chatCommands';
 import type {MatchCard} from '../lib/matches';
 import type {Game, Participant} from '../lib/types';
 import {useChat} from '../lib/useChat';
@@ -98,6 +99,15 @@ export function ChatPanel({
 			onCelebrate(result.celebrate);
 		}
 
+		const parsed = parseChatInput(draft);
+
+		if (parsed.kind === 'message') {
+			acTrack('chat_message_sent', {length: parsed.arg.length});
+		}
+		else {
+			acTrack('chat_command_used', {command: parsed.kind});
+		}
+
 		setDraft('');
 	};
 
@@ -171,9 +181,19 @@ export function ChatPanel({
 									<Reactions
 										counts={chatReactions.counts[msg.id] ?? {}}
 										mine={chatReactions.mine[msg.id] ?? []}
-										onReact={(emoji) =>
-											chatReactions.toggle(msg.id, emoji)
-										}
+										onReact={(emoji) => {
+											const action = chatReactions.mine[
+												msg.id
+											]?.includes(emoji)
+												? 'remove'
+												: 'add';
+
+											chatReactions.toggle(msg.id, emoji);
+											acTrack('chat_reaction', {
+												action,
+												emoji,
+											});
+										}}
 									/>
 								</div>
 							</div>

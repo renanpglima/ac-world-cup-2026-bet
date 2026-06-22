@@ -362,6 +362,7 @@ export default function App() {
 		}
 
 		setCelebrating(celebrateEvent.name);
+		acTrack('celebrate_shown', {name: celebrateEvent.name});
 
 		const timer = setTimeout(() => setCelebrating(null), 2600);
 
@@ -642,7 +643,14 @@ export default function App() {
 				</Routes>
 			</main>
 
-			{!chatOpen && <ChatButton onClick={() => setChatOpen(true)} />}
+			{!chatOpen && (
+				<ChatButton
+					onClick={() => {
+						setChatOpen(true);
+						acTrack('chat_opened');
+					}}
+				/>
+			)}
 
 			{chatOpen && (
 				<>
@@ -655,7 +663,10 @@ export default function App() {
 						games={games}
 						identity={identity.name}
 						liveCard={liveCard}
-						onCelebrate={celebrate}
+						onCelebrate={(name) => {
+							celebrate(name);
+							acTrack('celebrate_sent', {name});
+						}}
 						onClose={() => setChatOpen(false)}
 						onRequestIdentify={() => {
 							setChatOpen(false);

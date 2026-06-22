@@ -13,6 +13,7 @@ import {
 } from 'firebase/database';
 import {useEffect, useRef, useState} from 'react';
 
+import {acTrack} from './analyticsCloud';
 import {
 	type Ball,
 	BALL_VALUES,
@@ -378,6 +379,7 @@ export function useArena(name: string | null): {
 						[name]: increment(value),
 					});
 					set(ballNode, nextBall(claimedId, Date.now() + offset));
+					acTrack('arena_ball_caught', {kind: ball.kind, points: value});
 				}
 			})
 			.catch(() => undefined);
