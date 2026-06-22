@@ -12,7 +12,7 @@ export interface Ball {
 export const BALL_WALL = 0.04;
 
 // Default ball speed, in fractions of the field per second.
-export const BALL_SPEED = 0.25;
+export const BALL_SPEED = 0.35;
 
 // A start position in the inner field, away from the edges (fractions 0–1).
 export function randomBallPosition(): {x: number; y: number} {

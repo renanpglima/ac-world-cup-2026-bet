@@ -2,6 +2,7 @@ import {describe, expect, it} from 'vitest';
 
 import {
 	type Ball,
+	BALL_SPEED,
 	ballPositionAt,
 	isBallHit,
 	nextBall,
@@ -108,7 +109,7 @@ describe('nextBall', () => {
 		expect(ball.y0).toBeGreaterThanOrEqual(0.08);
 		expect(ball.y0).toBeLessThanOrEqual(0.92);
 		expect(Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy)).toBeCloseTo(
-			0.25,
+			BALL_SPEED,
 			10
 		);
 	});
