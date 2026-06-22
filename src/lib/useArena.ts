@@ -1,6 +1,7 @@
 // src/lib/useArena.ts
 import {onAuthStateChanged} from 'firebase/auth';
 import {
+	get,
 	increment,
 	onDisconnect,
 	onValue,
@@ -211,7 +212,20 @@ export function useArena(name: string | null): {
 					return value.phase === 'waiting'
 						? {...value, phase: 'starting', startsAt: now + START_COUNTDOWN_MS}
 						: undefined;
-				}).catch(() => undefined);
+				})
+					.then((result) => {
+						const ok =
+							result.committed &&
+							(result.snapshot.val() as ArenaRound | null)?.phase ===
+								'starting';
+
+						if (ok) {
+							set(ref(db, dataPath('arena/scores')), null).catch(
+								() => undefined
+							);
+						}
+					})
+					.catch(() => undefined);
 			}
 			else if (phase === 'starting' && rc < MIN_PLAYERS) {
 				runTransaction(roundNode, (current: ArenaRound | null) => {
@@ -230,6 +244,10 @@ export function useArena(name: string | null): {
 						return undefined;
 					}
 
+					if (refs.current.readyCount < MIN_PLAYERS) {
+						return {...value, phase: 'waiting', startsAt: 0};
+					}
+
 					return {...value, endsAt: now + ROUND_MS, phase: 'playing'};
 				})
 					.then((result) => {
@@ -239,9 +257,6 @@ export function useArena(name: string | null): {
 								'playing';
 
 						if (ok) {
-							set(ref(db, dataPath('arena/scores')), null).catch(
-								() => undefined
-							);
 							runTransaction(ballNode, (current: Ball | null) =>
 								current ?? nextBall(0, now)
 							).catch(() => undefined);
@@ -250,29 +265,40 @@ export function useArena(name: string | null): {
 					.catch(() => undefined);
 			}
 			else if (phase === 'playing' && now >= endsAt) {
-				const winner = topScorer(refs.current.scores);
+				get(ref(db, dataPath('arena/scores')))
+					.then((snapshot) => {
+						const winner = topScorer(
+							(snapshot.val() as Record<string, number>) ?? {}
+						);
 
-				runTransaction(roundNode, (current: ArenaRound | null) => {
-					const value = current ?? DEFAULT_ROUND;
+						runTransaction(roundNode, (current: ArenaRound | null) => {
+							const value = current ?? DEFAULT_ROUND;
 
-					if (value.phase !== 'playing' || now < value.endsAt) {
-						return undefined;
-					}
+							if (value.phase !== 'playing' || now < value.endsAt) {
+								return undefined;
+							}
 
-					return {...value, endsAt: 0, lastWinner: winner, phase: 'waiting'};
-				})
-					.then((result) => {
-						const ok =
-							result.committed &&
-							(result.snapshot.val() as ArenaRound | null)?.phase ===
-								'waiting';
+							return {
+								...value,
+								endsAt: 0,
+								lastWinner: winner,
+								phase: 'waiting',
+							};
+						})
+							.then((result) => {
+								const ok =
+									result.committed &&
+									(result.snapshot.val() as ArenaRound | null)?.phase ===
+										'waiting';
 
-						if (ok) {
-							set(ballNode, null).catch(() => undefined);
-							set(ref(db, dataPath('arena/ready')), null).catch(
-								() => undefined
-							);
-						}
+								if (ok) {
+									set(ballNode, null).catch(() => undefined);
+									set(ref(db, dataPath('arena/ready')), null).catch(
+										() => undefined
+									);
+								}
+							})
+							.catch(() => undefined);
 					})
 					.catch(() => undefined);
 			}
