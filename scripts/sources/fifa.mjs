@@ -1,20 +1,31 @@
 const FIFA_CALENDAR_URL =
 	'https://api.fifa.com/api/v3/calendar/matches?idCompetition=17&idSeason=285023&language=en&count=500';
 
-// FIFA MatchStatus: 0 = finished, 3 = live; anything else is treated as not
-// started (1 = scheduled; 4/5 postponed or abandoned never score points).
+// FIFA MatchStatus: 0 = finished; 1 = scheduled, 4/5 = postponed/abandoned
+// (these never score points). Every other value is a match in play — 3 = live,
+// 11 = half-time, plus the extra-time/penalty codes — so anything that is not
+// finished or a not-started state counts as live. (The old code matched only 3,
+// so a match at half-time dropped off the live bar despite being in progress.)
 function statusFields(match) {
 	if (match.MatchStatus === 0) {
 		return {finished: true, timeElapsed: 'finished'};
 	}
 
-	if (match.MatchStatus === 3) {
-		const minutes = String(match.MatchTime ?? '').match(/\d+/)?.[0];
-
-		return {finished: false, timeElapsed: minutes ?? '1'};
+	if (
+		match.MatchStatus === 1 ||
+		match.MatchStatus === 4 ||
+		match.MatchStatus === 5
+	) {
+		return {finished: false, timeElapsed: 'notstarted'};
 	}
 
-	return {finished: false, timeElapsed: 'notstarted'};
+	if (match.MatchStatus === 11) {
+		return {finished: false, timeElapsed: 'HT'};
+	}
+
+	const minutes = String(match.MatchTime ?? '').match(/\d+/)?.[0];
+
+	return {finished: false, timeElapsed: minutes ?? 'live'};
 }
 
 function localized(entries) {

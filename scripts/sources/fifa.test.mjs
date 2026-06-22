@@ -54,6 +54,31 @@ describe('normalizeFifaGames', () => {
 		expect(game.timeElapsed).toBe('67');
 	});
 
+	it('treats half-time (MatchStatus 11) as live', () => {
+		const [game] = normalizeFifaGames([
+			{
+				...RAW_MATCH,
+				Away: {...RAW_MATCH.Away, Score: 0},
+				Home: {...RAW_MATCH.Home, Score: 1},
+				MatchStatus: 11,
+				MatchTime: '',
+			},
+		]);
+
+		expect(game.finished).toBe(false);
+		expect(game.timeElapsed).toBe('HT');
+	});
+
+	it('keeps scheduled and postponed/abandoned (1/4/5) as notstarted', () => {
+		for (const status of [1, 4, 5]) {
+			const [game] = normalizeFifaGames([
+				{...RAW_MATCH, MatchStatus: status},
+			]);
+
+			expect(game.timeElapsed).toBe('notstarted');
+		}
+	});
+
 	it('maps a finished match', () => {
 		const [game] = normalizeFifaGames([
 			{
