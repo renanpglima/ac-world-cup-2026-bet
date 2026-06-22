@@ -7,6 +7,7 @@ import {
 	ballPositionAt,
 	cursorColor,
 	formatCountdown,
+	lerp,
 	MIN_PLAYERS,
 	sortScores,
 } from '../lib/arena';
@@ -38,8 +39,15 @@ export function ArenaView({
 		tryClaim,
 	} = useArena(identity);
 	const fieldRef = useRef<HTMLDivElement>(null);
-	const ballRef = useRef<HTMLSpanElement>(null);
+	const canvasRef = useRef<HTMLCanvasElement>(null);
+	const sizeRef = useRef({dpr: 1, h: 0, w: 0});
+	const renderedCursors = useRef<Map<string, {x: number; y: number}>>(
+		new Map()
+	);
+	const drawState = useRef({ball, cursors, offset, phase});
 	const [, setTick] = useState(0);
+
+	drawState.current = {ball, cursors, offset, phase};
 
 	const toFraction = (event: MouseEvent) => {
 		const rect = fieldRef.current?.getBoundingClientRect();
@@ -65,38 +73,140 @@ export function ArenaView({
 		return () => clearInterval(id);
 	}, [phase]);
 
-	// Animate the ball from the shared seed.
+	// Keep the canvas backing store matched to the field size (DPR-aware).
 	useEffect(() => {
-		if (!ball || phase !== 'playing') {
+		const canvas = canvasRef.current;
+		const field = fieldRef.current;
+
+		if (!canvas || !field) {
+			return undefined;
+		}
+
+		const resize = () => {
+			const rect = field.getBoundingClientRect();
+			const dpr = window.devicePixelRatio || 1;
+
+			canvas.width = Math.round(rect.width * dpr);
+			canvas.height = Math.round(rect.height * dpr);
+			sizeRef.current = {dpr, h: rect.height, w: rect.width};
+		};
+
+		resize();
+
+		const observer = new ResizeObserver(resize);
+
+		observer.observe(field);
+
+		return () => observer.disconnect();
+	}, []);
+
+	// One draw loop for the whole field; reads latest state from the ref so it
+	// never restarts.
+	useEffect(() => {
+		const canvas = canvasRef.current;
+		const ctx = canvas?.getContext('2d');
+
+		if (!canvas || !ctx) {
 			return undefined;
 		}
 
 		let frame = 0;
 
-		const tick = () => {
-			const node = ballRef.current;
+		const draw = () => {
+			const {dpr, h, w} = sizeRef.current;
+			const state = drawState.current;
 
-			if (node) {
-				const position = ballPositionAt(ball, Date.now() + offset);
+			ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+			ctx.clearRect(0, 0, w, h);
 
-				node.style.left = `${position.x * 100}%`;
-				node.style.top = `${position.y * 100}%`;
+			const seen = new Set<string>();
+
+			for (const cursor of state.cursors) {
+				seen.add(cursor.uid);
+
+				const target = {x: cursor.x * w, y: cursor.y * h};
+				const prev = renderedCursors.current.get(cursor.uid) ?? target;
+				const pos = {
+					x: lerp(prev.x, target.x, 0.2),
+					y: lerp(prev.y, target.y, 0.2),
+				};
+
+				renderedCursors.current.set(cursor.uid, pos);
+
+				const color = cursorColor(cursor.name);
+
+				ctx.fillStyle = color;
+				ctx.beginPath();
+				ctx.moveTo(pos.x, pos.y);
+				ctx.lineTo(pos.x + 13, pos.y + 4);
+				ctx.lineTo(pos.x + 4, pos.y + 13);
+				ctx.closePath();
+				ctx.fill();
+
+				ctx.font =
+					'600 11px Inter, system-ui, sans-serif';
+				ctx.textAlign = 'left';
+				ctx.textBaseline = 'middle';
+
+				const labelWidth = ctx.measureText(cursor.name).width;
+				const bx = pos.x + 15;
+				const by = pos.y + 3;
+				const bw = labelWidth + 10;
+				const bh = 16;
+
+				ctx.fillStyle = color;
+				ctx.beginPath();
+				ctx.roundRect(bx, by, bw, bh, 8);
+				ctx.fill();
+
+				ctx.fillStyle = '#ffffff';
+				ctx.fillText(cursor.name, bx + 5, by + bh / 2 + 0.5);
 			}
 
-			frame = requestAnimationFrame(tick);
+			for (const uid of [...renderedCursors.current.keys()]) {
+				if (!seen.has(uid)) {
+					renderedCursors.current.delete(uid);
+				}
+			}
+
+			if (state.phase === 'playing' && state.ball) {
+				const position = ballPositionAt(
+					state.ball,
+					Date.now() + state.offset
+				);
+				const x = position.x * w;
+				const y = position.y * h;
+
+				ctx.textAlign = 'center';
+				ctx.textBaseline = 'middle';
+
+				if (state.ball.kind === 'gold') {
+					ctx.shadowColor = 'gold';
+					ctx.shadowBlur = 16;
+				}
+
+				ctx.font = '28px system-ui, sans-serif';
+				ctx.fillText(BALL_EMOJI[state.ball.kind], x, y);
+				ctx.shadowBlur = 0;
+
+				if (state.ball.kind !== 'normal') {
+					ctx.font = '700 12px Inter, system-ui, sans-serif';
+					ctx.fillStyle = '#fcd34d';
+					ctx.fillText(`+${BALL_VALUES[state.ball.kind]}`, x + 18, y - 14);
+				}
+			}
+
+			frame = requestAnimationFrame(draw);
 		};
 
-		frame = requestAnimationFrame(tick);
+		frame = requestAnimationFrame(draw);
 
 		return () => cancelAnimationFrame(frame);
-	}, [ball, offset, phase]);
+	}, []);
 
 	const now = Date.now() + offset;
 	const ranked = sortScores(scores);
 	const playing = phase === 'playing';
-	const ballStart =
-		playing && ball ? ballPositionAt(ball, now) : null;
-	const ballValue = ball ? BALL_VALUES[ball.kind] : 1;
 	const startIn = Math.max(0, Math.ceil((startsAt - now) / 1000));
 
 	return (
@@ -140,6 +250,11 @@ export function ArenaView({
 						}}
 						ref={fieldRef}
 					>
+						<canvas
+							className="pointer-events-none absolute inset-0 h-full w-full"
+							ref={canvasRef}
+						/>
+
 						{!playing && (
 							<div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-4 px-4 text-center">
 								<div>
@@ -210,57 +325,6 @@ export function ArenaView({
 								)}
 							</div>
 						)}
-
-						{playing && ball && ballStart && (
-							<span
-								className={`pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 text-3xl ${
-									ball.kind === 'gold'
-										? 'drop-shadow-[0_0_8px_gold]'
-										: 'drop-shadow-lg'
-								}`}
-								ref={ballRef}
-								style={{
-									left: `${ballStart.x * 100}%`,
-									top: `${ballStart.y * 100}%`,
-								}}
-							>
-								{BALL_EMOJI[ball.kind]}
-
-								{ball.kind !== 'normal' && (
-									<span className="absolute -right-2 -top-1 rounded-full bg-black/70 px-1 text-[10px] font-bold text-amber-300">
-										+{ballValue}
-									</span>
-								)}
-							</span>
-						)}
-
-						{cursors.map((cursor) => (
-							<div
-								className="pointer-events-none absolute flex -translate-y-1 items-center gap-1"
-								key={cursor.uid}
-								style={{
-									left: `${cursor.x * 100}%`,
-									top: `${cursor.y * 100}%`,
-								}}
-							>
-								<span
-									aria-hidden
-									className="text-lg"
-									style={{color: cursorColor(cursor.name)}}
-								>
-									➤
-								</span>
-
-								<span
-									className="rounded-full px-1.5 py-0.5 text-[10px] font-medium text-white"
-									style={{
-										backgroundColor: cursorColor(cursor.name),
-									}}
-								>
-									{cursor.name}
-								</span>
-							</div>
-						))}
 					</div>
 
 					<div className="w-48 shrink-0 self-start rounded-2xl border border-white/10 bg-white/5 p-3">
