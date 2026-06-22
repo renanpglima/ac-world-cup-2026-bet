@@ -11,6 +11,26 @@ body {
 	--font-display: 'Archivo', system-ui, sans-serif;
 	--font-sans: 'Inter', system-ui, sans-serif;
 	--animate-flame: flame 0.85s ease-in-out infinite;
+	--animate-celebrate-pop: celebrate-pop 1.6s ease-out forwards;
+}
+
+/* Emoji flying outward from the celebrated avatar. */
+@keyframes celebrate-pop {
+	0% {
+		transform: translate(-50%, -50%) scale(0.4);
+		opacity: 0;
+	}
+	15% {
+		opacity: 1;
+	}
+	100% {
+		transform: translate(
+				calc(-50% + var(--dx)),
+				calc(-50% + var(--dy))
+			)
+			scale(1.2);
+		opacity: 0;
+	}
 }
 
 /* Living flames for the leading team's cheer counter — flicker, glow, sway. */

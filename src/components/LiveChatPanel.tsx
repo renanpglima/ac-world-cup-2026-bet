@@ -12,6 +12,7 @@ interface Props {
 	identity: string | null;
 	matchLabel: string;
 	matchNo: number;
+	onCelebrate: (name: string) => void;
 	onClose: () => void;
 	onRequestIdentify: () => void;
 	participants: Participant[];
@@ -23,6 +24,7 @@ export function LiveChatPanel({
 	identity,
 	matchLabel,
 	matchNo,
+	onCelebrate,
 	onClose,
 	onRequestIdentify,
 	participants,
@@ -66,6 +68,10 @@ export function LiveChatPanel({
 				...current,
 				{id: (ephemeralId.current += 1), text: result.ephemeral as string},
 			]);
+		}
+
+		if (result.celebrate) {
+			onCelebrate(result.celebrate);
 		}
 
 		setDraft('');
