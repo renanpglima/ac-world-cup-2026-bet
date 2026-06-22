@@ -15,6 +15,7 @@ import {HeadToHeadView} from './components/HeadToHeadView';
 import {Header} from './components/Header';
 import {IdentityPrompt} from './components/IdentityPrompt';
 import {Leaderboard} from './components/Leaderboard';
+import {LiveChatPanel} from './components/LiveChatPanel';
 import {LiveGames} from './components/LiveGames';
 import {MatchesView} from './components/MatchesView';
 import {NavBar} from './components/NavBar';
@@ -66,6 +67,7 @@ export default function App() {
 	const location = useLocation();
 	const [menuOpen, setMenuOpen] = useState(false);
 	const [identityOpen, setIdentityOpen] = useState(false);
+	const [chatMatchNo, setChatMatchNo] = useState<number | null>(null);
 
 	const {failed: fetchFailed, gamesFile} = useGames();
 	const {commentaryFile, ready: commentaryReady} = useCommentary();
@@ -463,6 +465,7 @@ export default function App() {
 						team: side === 'team1' ? game?.team1 : game?.team2,
 					});
 				}}
+				onOpenChat={setChatMatchNo}
 			/>
 
 			<ReactionBurst bursts={bursts} />
@@ -587,6 +590,30 @@ export default function App() {
 					<Route element={<Navigate replace to="/" />} path="*" />
 				</Routes>
 			</main>
+
+			{chatMatchNo !== null && (() => {
+				const chatCard = cards.find((c) => c.matchNo === chatMatchNo);
+
+				return chatCard ? (
+					<>
+						<div
+							className="fixed inset-0 z-40 bg-black/50"
+							onClick={() => setChatMatchNo(null)}
+						/>
+
+						<LiveChatPanel
+							identity={identity.name}
+							matchLabel={`${chatCard.team1} vs ${chatCard.team2}`}
+							matchNo={chatMatchNo}
+							onClose={() => setChatMatchNo(null)}
+							onRequestIdentify={() => {
+								setChatMatchNo(null);
+								setIdentityOpen(true);
+							}}
+						/>
+					</>
+				) : null;
+			})()}
 		</div>
 	);
 }

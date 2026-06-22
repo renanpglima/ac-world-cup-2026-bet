@@ -1,7 +1,45 @@
 import type {CheerCounts, CheerSide} from '../lib/useCheers';
+import {useMatchChat} from '../lib/useMatchChat';
 import {CheerCount} from './CheerCount';
 import {Flag} from './Flag';
 import {StatusChip} from './StatusChip';
+
+function LiveChatPreview({
+	matchNo,
+	onOpen,
+}: {
+	matchNo: number;
+	onOpen: (matchNo: number) => void;
+}) {
+	const {messages} = useMatchChat(matchNo, 1);
+	const last = messages.at(-1);
+
+	return (
+		<button
+			className="mt-2 flex w-full items-center gap-2 rounded-xl border border-sky-400/20 bg-sky-400/5 px-3 py-2 text-left transition-colors hover:bg-sky-400/10"
+			onClick={() => onOpen(matchNo)}
+		>
+			<span aria-hidden className="shrink-0 text-base">
+				💬
+			</span>
+
+			<div className="min-w-0 flex-1">
+				{last ? (
+					<p className="truncate text-xs text-slate-300">
+						<span className="font-medium text-sky-300">{last.name}:</span>{' '}
+						{last.text}
+					</p>
+				) : (
+					<p className="text-xs text-slate-500">Be the first to chat!</p>
+				)}
+			</div>
+
+			<span aria-hidden className="shrink-0 text-xs text-slate-500">
+				›
+			</span>
+		</button>
+	);
+}
 
 export interface LiveGame {
 	matchNo: number;
@@ -19,10 +57,12 @@ export function LiveGames({
 	cheers,
 	games,
 	onCheer,
+	onOpenChat,
 }: {
 	cheers: CheerCounts;
 	games: LiveGame[];
 	onCheer: (matchNo: number, side: CheerSide) => void;
+	onOpenChat: (matchNo: number) => void;
 }) {
 	if (games.length === 0) {
 		return null;
@@ -92,6 +132,8 @@ export function LiveGames({
 									live={(tally.team2 ?? 0) > (tally.team1 ?? 0)}
 								/>
 							</article>
+
+							<LiveChatPreview matchNo={game.matchNo} onOpen={onOpenChat} />
 						</div>
 					);
 				})}
