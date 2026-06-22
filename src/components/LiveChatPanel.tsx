@@ -6,6 +6,31 @@ import type {Game, Participant} from '../lib/types';
 import {useMatchChat} from '../lib/useMatchChat';
 import {Avatar} from './Avatar';
 
+function formatMessageTime(at: number, now: number): string {
+	if (!at) return '';
+
+	const msgDate = new Date(at);
+	const nowDate = new Date(now);
+	const isToday =
+		msgDate.getFullYear() === nowDate.getFullYear() &&
+		msgDate.getMonth() === nowDate.getMonth() &&
+		msgDate.getDate() === nowDate.getDate();
+
+	const time = msgDate.toLocaleTimeString([], {
+		hour: '2-digit',
+		minute: '2-digit',
+	});
+
+	if (isToday) return time;
+
+	const date = msgDate.toLocaleDateString([], {
+		day: '2-digit',
+		month: 'short',
+	});
+
+	return `${date} ${time}`;
+}
+
 interface Props {
 	card: MatchCard | null;
 	games: Game[];
@@ -109,6 +134,7 @@ export function LiveChatPanel({
 				) : (
 					messages.map((msg) => {
 						const isMe = msg.name === identity;
+						const timeLabel = formatMessageTime(msg.at, Date.now());
 
 						return (
 							<div
@@ -138,6 +164,12 @@ export function LiveChatPanel({
 									>
 										{msg.text}
 									</div>
+
+									{timeLabel && (
+										<span className="text-[10px] text-slate-500">
+											{timeLabel}
+										</span>
+									)}
 								</div>
 							</div>
 						);
