@@ -1,6 +1,9 @@
 import {Avatar} from './Avatar';
 
-const EMOJIS = ['🎉', '🥳', '🎊', '⭐', '🔥', '👏', '🙌', '💥', '✨', '🏆', '⚽', '💚'];
+const EMOJIS = [
+	'🎉', '🥳', '🎊', '⭐', '🔥', '👏', '🙌', '💥', '✨', '🏆', '⚽',
+	'💚', '🎈', '💫', '🤩', '😎', '💪', '🚀', '🌟', '❤️', '👑', '🍾',
+];
 
 // Full-screen, everyone-sees-it celebration: the participant's avatar with a
 // ring of emojis flying outward. Presentational — the parent mounts it for the
@@ -18,13 +21,17 @@ export function CelebrateOverlay({name}: {name: string}) {
 					{EMOJIS.map((emoji, index) => {
 						const angle = (index / EMOJIS.length) * Math.PI * 2;
 
+						// Layered radius so it reads as a full explosion, not a
+						// single ring.
+						const dist = 240 + (index % 3) * 70;
+
 						return (
 							<span
 								className="animate-celebrate-pop absolute left-1/2 top-1/2 text-3xl"
 								key={index}
 								style={{
-									['--dx' as string]: `${Math.cos(angle) * 150}px`,
-									['--dy' as string]: `${Math.sin(angle) * 150}px`,
+									['--dx' as string]: `${Math.cos(angle) * dist}px`,
+									['--dy' as string]: `${Math.sin(angle) * dist}px`,
 								}}
 							>
 								{emoji}
