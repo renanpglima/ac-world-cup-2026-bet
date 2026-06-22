@@ -1,7 +1,7 @@
 // src/components/ArenaView.tsx
 import {type MouseEvent, useEffect, useRef} from 'react';
 
-import {ballPositionAt, sortScores} from '../lib/arena';
+import {ballPositionAt, MIN_PLAYERS, sortScores} from '../lib/arena';
 import {useArena} from '../lib/useArena';
 import {Avatar} from './Avatar';
 
@@ -12,7 +12,7 @@ export function ArenaView({
 	identity: string | null;
 	onRequestIdentify: () => void;
 }) {
-	const {ball, cursors, moveCursor, offset, scores, tryClaim} =
+	const {ball, cursors, moveCursor, offset, playerCount, scores, tryClaim} =
 		useArena(identity);
 	const fieldRef = useRef<HTMLDivElement>(null);
 	const ballRef = useRef<HTMLSpanElement>(null);
@@ -101,6 +101,19 @@ export function ArenaView({
 						}}
 						ref={fieldRef}
 					>
+						{playerCount < MIN_PLAYERS && (
+							<div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-1 text-center">
+								<p className="text-lg font-semibold text-white">
+									Waiting for players…
+								</p>
+
+								<p className="text-sm text-slate-400">
+									Need {MIN_PLAYERS} to kick off — {playerCount}/
+									{MIN_PLAYERS} here
+								</p>
+							</div>
+						)}
+
 						{ball && ballStart && (
 							<span
 								className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 text-3xl drop-shadow-lg"

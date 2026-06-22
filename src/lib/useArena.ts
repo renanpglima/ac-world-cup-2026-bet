@@ -12,7 +12,13 @@ import {
 } from 'firebase/database';
 import {useEffect, useRef, useState} from 'react';
 
-import {type Ball, ballPositionAt, isBallHit, nextBall} from './arena';
+import {
+	type Ball,
+	ballPositionAt,
+	isBallHit,
+	MIN_PLAYERS,
+	nextBall,
+} from './arena';
 import {dataPath} from './dataRoot';
 import {auth, db, signedIn} from './firebase';
 
@@ -31,6 +37,7 @@ export function useArena(name: string | null): {
 	cursors: ArenaCursor[];
 	moveCursor: (x: number, y: number) => void;
 	offset: number;
+	playerCount: number;
 	scores: Record<string, number>;
 	tryClaim: (x: number, y: number) => void;
 } {
@@ -97,16 +104,43 @@ export function useArena(name: string | null): {
 		[]
 	);
 
-	// Spawn the very first ball if none exists (transaction → only one wins).
+	// Players present in the arena = the rendered cursors (others) + me, if I'm
+	// identified and connected.
+	const playerCount = cursors.length + (name && uid ? 1 : 0);
+
+	// Announce my presence at center as soon as I'm identified, so I'm counted
+	// before I even move the mouse.
+	useEffect(() => {
+		if (!uid || !name) {
+			return;
+		}
+
+		set(ref(db, `${dataPath('arena/cursors')}/${uid}`), {
+			at: serverTimestamp(),
+			name,
+			x: 0.5,
+			y: 0.5,
+		}).catch(() => undefined);
+	}, [uid, name]);
+
+	// Run the game only with enough players: spawn a ball when the room reaches
+	// MIN_PLAYERS and none exists; clear it if the room drops below that.
 	useEffect(() => {
 		if (!uid) {
 			return;
 		}
 
-		runTransaction(ref(db, dataPath('arena/ball')), (current: Ball | null) =>
-			current ?? nextBall(0, Date.now() + offset)
-		).catch(() => undefined);
-	}, [uid, offset]);
+		const ballRef = ref(db, dataPath('arena/ball'));
+
+		if (playerCount >= MIN_PLAYERS) {
+			runTransaction(ballRef, (current: Ball | null) =>
+				current ?? nextBall(0, Date.now() + offset)
+			).catch(() => undefined);
+		}
+		else if (ball) {
+			set(ballRef, null).catch(() => undefined);
+		}
+	}, [uid, offset, playerCount, ball]);
 
 	// Remove my cursor when I disconnect or leave the page.
 	useEffect(() => {
@@ -179,5 +213,5 @@ export function useArena(name: string | null): {
 			.catch(() => undefined);
 	};
 
-	return {ball, cursors, moveCursor, offset, scores, tryClaim};
+	return {ball, cursors, moveCursor, offset, playerCount, scores, tryClaim};
 }
