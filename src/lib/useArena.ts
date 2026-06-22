@@ -14,16 +14,23 @@ import {useEffect, useRef, useState} from 'react';
 
 import {
 	type Ball,
+	BALL_VALUES,
 	ballPositionAt,
 	isBallHit,
 	MIN_PLAYERS,
 	nextBall,
+	ROUND_MS,
+	START_COUNTDOWN_MS,
+	topScorer,
 } from './arena';
 import {dataPath} from './dataRoot';
 import {auth, db, signedIn} from './firebase';
 
 const HIT_RADIUS = 0.06;
 const MOVE_THROTTLE_MS = 50;
+const TICK_MS = 300;
+
+export type ArenaPhase = 'playing' | 'starting' | 'waiting';
 
 export interface ArenaCursor {
 	name: string;
@@ -32,13 +39,36 @@ export interface ArenaCursor {
 	y: number;
 }
 
+export interface ArenaRound {
+	endsAt: number;
+	lastWinner: string | null;
+	phase: ArenaPhase;
+	startsAt: number;
+}
+
+const DEFAULT_ROUND: ArenaRound = {
+	endsAt: 0,
+	lastWinner: null,
+	phase: 'waiting',
+	startsAt: 0,
+};
+
 export function useArena(name: string | null): {
 	ball: Ball | null;
 	cursors: ArenaCursor[];
+	endsAt: number;
+	isReady: boolean;
+	lastWinner: string | null;
 	moveCursor: (x: number, y: number) => void;
 	offset: number;
+	phase: ArenaPhase;
 	playerCount: number;
+	present: ArenaCursor[];
+	ready: Record<string, boolean>;
+	readyCount: number;
 	scores: Record<string, number>;
+	startsAt: number;
+	toggleReady: () => void;
 	tryClaim: (x: number, y: number) => void;
 } {
 	const [uid, setUid] = useState<string | null>(null);
@@ -46,6 +76,8 @@ export function useArena(name: string | null): {
 	const [ball, setBall] = useState<Ball | null>(null);
 	const [scores, setScores] = useState<Record<string, number>>({});
 	const [offset, setOffset] = useState(0);
+	const [round, setRound] = useState<ArenaRound>(DEFAULT_ROUND);
+	const [ready, setReady] = useState<Record<string, boolean>>({});
 	const lastMove = useRef(0);
 
 	useEffect(() => {
@@ -54,7 +86,6 @@ export function useArena(name: string | null): {
 		return onAuthStateChanged(auth, (user) => setUid(user?.uid ?? null));
 	}, []);
 
-	// Server-clock offset, so every client agrees on the ball's position.
 	useEffect(
 		() =>
 			onValue(ref(db, '.info/serverTimeOffset'), (snapshot) => {
@@ -62,8 +93,6 @@ export function useArena(name: string | null): {
 			}),
 		[]
 	);
-
-	const serverNow = () => Date.now() + offset;
 
 	useEffect(
 		() =>
@@ -75,17 +104,15 @@ export function useArena(name: string | null): {
 					>) ?? {};
 
 				setCursors(
-					Object.entries(value)
-						.filter(([id]) => id !== uid)
-						.map(([id, cursor]) => ({
-							name: cursor.name ?? '',
-							uid: id,
-							x: cursor.x ?? 0,
-							y: cursor.y ?? 0,
-						}))
+					Object.entries(value).map(([id, cursor]) => ({
+						name: cursor.name ?? '',
+						uid: id,
+						x: cursor.x ?? 0,
+						y: cursor.y ?? 0,
+					}))
 				);
 			}),
-		[uid]
+		[]
 	);
 
 	useEffect(
@@ -104,12 +131,33 @@ export function useArena(name: string | null): {
 		[]
 	);
 
-	// Players present in the arena = the rendered cursors (others) + me, if I'm
-	// identified and connected.
-	const playerCount = cursors.length + (name && uid ? 1 : 0);
+	useEffect(
+		() =>
+			onValue(ref(db, dataPath('arena/round')), (snapshot) => {
+				setRound((snapshot.val() as ArenaRound | null) ?? DEFAULT_ROUND);
+			}),
+		[]
+	);
 
-	// Announce my presence at center as soon as I'm identified, so I'm counted
-	// before I even move the mouse.
+	useEffect(
+		() =>
+			onValue(ref(db, dataPath('arena/ready')), (snapshot) => {
+				setReady((snapshot.val() as Record<string, boolean>) ?? {});
+			}),
+		[]
+	);
+
+	const serverNow = () => Date.now() + offset;
+	const others = cursors.filter((cursor) => cursor.uid !== uid);
+	const playerCount = cursors.length;
+	const readyCount = Object.keys(ready).length;
+	const isReady = Boolean(uid && ready[uid]);
+
+	// Latest values for the ticker, read without restarting the interval.
+	const refs = useRef({ball, offset, ready, readyCount, round, scores});
+	refs.current = {ball, offset, ready, readyCount, round, scores};
+
+	// Announce my presence at center as soon as I'm identified.
 	useEffect(() => {
 		if (!uid || !name) {
 			return;
@@ -123,38 +171,119 @@ export function useArena(name: string | null): {
 		}).catch(() => undefined);
 	}, [uid, name]);
 
-	// Run the game only with enough players: spawn a ball when the room reaches
-	// MIN_PLAYERS and none exists; clear it if the room drops below that.
-	useEffect(() => {
-		if (!uid) {
-			return;
-		}
-
-		const ballRef = ref(db, dataPath('arena/ball'));
-
-		if (playerCount >= MIN_PLAYERS) {
-			runTransaction(ballRef, (current: Ball | null) =>
-				current ?? nextBall(0, Date.now() + offset)
-			).catch(() => undefined);
-		}
-		else if (ball) {
-			set(ballRef, null).catch(() => undefined);
-		}
-	}, [uid, offset, playerCount, ball]);
-
-	// Remove my cursor when I disconnect or leave the page.
+	// Remove my cursor + ready on disconnect or leave.
 	useEffect(() => {
 		if (!uid) {
 			return undefined;
 		}
 
-		const node = ref(db, `${dataPath('arena/cursors')}/${uid}`);
+		const cursorNode = ref(db, `${dataPath('arena/cursors')}/${uid}`);
+		const readyNode = ref(db, `${dataPath('arena/ready')}/${uid}`);
 
-		onDisconnect(node).remove();
+		onDisconnect(cursorNode).remove();
+		onDisconnect(readyNode).remove();
 
 		return () => {
-			set(node, null).catch(() => undefined);
+			set(cursorNode, null).catch(() => undefined);
+			set(readyNode, null).catch(() => undefined);
 		};
+	}, [uid]);
+
+	// The round driver: every client ticks; guarded transactions ensure only
+	// one commits each transition.
+	useEffect(() => {
+		if (!uid) {
+			return undefined;
+		}
+
+		const roundNode = ref(db, dataPath('arena/round'));
+		const ballNode = ref(db, dataPath('arena/ball'));
+
+		const id = setInterval(() => {
+			const now = Date.now() + refs.current.offset;
+			const {phase, startsAt, endsAt} = refs.current.round;
+			const rc = refs.current.readyCount;
+
+			if (phase === 'waiting' && rc >= MIN_PLAYERS) {
+				runTransaction(roundNode, (current: ArenaRound | null) => {
+					const value = current ?? DEFAULT_ROUND;
+
+					return value.phase === 'waiting'
+						? {...value, phase: 'starting', startsAt: now + START_COUNTDOWN_MS}
+						: undefined;
+				}).catch(() => undefined);
+			}
+			else if (phase === 'starting' && rc < MIN_PLAYERS) {
+				runTransaction(roundNode, (current: ArenaRound | null) => {
+					const value = current ?? DEFAULT_ROUND;
+
+					return value.phase === 'starting'
+						? {...value, phase: 'waiting', startsAt: 0}
+						: undefined;
+				}).catch(() => undefined);
+			}
+			else if (phase === 'starting' && now >= startsAt) {
+				runTransaction(roundNode, (current: ArenaRound | null) => {
+					const value = current ?? DEFAULT_ROUND;
+
+					if (value.phase !== 'starting' || now < value.startsAt) {
+						return undefined;
+					}
+
+					return {...value, endsAt: now + ROUND_MS, phase: 'playing'};
+				})
+					.then((result) => {
+						const ok =
+							result.committed &&
+							(result.snapshot.val() as ArenaRound | null)?.phase ===
+								'playing';
+
+						if (ok) {
+							set(ref(db, dataPath('arena/scores')), null).catch(
+								() => undefined
+							);
+							runTransaction(ballNode, (current: Ball | null) =>
+								current ?? nextBall(0, now)
+							).catch(() => undefined);
+						}
+					})
+					.catch(() => undefined);
+			}
+			else if (phase === 'playing' && now >= endsAt) {
+				const winner = topScorer(refs.current.scores);
+
+				runTransaction(roundNode, (current: ArenaRound | null) => {
+					const value = current ?? DEFAULT_ROUND;
+
+					if (value.phase !== 'playing' || now < value.endsAt) {
+						return undefined;
+					}
+
+					return {...value, endsAt: 0, lastWinner: winner, phase: 'waiting'};
+				})
+					.then((result) => {
+						const ok =
+							result.committed &&
+							(result.snapshot.val() as ArenaRound | null)?.phase ===
+								'waiting';
+
+						if (ok) {
+							set(ballNode, null).catch(() => undefined);
+							set(ref(db, dataPath('arena/ready')), null).catch(
+								() => undefined
+							);
+						}
+					})
+					.catch(() => undefined);
+			}
+			else if (phase === 'playing' && !refs.current.ball) {
+				runTransaction(ballNode, (current: Ball | null) =>
+					current ?? nextBall(0, now)
+				).catch(() => undefined);
+			}
+		}, TICK_MS);
+
+		return () => clearInterval(id);
 	}, [uid]);
 
 	const moveCursor = (x: number, y: number) => {
@@ -178,9 +307,23 @@ export function useArena(name: string | null): {
 		}).catch(() => undefined);
 	};
 
+	const toggleReady = () => {
+		if (!uid || !name || round.phase === 'playing') {
+			return;
+		}
+
+		set(
+			ref(db, `${dataPath('arena/ready')}/${uid}`),
+			ready[uid] ? null : true
+		).catch(() => undefined);
+	};
+
 	const tryClaim = (x: number, y: number) => {
 		if (
+			round.phase !== 'playing' ||
 			!name ||
+			!uid ||
+			!ready[uid] ||
 			!ball ||
 			ball.claimedBy ||
 			!isBallHit(x, y, ballPositionAt(ball, serverNow()), HIT_RADIUS)
@@ -188,10 +331,11 @@ export function useArena(name: string | null): {
 			return;
 		}
 
-		const ballRef = ref(db, dataPath('arena/ball'));
+		const ballNode = ref(db, dataPath('arena/ball'));
 		const claimedId = ball.id;
+		const value = BALL_VALUES[ball.kind] ?? 1;
 
-		runTransaction(ballRef, (current: Ball | null) => {
+		runTransaction(ballNode, (current: Ball | null) => {
 			if (!current || current.id !== claimedId || current.claimedBy) {
 				return undefined;
 			}
@@ -205,13 +349,30 @@ export function useArena(name: string | null): {
 
 				if (committed) {
 					update(ref(db, dataPath('arena/scores')), {
-						[name]: increment(1),
+						[name]: increment(value),
 					});
-					set(ballRef, nextBall(claimedId, Date.now() + offset));
+					set(ballNode, nextBall(claimedId, Date.now() + offset));
 				}
 			})
 			.catch(() => undefined);
 	};
 
-	return {ball, cursors, moveCursor, offset, playerCount, scores, tryClaim};
+	return {
+		ball,
+		cursors: others,
+		endsAt: round.endsAt,
+		isReady,
+		lastWinner: round.lastWinner,
+		moveCursor,
+		offset,
+		phase: round.phase,
+		playerCount,
+		present: cursors,
+		ready,
+		readyCount,
+		scores,
+		startsAt: round.startsAt,
+		toggleReady,
+		tryClaim,
+	};
 }
