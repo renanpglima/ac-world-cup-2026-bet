@@ -1,6 +1,9 @@
+export type BallKind = 'basket' | 'gold' | 'normal';
+
 export interface Ball {
 	claimedBy: string | null;
 	id: number;
+	kind: BallKind;
 	t0: number;
 	vx: number;
 	vy: number;
@@ -16,6 +19,22 @@ export const BALL_SPEED = 0.35;
 
 // The game only runs with at least this many players in the arena.
 export const MIN_PLAYERS = 3;
+
+// A round lasts this long; the start countdown after 3 are ready.
+export const ROUND_MS = 120000;
+export const START_COUNTDOWN_MS = 5000;
+
+export const BALL_VALUES: Record<BallKind, number> = {
+	basket: 2,
+	gold: 5,
+	normal: 1,
+};
+
+export const BALL_EMOJI: Record<BallKind, string> = {
+	basket: '🏀',
+	gold: '⚽',
+	normal: '⚽',
+};
 
 // A start position in the inner field, away from the edges (fractions 0–1).
 export function randomBallPosition(): {x: number; y: number} {
@@ -86,7 +105,16 @@ export function nextBall(prevId: number, nowMs: number): Ball {
 	const {x, y} = randomBallPosition();
 	const {vx, vy} = randomVelocity();
 
-	return {claimedBy: null, id: prevId + 1, t0: nowMs, vx, vy, x0: x, y0: y};
+	return {
+		claimedBy: null,
+		id: prevId + 1,
+		kind: pickBallKind(Math.random()),
+		t0: nowMs,
+		vx,
+		vy,
+		x0: x,
+		y0: y,
+	};
 }
 
 export function sortScores(
@@ -95,4 +123,43 @@ export function sortScores(
 	return Object.entries(scores).sort(
 		(a, b) => b[1] - a[1] || a[0].localeCompare(b[0])
 	);
+}
+
+// Weighted ball kind: gold ~10%, basket ~25%, normal ~65%.
+export function pickBallKind(rand: number): BallKind {
+	if (rand < 0.1) {
+		return 'gold';
+	}
+
+	if (rand < 0.35) {
+		return 'basket';
+	}
+
+	return 'normal';
+}
+
+// The round's winner (highest score, tie broken by name); null if no one scored.
+export function topScorer(scores: Record<string, number>): string | null {
+	const [top] = sortScores(scores);
+
+	return top && top[1] > 0 ? top[0] : null;
+}
+
+export function formatCountdown(ms: number): string {
+	const total = Math.max(0, Math.ceil(ms / 1000));
+	const minutes = Math.floor(total / 60);
+	const seconds = total % 60;
+
+	return `${minutes}:${String(seconds).padStart(2, '0')}`;
+}
+
+// A stable, distinct color per player, hashed from their name.
+export function cursorColor(name: string): string {
+	let hash = 0;
+
+	for (let i = 0; i < name.length; i += 1) {
+		hash = (hash * 31 + name.charCodeAt(i)) % 360;
+	}
+
+	return `hsl(${hash}, 70%, 60%)`;
 }

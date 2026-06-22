@@ -112,6 +112,7 @@ describe('nextBall', () => {
 			BALL_SPEED,
 			10
 		);
+		expect(['normal', 'basket', 'gold']).toContain(ball.kind);
 	});
 });
 
@@ -126,5 +127,57 @@ describe('sortScores', () => {
 
 	it('handles empty', () => {
 		expect(sortScores({})).toEqual([]);
+	});
+});
+
+import {
+	BALL_VALUES,
+	cursorColor,
+	formatCountdown,
+	pickBallKind,
+	topScorer,
+} from './arena';
+
+describe('pickBallKind', () => {
+	it('maps the weight bands', () => {
+		expect(pickBallKind(0)).toBe('gold');
+		expect(pickBallKind(0.09)).toBe('gold');
+		expect(pickBallKind(0.1)).toBe('basket');
+		expect(pickBallKind(0.34)).toBe('basket');
+		expect(pickBallKind(0.35)).toBe('normal');
+		expect(pickBallKind(0.99)).toBe('normal');
+	});
+});
+
+describe('BALL_VALUES', () => {
+	it('scores 1 / 2 / 5', () => {
+		expect(BALL_VALUES).toEqual({basket: 2, gold: 5, normal: 1});
+	});
+});
+
+describe('topScorer', () => {
+	it('returns the highest, breaking ties by name', () => {
+		expect(topScorer({Ana: 3, Bob: 5, Cid: 5})).toBe('Bob');
+	});
+
+	it('is null when empty or all zero', () => {
+		expect(topScorer({})).toBeNull();
+		expect(topScorer({Ana: 0})).toBeNull();
+	});
+});
+
+describe('formatCountdown', () => {
+	it('formats m:ss and clamps at zero', () => {
+		expect(formatCountdown(120000)).toBe('2:00');
+		expect(formatCountdown(65000)).toBe('1:05');
+		expect(formatCountdown(0)).toBe('0:00');
+		expect(formatCountdown(-500)).toBe('0:00');
+	});
+});
+
+describe('cursorColor', () => {
+	it('is deterministic and returns an hsl color', () => {
+		expect(cursorColor('Adriano')).toBe(cursorColor('Adriano'));
+		expect(cursorColor('Adriano')).toMatch(/^hsl\(\d+, 70%, 60%\)$/);
 	});
 });
