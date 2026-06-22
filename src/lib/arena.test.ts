@@ -64,6 +64,7 @@ describe('ballPositionAt', () => {
 	const ball: Ball = {
 		claimedBy: null,
 		id: 1,
+		kind: 'normal',
 		t0: 1000,
 		vx: 0.1,
 		vy: 0,
