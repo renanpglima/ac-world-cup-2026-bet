@@ -124,7 +124,7 @@ export function ChatPanel({
 	};
 
 	return (
-		<div className="fixed bottom-0 right-0 top-14 z-50 flex w-full flex-col overflow-hidden border-l border-white/10 bg-slate-900 shadow-2xl sm:top-0 sm:w-80 md:w-96">
+		<div className="fixed inset-y-0 left-14 right-0 z-50 flex flex-col overflow-hidden border-l border-white/10 bg-slate-900 shadow-2xl sm:left-auto sm:w-80 md:w-96">
 			<div className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-3">
 				<div className="min-w-0">
 					<p className="text-[10px] font-semibold uppercase tracking-wider text-emerald-400">
