@@ -68,7 +68,12 @@ export function ChatPanel({
 	}, [messages.length]);
 
 	useEffect(() => {
-		inputRef.current?.focus();
+		// Only auto-focus on larger screens. On mobile it pops the soft keyboard
+		// the moment the panel opens, which resizes the viewport and adds a
+		// scrollbar.
+		if (window.matchMedia('(min-width: 640px)').matches) {
+			inputRef.current?.focus();
+		}
 	}, []);
 
 	const submit = () => {
@@ -112,7 +117,7 @@ export function ChatPanel({
 	};
 
 	return (
-		<div className="fixed inset-y-0 right-0 z-50 flex w-80 flex-col border-l border-white/10 bg-slate-900 shadow-2xl md:w-96">
+		<div className="fixed inset-y-0 right-0 z-50 flex w-full flex-col border-l border-white/10 bg-slate-900 shadow-2xl sm:w-80 md:w-96">
 			<div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
 				<div className="min-w-0">
 					<p className="text-[10px] font-semibold uppercase tracking-wider text-emerald-400">
@@ -223,6 +228,8 @@ export function ChatPanel({
 			{identity ? (
 				<div className="flex gap-2 border-t border-white/10 p-3">
 					<input
+						autoComplete="off"
+						autoCorrect="off"
 						className="min-w-0 flex-1 rounded-xl bg-white/10 px-3 py-2 text-sm text-white placeholder-slate-500 outline-none focus:ring-1 focus:ring-emerald-400"
 						maxLength={200}
 						onChange={(e) => setDraft(e.target.value)}
@@ -234,6 +241,7 @@ export function ChatPanel({
 						}}
 						placeholder="Message or /help"
 						ref={inputRef}
+						spellCheck={false}
 						value={draft}
 					/>
 
