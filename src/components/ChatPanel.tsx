@@ -140,6 +140,16 @@ export function ChatPanel({
 					</p>
 				) : (
 					messages.map((msg) => {
+						if (msg.name === '⚽ Match Bot') {
+							return (
+								<div className="flex justify-center" key={msg.id}>
+									<div className="max-w-[90%] rounded-xl bg-emerald-500/10 px-3 py-1.5 text-center text-xs font-medium text-emerald-200">
+										{msg.text}
+									</div>
+								</div>
+							);
+						}
+
 						const isMe = msg.name === identity;
 						const timeLabel = formatMessageTime(msg.at, Date.now());
 
