@@ -155,7 +155,7 @@ export default function App() {
 	const [approvals, setApprovals] = useState<Record<string, Approval>>({});
 	useEffect(
 		() =>
-			onValue(ref(db, 'approvals'), (snapshot) => {
+			onValue(ref(db, dataPath('approvals')), (snapshot) => {
 				setApprovals((snapshot.val() as Record<string, Approval>) ?? {});
 			}),
 		[]
@@ -166,7 +166,7 @@ export default function App() {
 	const [profiles, setProfiles] = useState<Record<string, Profile>>({});
 	useEffect(
 		() =>
-			onValue(ref(db, 'profiles'), (snapshot) => {
+			onValue(ref(db, dataPath('profiles')), (snapshot) => {
 				setProfiles((snapshot.val() as Record<string, Profile>) ?? {});
 			}),
 		[]

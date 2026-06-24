@@ -4,6 +4,7 @@ import {onValue, ref, serverTimestamp, set, update} from 'firebase/database';
 import {useEffect, useState} from 'react';
 
 import {isOwner as checkOwner} from './auth';
+import {dataPath} from './dataRoot';
 import {auth, db, signInWithGoogle, signOutUser} from './firebase';
 import {buildProfileUpdate, type Profile} from './profiles';
 
@@ -47,18 +48,21 @@ export function useAuth(): AuthState {
 		}
 
 		update(
-			ref(db, `profiles/${user.uid}`),
+			ref(db, `${dataPath('profiles')}/${user.uid}`),
 			buildProfileUpdate(user, Date.now())
 		).catch(() => undefined);
 
 		// lastSeenAt as a server timestamp (overwrites the optimistic Date.now()).
-		update(ref(db, `profiles/${user.uid}`), {
+		update(ref(db, `${dataPath('profiles')}/${user.uid}`), {
 			lastSeenAt: serverTimestamp(),
 		}).catch(() => undefined);
 
-		return onValue(ref(db, `profiles/${user.uid}`), (snapshot) => {
-			setProfile((snapshot.val() as Profile) ?? null);
-		});
+		return onValue(
+			ref(db, `${dataPath('profiles')}/${user.uid}`),
+			(snapshot) => {
+				setProfile((snapshot.val() as Profile) ?? null);
+			}
+		);
 	}, [user]);
 
 	const setClaim = (slug: string | null) => {
@@ -66,7 +70,7 @@ export function useAuth(): AuthState {
 			return;
 		}
 
-		set(ref(db, `profiles/${user.uid}/claim`), slug);
+		set(ref(db, `${dataPath('profiles')}/${user.uid}/claim`), slug);
 	};
 
 	const requestKnockout = () => {
@@ -74,7 +78,7 @@ export function useAuth(): AuthState {
 			return;
 		}
 
-		set(ref(db, `profiles/${user.uid}/wantsKnockout`), true);
+		set(ref(db, `${dataPath('profiles')}/${user.uid}/wantsKnockout`), true);
 	};
 
 	const setNickname = (nickname: string) => {
@@ -82,7 +86,10 @@ export function useAuth(): AuthState {
 			return;
 		}
 
-		set(ref(db, `profiles/${user.uid}/nickname`), nickname.trim() || null);
+		set(
+			ref(db, `${dataPath('profiles')}/${user.uid}/nickname`),
+			nickname.trim() || null
+		);
 	};
 
 	return {

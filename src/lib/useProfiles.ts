@@ -8,6 +8,7 @@ import {
 	type Profile,
 	type UserRow,
 } from './profiles';
+import {dataPath} from './dataRoot';
 import {db} from './firebase';
 
 export interface ProfilesApi {
@@ -28,7 +29,7 @@ export function useProfiles(): ProfilesApi {
 
 	useEffect(
 		() =>
-			onValue(ref(db, 'profiles'), (snapshot) => {
+			onValue(ref(db, dataPath('profiles')), (snapshot) => {
 				setProfiles((snapshot.val() as Record<string, Profile>) ?? {});
 			}),
 		[]
@@ -36,7 +37,7 @@ export function useProfiles(): ProfilesApi {
 
 	useEffect(
 		() =>
-			onValue(ref(db, 'approvals'), (snapshot) => {
+			onValue(ref(db, dataPath('approvals')), (snapshot) => {
 				setApprovals(
 					(snapshot.val() as Record<string, Approval>) ?? {}
 				);
@@ -54,28 +55,32 @@ export function useProfiles(): ProfilesApi {
 		// Owner writes the approved link; the claim now equals the participant
 		// so the row stops being pending.
 		approve: (uid, slug) => {
-			update(ref(db, `approvals/${uid}`), {participant: slug});
-			set(ref(db, `profiles/${uid}/claim`), slug);
+			update(ref(db, `${dataPath('approvals')}/${uid}`), {
+				participant: slug,
+			});
+			set(ref(db, `${dataPath('profiles')}/${uid}/claim`), slug);
 		},
 		// Owner lets a sign-up into the knockout pool.
 		approveKnockout: (uid) => {
-			update(ref(db, `approvals/${uid}`), {knockout: true});
+			update(ref(db, `${dataPath('approvals')}/${uid}`), {knockout: true});
 		},
 		profiles,
 		// Reject clears the user's claim (owner may write profiles per rules).
 		reject: (uid) => {
-			set(ref(db, `profiles/${uid}/claim`), null);
+			set(ref(db, `${dataPath('profiles')}/${uid}/claim`), null);
 		},
 		// Reject clears the knockout request (owner may write profiles per rules).
 		rejectKnockout: (uid) => {
-			set(ref(db, `profiles/${uid}/wantsKnockout`), null);
+			set(ref(db, `${dataPath('profiles')}/${uid}/wantsKnockout`), null);
 		},
 		rows,
 		setBlocked: (uid, blocked) => {
-			update(ref(db, `approvals/${uid}`), {blocked});
+			update(ref(db, `${dataPath('approvals')}/${uid}`), {blocked});
 		},
 		unlink: (uid) => {
-			update(ref(db, `approvals/${uid}`), {participant: null});
+			update(ref(db, `${dataPath('approvals')}/${uid}`), {
+				participant: null,
+			});
 		},
 	};
 }
