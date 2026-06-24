@@ -17,6 +17,7 @@ type PicksTree = Record<string, Record<string, KnockoutPick>>;
 // everyone's picks show in the match card; each user writes only their own.
 export function useKnockoutPicks(identity: KnockoutIdentity | null): {
 	byMatch: Record<number, KnockoutPick[]>;
+	byUid: Record<string, Record<number, KnockoutPick>>;
 	mine: Record<number, KnockoutPick>;
 	setPick: (matchNo: number, p1: number, p2: number) => void;
 } {
@@ -31,6 +32,7 @@ export function useKnockoutPicks(identity: KnockoutIdentity | null): {
 	);
 
 	const byMatch: Record<number, KnockoutPick[]> = {};
+	const byUid: Record<string, Record<number, KnockoutPick>> = {};
 	const mine: Record<number, KnockoutPick> = {};
 
 	for (const [uid, matches] of Object.entries(tree)) {
@@ -39,6 +41,7 @@ export function useKnockoutPicks(identity: KnockoutIdentity | null): {
 			const entry: KnockoutPick = {...pick, uid};
 
 			(byMatch[num] ??= []).push(entry);
+			(byUid[uid] ??= {})[num] = entry;
 
 			if (identity && uid === identity.uid) {
 				mine[num] = entry;
@@ -63,5 +66,5 @@ export function useKnockoutPicks(identity: KnockoutIdentity | null): {
 		);
 	};
 
-	return {byMatch, mine, setPick};
+	return {byMatch, byUid, mine, setPick};
 }

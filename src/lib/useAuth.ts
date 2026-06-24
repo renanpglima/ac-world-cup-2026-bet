@@ -12,7 +12,9 @@ export interface AuthState {
 	isOwner: boolean;
 	loading: boolean;
 	profile: Profile | null;
+	requestKnockout: () => void;
 	setClaim: (slug: string | null) => void;
+	setNickname: (nickname: string) => void;
 	signIn: () => void;
 	signOut: () => void;
 	user: User | null;
@@ -67,12 +69,30 @@ export function useAuth(): AuthState {
 		set(ref(db, `profiles/${user.uid}/claim`), slug);
 	};
 
+	const requestKnockout = () => {
+		if (!user || user.isAnonymous) {
+			return;
+		}
+
+		set(ref(db, `profiles/${user.uid}/wantsKnockout`), true);
+	};
+
+	const setNickname = (nickname: string) => {
+		if (!user || user.isAnonymous) {
+			return;
+		}
+
+		set(ref(db, `profiles/${user.uid}/nickname`), nickname.trim() || null);
+	};
+
 	return {
 		isAnonymous: user?.isAnonymous ?? true,
 		isOwner: checkOwner(user?.email, user?.emailVerified),
 		loading,
 		profile,
+		requestKnockout,
 		setClaim,
+		setNickname,
 		signIn: () => {
 			signInWithGoogle().catch(() => undefined);
 		},
