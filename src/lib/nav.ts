@@ -22,9 +22,13 @@ export const NAV_ITEMS: NavItem[] = [
 
 // The item matching the current route — exact for "/", prefix for the rest, so
 // /bets/adriano still resolves to "Bets".
+// Profile is reachable from the header avatar, not the menu, so it has no
+// NAV_ITEM — give it a title here instead of falling back to "Leaderboard".
+const OFF_MENU: NavItem[] = [{icon: '👤', label: 'Perfil', to: '/profile'}];
+
 export function currentNavItem(pathname: string): NavItem {
 	return (
-		NAV_ITEMS.find((item) =>
+		[...NAV_ITEMS, ...OFF_MENU].find((item) =>
 			item.end ? pathname === item.to : pathname.startsWith(item.to)
 		) ?? NAV_ITEMS[0]
 	);
