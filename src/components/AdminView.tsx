@@ -1,6 +1,6 @@
 // src/components/AdminView.tsx
 import {pendingKnockout} from '../lib/knockoutStandings';
-import {NAV_ITEMS, orderMenu} from '../lib/nav';
+import {isMenuItemHidden, NAV_ITEMS, orderMenu} from '../lib/nav';
 import {useMenu} from '../lib/useMenu';
 import {useProfiles} from '../lib/useProfiles';
 import {useSettings} from '../lib/useSettings';
@@ -23,7 +23,6 @@ export function AdminView() {
 
 	const {config: menuConfig, move, setHidden} = useMenu();
 	const menuRows = orderMenu(NAV_ITEMS, menuConfig);
-	const menuHidden = menuConfig.hidden ?? {};
 
 	const {chatLoginOnly, setChatLoginOnly} = useSettings();
 
@@ -228,7 +227,7 @@ export function AdminView() {
 
 				<ul className="space-y-2">
 					{menuRows.map((item, index) => {
-						const isHidden = Boolean(menuHidden[item.id]);
+						const isHidden = isMenuItemHidden(item, menuConfig);
 
 						return (
 							<li

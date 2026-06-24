@@ -2,6 +2,7 @@ export interface NavItem {
 	badge?: string;
 	desktopOnly?: boolean;
 	end?: boolean;
+	hiddenByDefault?: boolean;
 	icon: string;
 	id: string;
 	label: string;
@@ -23,7 +24,13 @@ export const NAV_ITEMS: NavItem[] = [
 	{icon: '🗂️', id: 'groups', label: 'Groups', to: '/groups'},
 	{icon: '🎯', id: 'bets', label: 'Participants', to: '/bets'},
 	{icon: '⚔️', id: 'h2h', label: 'Head to Head', to: '/h2h'},
-	{icon: '📊', id: 'stats', label: 'Stats', to: '/stats'},
+	{
+		hiddenByDefault: true,
+		icon: '🏅',
+		id: 'groupstage',
+		label: 'Group Stage',
+		to: '/group-stage',
+	},
 	{desktopOnly: true, icon: '🎮', id: 'arena', label: 'Arena', to: '/arena'},
 	{icon: '📜', id: 'rules', label: 'Rules', to: '/rules'},
 ];
@@ -61,11 +68,20 @@ export function orderMenu(items: NavItem[], config: MenuConfig): NavItem[] {
 	return result;
 }
 
+// Whether an item is hidden from the nav: the owner's explicit choice wins;
+// otherwise items flagged `hiddenByDefault` start hidden until the owner reveals
+// them from the admin menu manager.
+export function isMenuItemHidden(item: NavItem, config: MenuConfig): boolean {
+	const explicit = config.hidden?.[item.id];
+
+	return explicit === undefined ? Boolean(item.hiddenByDefault) : explicit;
+}
+
 // The visible menu, ordered — what the nav renders.
 export function visibleMenu(items: NavItem[], config: MenuConfig): NavItem[] {
-	const hidden = config.hidden ?? {};
-
-	return orderMenu(items, config).filter((item) => !hidden[item.id]);
+	return orderMenu(items, config).filter(
+		(item) => !isMenuItemHidden(item, config)
+	);
 }
 
 // The item matching the current route — exact for "/", prefix for the rest, so

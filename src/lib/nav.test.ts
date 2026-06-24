@@ -36,4 +36,13 @@ describe('visibleMenu', () => {
 			)
 		).toEqual(['c', 'a']);
 	});
+
+	it('hides hiddenByDefault items until the owner reveals them', () => {
+		const items = [item('a'), {...item('b'), hiddenByDefault: true}];
+
+		expect(visibleMenu(items, {}).map((i) => i.id)).toEqual(['a']);
+		expect(
+			visibleMenu(items, {hidden: {b: false}}).map((i) => i.id)
+		).toEqual(['a', 'b']);
+	});
 });

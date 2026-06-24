@@ -31,12 +31,13 @@ import {ProfileView} from './components/ProfileView';
 import {NavDrawer} from './components/NavDrawer';
 import {ReactionBurst} from './components/ReactionBurst';
 import {RulesView} from './components/RulesView';
-import {StatsView} from './components/StatsView';
+import {GroupStageView} from './components/GroupStageView';
 import {trackEvent, trackPageView} from './lib/analytics';
 import {acPage, acTrack, initAnalyticsCloud} from './lib/analyticsCloud';
 import {dataPath} from './lib/dataRoot';
 import {participantSlug} from './lib/auth';
 import {buildEvolution} from './lib/evolution';
+import {buildGroupStageAwards} from './lib/groupStageAwards';
 import {db} from './lib/firebase';
 import {getMatchStatus} from './lib/games';
 import {detectLocale, localize, stripEmoji} from './lib/locale';
@@ -619,6 +620,11 @@ export default function App() {
 		[participants, games]
 	);
 
+	const groupStageAwards = useMemo(
+		() => buildGroupStageAwards(timeline, rows),
+		[timeline, rows]
+	);
+
 	const liveGames = useMemo(
 		() =>
 			cards
@@ -860,12 +866,20 @@ export default function App() {
 
 					<Route
 						element={
-							<StatsView
+							<GroupStageView
+								awards={groupStageAwards}
 								evolution={evolution}
+								leader={leader}
+								onHype={hype}
 								stats={stats}
 								timeline={timeline}
 							/>
 						}
+						path="/group-stage"
+					/>
+
+					<Route
+						element={<Navigate replace to="/group-stage" />}
 						path="/stats"
 					/>
 
