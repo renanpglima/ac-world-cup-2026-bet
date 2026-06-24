@@ -1,6 +1,7 @@
 import {useParams} from 'react-router-dom';
 
 import type {Game, Participant} from '../lib/types';
+import type {KnockoutMatch} from '../lib/useKnockout';
 import {ParticipantView} from './ParticipantView';
 
 // The /bets/:id route: resolves the participant from the URL (id = lowercased
@@ -8,12 +9,19 @@ import {ParticipantView} from './ParticipantView';
 // the menu's Participants dropdown.
 export function BetsView({
 	games,
+	knockoutMatches,
+	knockoutPicksByName,
 	myReactions,
 	onReact,
 	participants,
 	reactions,
 }: {
 	games: Game[];
+	knockoutMatches: KnockoutMatch[];
+	knockoutPicksByName: Record<
+		string,
+		Record<number, {p1: number; p2: number}>
+	>;
 	myReactions: Record<string, string[]>;
 	onReact: (name: string, emoji: string) => void;
 	participants: Participant[];
@@ -29,6 +37,8 @@ export function BetsView({
 	return (
 		<ParticipantView
 			games={games}
+			knockoutMatches={knockoutMatches}
+			knockoutPicks={knockoutPicksByName[active.name] ?? {}}
 			myReactions={myReactions[active.name] ?? []}
 			onReact={(emoji) => onReact(active.name, emoji)}
 			participant={active}

@@ -1,15 +1,22 @@
 import {useMemo} from 'react';
 
+import {flagCode} from '../lib/flags';
 import {buildParticipantStats} from '../lib/participantStats';
 import {scoreParticipant} from '../lib/ranking';
+import {scorePrediction} from '../lib/scoring';
 import type {Game, Participant} from '../lib/types';
+import type {KnockoutMatch} from '../lib/useKnockout';
 import {Avatar} from './Avatar';
+import {Flag} from './Flag';
 import {MatchRow} from './MatchRow';
 import {ParticipantStatsPanel} from './ParticipantStatsPanel';
 import {Reactions} from './Reactions';
+import {TIER_STYLES} from './StatusChip';
 
 interface ParticipantViewProps {
 	games: Game[];
+	knockoutMatches: KnockoutMatch[];
+	knockoutPicks: Record<number, {p1: number; p2: number}>;
 	myReactions: string[];
 	onReact: (emoji: string) => void;
 	participant: Participant;
@@ -19,12 +26,17 @@ interface ParticipantViewProps {
 
 export function ParticipantView({
 	games,
+	knockoutMatches,
+	knockoutPicks,
 	myReactions,
 	onReact,
 	participant,
 	participants,
 	reactions,
 }: ParticipantViewProps) {
+	const knockoutBets = knockoutMatches
+		.filter((match) => knockoutPicks[match.matchNumber])
+		.sort((a, b) => a.matchNumber - b.matchNumber);
 	const {exactCount, scored, total} = scoreParticipant(participant, games);
 
 	const stats = useMemo(
@@ -95,33 +107,158 @@ export function ParticipantView({
 				stats={stats}
 			/>
 
-			<div className="overflow-x-auto rounded-2xl border border-white/10 bg-white/5">
-				<table className="w-full min-w-[640px] text-left">
-					<thead>
-						<tr className="border-b border-white/10 text-xs font-semibold uppercase tracking-wider text-slate-400">
-							<th className="px-3 py-3">#</th>
+			{scored.length > 0 && (
+				<div className="overflow-x-auto rounded-2xl border border-white/10 bg-white/5">
+					<table className="w-full min-w-[640px] text-left">
+						<thead>
+							<tr className="border-b border-white/10 text-xs font-semibold uppercase tracking-wider text-slate-400">
+								<th className="px-3 py-3">#</th>
 
-							<th className="px-3 py-3">Group</th>
+								<th className="px-3 py-3">Group</th>
 
-							<th className="hidden px-3 py-3 sm:table-cell">Date</th>
+								<th className="hidden px-3 py-3 sm:table-cell">
+									Date
+								</th>
 
-							<th className="px-3 py-3">Prediction</th>
+								<th className="px-3 py-3">Prediction</th>
 
-							<th className="px-3 py-3 text-center">Result</th>
+								<th className="px-3 py-3 text-center">Result</th>
 
-							<th className="px-3 py-3 text-center">Status</th>
+								<th className="px-3 py-3 text-center">Status</th>
 
-							<th className="px-3 py-3 text-right">Points</th>
-						</tr>
-					</thead>
+								<th className="px-3 py-3 text-right">Points</th>
+							</tr>
+						</thead>
 
-					<tbody>
-						{scored.map((item) => (
-							<MatchRow key={item.prediction.matchNo} scored={item} />
-						))}
-					</tbody>
-				</table>
-			</div>
+						<tbody>
+							{scored.map((item) => (
+								<MatchRow
+									key={item.prediction.matchNo}
+									scored={item}
+								/>
+							))}
+						</tbody>
+					</table>
+				</div>
+			)}
+
+			{knockoutBets.length > 0 && (
+				<div>
+					<h3 className="mb-2 px-1 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">
+						Knockout
+					</h3>
+
+					<div className="overflow-x-auto rounded-2xl border border-white/10 bg-white/5">
+						<table className="w-full text-left">
+							<thead>
+								<tr className="border-b border-white/10 text-xs font-semibold uppercase tracking-wider text-slate-400">
+									<th className="px-3 py-3">Round</th>
+
+									<th className="px-3 py-3">Match</th>
+
+									<th className="px-3 py-3 text-center">Pick</th>
+
+									<th className="px-3 py-3 text-center">
+										Result
+									</th>
+
+									<th className="px-3 py-3 text-right">Points</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								{knockoutBets.map((match) => {
+									const pick = knockoutPicks[match.matchNumber];
+									const resolved =
+										match.scoreA != null &&
+										match.scoreB != null;
+									const points = resolved
+										? scorePrediction(
+												pick.p1,
+												pick.p2,
+												match.scoreA as number,
+												match.scoreB as number
+											)
+										: null;
+
+									return (
+										<tr
+											className="border-b border-white/5 last:border-0"
+											key={match.matchNumber}
+										>
+											<td className="px-3 py-2.5 text-xs text-slate-400">
+												{match.stage}
+											</td>
+
+											<td className="px-3 py-2.5">
+												<span className="flex items-center gap-1.5 text-sm text-white">
+													{flagCode(
+														match.teamA ?? ''
+													) && (
+														<Flag
+															className="h-3 w-4"
+															team={
+																match.teamA as string
+															}
+														/>
+													)}
+
+													<span className="truncate">
+														{match.teamA ?? match.a}
+													</span>
+
+													<span className="text-slate-500">
+														×
+													</span>
+
+													<span className="truncate">
+														{match.teamB ?? match.b}
+													</span>
+
+													{flagCode(
+														match.teamB ?? ''
+													) && (
+														<Flag
+															className="h-3 w-4"
+															team={
+																match.teamB as string
+															}
+														/>
+													)}
+												</span>
+											</td>
+
+											<td className="px-3 py-2.5 text-center font-display font-bold text-white">
+												{pick.p1}–{pick.p2}
+											</td>
+
+											<td className="px-3 py-2.5 text-center text-slate-300">
+												{resolved
+													? `${match.scoreA}–${match.scoreB}`
+													: '—'}
+											</td>
+
+											<td className="px-3 py-2.5 text-right">
+												{points !== null ? (
+													<span
+														className={`inline-block min-w-8 rounded-full px-1.5 py-0.5 text-center text-xs font-bold ${TIER_STYLES[points]}`}
+													>
+														{points}
+													</span>
+												) : (
+													<span className="text-slate-600">
+														—
+													</span>
+												)}
+											</td>
+										</tr>
+									);
+								})}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }

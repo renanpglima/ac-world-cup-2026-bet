@@ -561,6 +561,20 @@ export default function App() {
 		[participants, knockoutRosterRows]
 	);
 
+	// Each participant's knockout picks (by display name), for their profile page.
+	const knockoutPicksByName = useMemo(() => {
+		const map: Record<
+			string,
+			Record<number, {p1: number; p2: number}>
+		> = {};
+
+		for (const row of knockoutRosterRows) {
+			map[row.name] = knockoutPicksByUid[row.uid] ?? {};
+		}
+
+		return map;
+	}, [knockoutRosterRows, knockoutPicksByUid]);
+
 	const knockoutLeader = useMemo(
 		() =>
 			buildKnockoutLeaderStats(
@@ -822,6 +836,8 @@ export default function App() {
 						element={
 							<BetsView
 								games={games}
+								knockoutMatches={knockoutMatches}
+								knockoutPicksByName={knockoutPicksByName}
 								myReactions={mine}
 								onReact={react}
 								participants={menuParticipants}
