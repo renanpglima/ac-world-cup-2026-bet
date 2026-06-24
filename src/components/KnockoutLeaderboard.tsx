@@ -13,8 +13,8 @@ export function KnockoutLeaderboard({
 	if (rows.length === 0) {
 		return (
 			<p className="rounded-2xl border border-white/10 bg-white/5 px-6 py-12 text-center text-sm text-slate-400">
-				Ninguém no mata-mata ainda — entre pelo seu perfil e os pontos
-				aparecem quando os jogos começarem a ser decididos.
+				Nobody in the knockout yet — join from your profile and points
+				appear once games start to be decided.
 			</p>
 		);
 	}
@@ -44,7 +44,7 @@ export function KnockoutLeaderboard({
 					</span>
 
 					<span className="shrink-0 text-[10px] text-slate-500">
-						{row.exact} exatos · {row.played} jogos
+						{row.exact} exact · {row.played} games
 					</span>
 
 					<span className="font-display text-base font-bold text-amber-300">

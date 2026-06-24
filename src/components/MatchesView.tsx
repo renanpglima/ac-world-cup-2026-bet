@@ -175,7 +175,7 @@ function KnockoutPickRow({
 	if (!entry.pickable) {
 		return (
 			<div className="mb-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-center text-xs text-slate-500">
-				Aguardando os times
+				Waiting for teams
 			</div>
 		);
 	}
@@ -186,7 +186,7 @@ function KnockoutPickRow({
 				className="mb-3 w-full rounded-xl border border-emerald-400/20 bg-emerald-400/5 px-4 py-2 text-sm font-medium text-emerald-300"
 				onClick={entry.onSignIn}
 			>
-				👋 Entre com Google para palpitar
+				👋 Sign in with Google to predict
 			</button>
 		);
 	}
@@ -197,7 +197,7 @@ function KnockoutPickRow({
 	return (
 		<div className="mb-3 flex flex-wrap items-center justify-center gap-2 rounded-xl border border-emerald-400/20 bg-emerald-400/5 px-3 py-2">
 			<span className="mr-1 text-[10px] font-semibold uppercase tracking-wide text-emerald-400">
-				Seu palpite
+				Your pick
 			</span>
 
 			<Flag team={team1} />

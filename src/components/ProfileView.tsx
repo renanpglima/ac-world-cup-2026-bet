@@ -32,15 +32,15 @@ export function ProfileView({
 		return (
 			<div className="rounded-2xl border border-white/10 bg-white/5 px-6 py-12 text-center">
 				<p className="mb-4 text-sm text-slate-300">
-					Entre com Google para gerenciar seu perfil e participar do
-					mata-mata.
+					Sign in with Google to manage your profile and join the
+					knockout.
 				</p>
 
 				<button
 					className="rounded-full bg-emerald-500 px-4 py-2 text-sm font-bold text-emerald-950 transition hover:bg-emerald-400"
 					onClick={onSignIn}
 				>
-					Entrar com Google
+					Sign in with Google
 				</button>
 			</div>
 		);
@@ -74,7 +74,7 @@ export function ProfileView({
 
 			<section className="rounded-2xl border border-white/10 bg-white/5 p-4">
 				<h3 className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">
-					Apelido
+					Nickname
 				</h3>
 
 				<div className="flex gap-2">
@@ -85,7 +85,7 @@ export function ProfileView({
 							setDraft(event.target.value);
 							setSaved(false);
 						}}
-						placeholder={name ?? 'Seu apelido'}
+						placeholder={name ?? 'Your nickname'}
 						value={draft}
 					/>
 
@@ -96,40 +96,40 @@ export function ProfileView({
 							setSaved(true);
 						}}
 					>
-						Salvar
+						Save
 					</button>
 				</div>
 
 				{saved && (
-					<p className="mt-2 text-xs text-emerald-400">✓ salvo</p>
+					<p className="mt-2 text-xs text-emerald-400">✓ saved</p>
 				)}
 			</section>
 
 			<section className="rounded-2xl border border-white/10 bg-white/5 p-4">
 				<h3 className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">
-					Mata-mata
+					Knockout
 				</h3>
 
 				{approved ? (
 					<p className="text-sm text-emerald-300">
-						✅ Você está no bolão do mata-mata.
+						✅ You're in the knockout pool.
 					</p>
 				) : pending ? (
 					<p className="text-sm text-amber-300">
-						⏳ Pedido enviado — aguardando aprovação do admin.
+						⏳ Request sent — waiting for admin approval.
 					</p>
 				) : (
 					<>
 						<p className="mb-3 text-sm text-slate-300">
-							Participe da fase de mata-mata com um ranking zerado
-							para todos.
+							Join the knockout phase with a fresh ranking for
+							everyone.
 						</p>
 
 						<button
 							className="rounded-full bg-emerald-500 px-4 py-2 text-sm font-bold text-emerald-950 transition hover:bg-emerald-400"
 							onClick={onRequestKnockout}
 						>
-							Participar do mata-mata
+							Join the knockout
 						</button>
 					</>
 				)}

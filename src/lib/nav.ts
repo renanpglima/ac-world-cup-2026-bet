@@ -24,7 +24,7 @@ export const NAV_ITEMS: NavItem[] = [
 // /bets/adriano still resolves to "Bets".
 // Profile is reachable from the header avatar, not the menu, so it has no
 // NAV_ITEM — give it a title here instead of falling back to "Leaderboard".
-const OFF_MENU: NavItem[] = [{icon: '👤', label: 'Perfil', to: '/profile'}];
+const OFF_MENU: NavItem[] = [{icon: '👤', label: 'Profile', to: '/profile'}];
 
 export function currentNavItem(pathname: string): NavItem {
 	return (
