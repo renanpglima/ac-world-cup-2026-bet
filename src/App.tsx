@@ -24,7 +24,7 @@ import {Leaderboard} from './components/Leaderboard';
 import {ChatButton} from './components/ChatButton';
 import {ChatPanel} from './components/ChatPanel';
 import {LiveGames} from './components/LiveGames';
-import {KnockoutLeaderboard} from './components/KnockoutLeaderboard';
+import {KnockoutView} from './components/KnockoutView';
 import {MatchesView} from './components/MatchesView';
 import {NavBar} from './components/NavBar';
 import {ProfileView} from './components/ProfileView';
@@ -842,7 +842,7 @@ export default function App() {
 
 					<Route
 						element={
-							<KnockoutLeaderboard
+							<KnockoutView
 								rows={knockoutStandings}
 								youUid={auth.user?.uid ?? null}
 							/>
