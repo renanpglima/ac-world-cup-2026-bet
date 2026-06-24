@@ -126,6 +126,30 @@ describe('buildKnockoutLeaderStats', () => {
 		expect(buildKnockoutLeaderStats([], {}, [])).toBeNull();
 	});
 
+	it('returns null when the leader has 1 point or fewer', () => {
+		const standings = buildKnockoutStandings(
+			[{name: 'Solo', uid: 's'}],
+			{},
+			[]
+		);
+
+		expect(buildKnockoutLeaderStats(standings, {}, [])).toBeNull();
+	});
+
+	it('returns null when the top is tied', () => {
+		const matches = [match({matchNumber: 76, scoreA: 2, scoreB: 1})];
+		const standings = buildKnockoutStandings(
+			[
+				{name: 'Bruna', uid: 'b'},
+				{name: 'Caio', uid: 'c'},
+			],
+			{b: {76: {p1: 2, p2: 1}}, c: {76: {p1: 2, p2: 1}}},
+			matches
+		);
+
+		expect(buildKnockoutLeaderStats(standings, {}, matches)).toBeNull();
+	});
+
 	it('builds the leader card stats from the leader picks over finished matches', () => {
 		const standings = buildKnockoutStandings(
 			[

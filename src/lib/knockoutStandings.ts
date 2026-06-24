@@ -174,7 +174,12 @@ export function buildKnockoutLeaderStats(
 ): {name: string; stats: ParticipantStats} | null {
 	const leader = standings[0];
 
-	if (!leader) {
+	// Only spotlight a clear leader: more than 1 point and nobody tied at the top.
+	if (!leader || leader.points <= 1) {
+		return null;
+	}
+
+	if (standings[1] && standings[1].points === leader.points) {
 		return null;
 	}
 

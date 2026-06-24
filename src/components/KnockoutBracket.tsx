@@ -1,7 +1,10 @@
 import {useMemo} from 'react';
 
 import {flagCode} from '../lib/flags';
+import type {KnockoutPick} from '../lib/knockoutCards';
+import {scorePrediction} from '../lib/scoring';
 import {type KnockoutMatch, useKnockout} from '../lib/useKnockout';
+import {useKnockoutPicks} from '../lib/useKnockoutPicks';
 import {Flag} from './Flag';
 
 type ByNum = Record<number, KnockoutMatch>;
@@ -47,17 +50,17 @@ function TeamLine({
 	const hasFlag = Boolean(team && flagCode(team));
 
 	return (
-		<div className="flex items-center gap-1">
+		<div className="flex items-center gap-1.5">
 			{hasFlag ? (
-				<Flag className="h-2.5 w-3.5 shrink-0" team={team as string} />
+				<Flag className="h-4 w-6 shrink-0" team={team as string} />
 			) : (
-				<span className="flex h-2.5 w-3.5 shrink-0 items-center justify-center rounded-[2px] bg-white/10 text-[7px] font-bold text-slate-500">
+				<span className="flex h-4 w-6 shrink-0 items-center justify-center rounded-[2px] bg-white/10 text-[10px] font-bold text-slate-500">
 					{placeholder.slice(0, 2)}
 				</span>
 			)}
 
 			<span
-				className={`min-w-0 flex-1 truncate text-[10px] leading-tight ${
+				className={`min-w-0 flex-1 truncate text-sm leading-tight ${
 					team ? 'text-white' : 'text-slate-400'
 				}`}
 			>
@@ -65,17 +68,61 @@ function TeamLine({
 			</span>
 
 			{score !== null && (
-				<span className="text-[10px] font-bold text-amber-300">
-					{score}
-				</span>
+				<span className="text-sm font-bold text-amber-300">{score}</span>
 			)}
 		</div>
 	);
 }
 
-function MatchCard({m}: {m: KnockoutMatch}) {
+// Hover popover listing everyone's picks for the match (with points once the
+// match is decided).
+function PicksPopover({m, picks}: {m: KnockoutMatch; picks: KnockoutPick[]}) {
+	const resolved = m.scoreA != null && m.scoreB != null;
+
 	return (
-		<div className="w-full min-w-0 rounded-md border border-white/10 bg-white/5 px-1 py-0.5">
+		<div className="invisible absolute left-1/2 top-full z-50 mt-1 w-48 -translate-x-1/2 rounded-lg border border-white/10 bg-slate-900 p-2 opacity-0 shadow-xl transition group-hover:visible group-hover:opacity-100">
+			<p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-emerald-400">
+				Picks ({picks.length})
+			</p>
+
+			<ul className="space-y-0.5">
+				{picks.map((pick) => {
+					const points = resolved
+						? scorePrediction(
+								pick.p1,
+								pick.p2,
+								m.scoreA as number,
+								m.scoreB as number
+							)
+						: null;
+
+					return (
+						<li
+							className="flex items-center justify-between gap-2 text-xs text-slate-200"
+							key={pick.uid ?? pick.name}
+						>
+							<span className="truncate">{pick.name}</span>
+
+							<span className="shrink-0 font-bold text-slate-300">
+								{pick.p1}–{pick.p2}
+								{points !== null && (
+									<span className="text-amber-300">
+										{' '}
+										+{points}
+									</span>
+								)}
+							</span>
+						</li>
+					);
+				})}
+			</ul>
+		</div>
+	);
+}
+
+function MatchCard({m, picks}: {m: KnockoutMatch; picks: KnockoutPick[]}) {
+	return (
+		<div className="group relative w-full min-w-0 rounded-md border border-white/10 bg-white/5 px-1.5 py-1">
 			<TeamLine
 				placeholder={m.a}
 				score={m.scoreA ?? null}
@@ -89,15 +136,19 @@ function MatchCard({m}: {m: KnockoutMatch}) {
 				score={m.scoreB ?? null}
 				team={m.teamB ?? null}
 			/>
+
+			{picks.length > 0 && <PicksPopover m={m} picks={picks} />}
 		</div>
 	);
 }
 
 function Half({
+	byMatch,
 	byNum,
 	rounds,
 	side,
 }: {
+	byMatch: Record<number, KnockoutPick[]>;
 	byNum: ByNum;
 	rounds: number[][];
 	side: 'left' | 'right';
@@ -109,7 +160,7 @@ function Half({
 			className="grid flex-1 gap-x-6"
 			style={{
 				gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
-				gridTemplateRows: 'repeat(8, minmax(3.25rem, 1fr))',
+				gridTemplateRows: 'repeat(8, minmax(4.5rem, 1fr))',
 			}}
 		>
 			{rounds.flatMap((nums, round) =>
@@ -166,7 +217,10 @@ function Half({
 								</>
 							)}
 
-							<MatchCard m={match} />
+							<MatchCard
+								m={match}
+								picks={byMatch[num] ?? []}
+							/>
 						</div>
 					);
 				})
@@ -175,12 +229,18 @@ function Half({
 	);
 }
 
-function Center({byNum}: {byNum: ByNum}) {
+function Center({
+	byMatch,
+	byNum,
+}: {
+	byMatch: Record<number, KnockoutPick[]>;
+	byNum: ByNum;
+}) {
 	const final = byNum[104];
 	const third = byNum[103];
 
 	return (
-		<div className="relative flex w-24 shrink-0 flex-col items-center justify-center gap-1">
+		<div className="relative flex w-28 shrink-0 flex-col items-center justify-center gap-1">
 			<span
 				className={`${LINE} border-t`}
 				style={{left: '-12px', top: '50%', width: '12px'}}
@@ -191,23 +251,23 @@ function Center({byNum}: {byNum: ByNum}) {
 				style={{right: '-12px', top: '50%', width: '12px'}}
 			/>
 
-			<div aria-hidden className="text-2xl leading-none">
+			<div aria-hidden className="text-3xl leading-none">
 				🏆
 			</div>
 
-			<span className="text-[8px] font-bold uppercase tracking-[0.2em] text-amber-300">
+			<span className="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-300">
 				Final
 			</span>
 
-			{final && <MatchCard m={final} />}
+			{final && <MatchCard m={final} picks={byMatch[104] ?? []} />}
 
 			{third && (
 				<div className="mt-2 flex w-full flex-col items-center gap-0.5">
-					<span className="text-[8px] uppercase tracking-wide text-slate-500">
+					<span className="text-[10px] uppercase tracking-wide text-slate-500">
 						3rd place
 					</span>
 
-					<MatchCard m={third} />
+					<MatchCard m={third} picks={byMatch[103] ?? []} />
 				</div>
 			)}
 		</div>
@@ -216,6 +276,8 @@ function Center({byNum}: {byNum: ByNum}) {
 
 export function KnockoutBracket() {
 	const matches = useKnockout();
+	const {byMatch} = useKnockoutPicks(null);
+
 	const byNum = useMemo<ByNum>(
 		() =>
 			Object.fromEntries(matches.map((match) => [match.matchNumber, match])),
@@ -226,18 +288,28 @@ export function KnockoutBracket() {
 		<div>
 			{/* Desktop: symmetric tree with the trophy in the centre. */}
 			<div className="hidden sm:block">
-				<div className="mb-2 flex justify-between px-1 text-[9px] font-semibold uppercase tracking-[0.15em] text-emerald-400">
+				<div className="mb-2 flex justify-between px-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-emerald-400">
 					<span>R32 · R16 · QF · SF</span>
 
 					<span>SF · QF · R16 · R32</span>
 				</div>
 
 				<div className="flex items-stretch gap-2">
-					<Half byNum={byNum} rounds={LEFT} side="left" />
+					<Half
+						byMatch={byMatch}
+						byNum={byNum}
+						rounds={LEFT}
+						side="left"
+					/>
 
-					<Center byNum={byNum} />
+					<Center byMatch={byMatch} byNum={byNum} />
 
-					<Half byNum={byNum} rounds={RIGHT} side="right" />
+					<Half
+						byMatch={byMatch}
+						byNum={byNum}
+						rounds={RIGHT}
+						side="right"
+					/>
 				</div>
 			</div>
 
@@ -257,9 +329,7 @@ export function KnockoutBracket() {
 					return (
 						<section key={round.key}>
 							<h3 className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">
-								{round.key === 'Final' && (
-									<span aria-hidden>🏆</span>
-								)}
+								{round.key === 'Final' && <span aria-hidden>🏆</span>}
 
 								{round.label}
 							</h3>
@@ -270,7 +340,11 @@ export function KnockoutBracket() {
 								}`}
 							>
 								{roundMatches.map((match) => (
-									<MatchCard key={match.matchNumber} m={match} />
+									<MatchCard
+										key={match.matchNumber}
+										m={match}
+										picks={byMatch[match.matchNumber] ?? []}
+									/>
 								))}
 							</div>
 						</section>
@@ -279,10 +353,10 @@ export function KnockoutBracket() {
 			</div>
 
 			<p className="mt-3 px-1 text-[11px] leading-relaxed text-slate-500">
-				View only — teams fill in as the group stage finishes. Slots show
-				the bracket position (<strong>1A</strong> = Group A winner,{' '}
-				<strong>2B</strong> = Group B runner-up,{' '}
-				<strong>3ABCDF</strong> = a best-third).
+				Teams fill in as the group stage finishes. Slots show the bracket
+				position (<strong>1A</strong> = Group A winner, <strong>2B</strong>{' '}
+				= Group B runner-up, <strong>3ABCDF</strong> = a best-third). Hover
+				a match to see everyone's picks.
 			</p>
 		</div>
 	);
