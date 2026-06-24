@@ -39,6 +39,7 @@ export function ParticipantView({
 					<Avatar
 						className="h-16 w-16 rounded-2xl text-2xl sm:h-64 sm:w-64 sm:text-4xl"
 						name={participant.name}
+						photoURL={participant.photoURL}
 					/>
 
 					<div>

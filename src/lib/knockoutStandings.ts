@@ -75,7 +75,11 @@ export function mergeKnockoutParticipants(
 
 	const newcomers: Participant[] = roster
 		.filter((row) => !known.has(row.name.toLowerCase()))
-		.map((row) => ({name: row.name, predictions: []}));
+		.map((row) => ({
+			name: row.name,
+			photoURL: row.photoURL ?? null,
+			predictions: [],
+		}));
 
 	return [...participants, ...newcomers].sort((a, b) =>
 		a.name.localeCompare(b.name)

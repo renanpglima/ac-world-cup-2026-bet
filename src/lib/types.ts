@@ -11,6 +11,7 @@ export interface Prediction {
 
 export interface Participant {
 	name: string;
+	photoURL?: string | null;
 	predictions: Prediction[];
 }
 
