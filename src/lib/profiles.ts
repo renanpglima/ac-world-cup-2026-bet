@@ -4,12 +4,15 @@ export interface Profile {
 	email: string;
 	lastSeenAt?: number | string;
 	name: string;
+	nickname?: string | null;
 	photoURL?: string;
+	wantsKnockout?: boolean;
 }
 
 // approvals/<uid> — written ONLY by the owner.
 export interface Approval {
 	blocked?: boolean;
+	knockout?: boolean;
 	participant?: string | null;
 }
 
