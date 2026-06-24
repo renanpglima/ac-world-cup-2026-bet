@@ -32,6 +32,7 @@ import {NavDrawer} from './components/NavDrawer';
 import {ReactionBurst} from './components/ReactionBurst';
 import {RulesView} from './components/RulesView';
 import {GroupStageView} from './components/GroupStageView';
+import {KnockoutChampionView} from './components/KnockoutChampionView';
 import {trackEvent, trackPageView} from './lib/analytics';
 import {acPage, acTrack, initAnalyticsCloud} from './lib/analyticsCloud';
 import {dataPath} from './lib/dataRoot';
@@ -53,6 +54,7 @@ import {
 	knockoutRoster,
 	mergeKnockoutParticipants,
 } from './lib/knockoutStandings';
+import {buildKnockoutChampion} from './lib/knockoutChampion';
 import {approvedParticipant, type Approval, type Profile} from './lib/profiles';
 import {buildLeaderboardWithMovement} from './lib/ranking';
 import {buildPointsTimeline} from './lib/timeline';
@@ -586,6 +588,22 @@ export default function App() {
 		[knockoutStandings, knockoutPicksByUid, knockoutMatches]
 	);
 
+	const knockoutChampion = useMemo(
+		() =>
+			buildKnockoutChampion(
+				knockoutRosterRows,
+				knockoutPicksByUid,
+				knockoutMatches,
+				knockoutStandings
+			),
+		[
+			knockoutRosterRows,
+			knockoutPicksByUid,
+			knockoutMatches,
+			knockoutStandings,
+		]
+	);
+
 	const knockoutInfo = useMemo(
 		() =>
 			Object.fromEntries(
@@ -876,6 +894,21 @@ export default function App() {
 							/>
 						}
 						path="/group-stage"
+					/>
+
+					<Route
+						element={
+							<KnockoutChampionView
+								awards={knockoutChampion.awards}
+								evolution={knockoutChampion.evolution}
+								leader={knockoutLeader}
+								onHype={hype}
+								played={knockoutChampion.played}
+								stats={knockoutChampion.stats}
+								timeline={knockoutChampion.timeline}
+							/>
+						}
+						path="/knockout-champion"
 					/>
 
 					<Route

@@ -1,6 +1,6 @@
 import {describe, expect, it} from 'vitest';
 
-import {type NavItem, orderMenu, visibleMenu} from './nav';
+import {currentNavItem, type NavItem, orderMenu, visibleMenu} from './nav';
 
 function item(id: string): NavItem {
 	return {icon: '•', id, label: id, to: `/${id}`};
@@ -44,5 +44,22 @@ describe('visibleMenu', () => {
 		expect(
 			visibleMenu(items, {hidden: {b: false}}).map((i) => i.id)
 		).toEqual(['a', 'b']);
+	});
+});
+
+describe('currentNavItem', () => {
+	it('resolves the leaderboard only on an exact "/"', () => {
+		expect(currentNavItem('/').id).toBe('leaderboard');
+	});
+
+	it('resolves a deep participant path to Participants', () => {
+		expect(currentNavItem('/bets/adriano').id).toBe('bets');
+	});
+
+	it('prefers the most specific match for overlapping prefixes', () => {
+		expect(currentNavItem('/knockout').id).toBe('knockout');
+		expect(currentNavItem('/knockout-champion').id).toBe(
+			'knockoutchampion'
+		);
 	});
 });

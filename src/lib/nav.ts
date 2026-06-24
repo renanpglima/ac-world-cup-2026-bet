@@ -31,6 +31,13 @@ export const NAV_ITEMS: NavItem[] = [
 		label: 'Group Stage',
 		to: '/group-stage',
 	},
+	{
+		hiddenByDefault: true,
+		icon: '👑',
+		id: 'knockoutchampion',
+		label: 'Knockout Champion',
+		to: '/knockout-champion',
+	},
 	{desktopOnly: true, icon: '🎮', id: 'arena', label: 'Arena', to: '/arena'},
 	{icon: '📜', id: 'rules', label: 'Rules', to: '/rules'},
 ];
@@ -93,9 +100,13 @@ const OFF_MENU: NavItem[] = [
 ];
 
 export function currentNavItem(pathname: string): NavItem {
-	return (
-		[...NAV_ITEMS, ...OFF_MENU].find((item) =>
+	// Most specific match wins, so /knockout-champion resolves to its own item
+	// rather than /knockout, whose `to` is a prefix of it.
+	const matches = [...NAV_ITEMS, ...OFF_MENU]
+		.filter((item) =>
 			item.end ? pathname === item.to : pathname.startsWith(item.to)
-		) ?? NAV_ITEMS[0]
-	);
+		)
+		.sort((a, b) => b.to.length - a.to.length);
+
+	return matches[0] ?? NAV_ITEMS[0];
 }
