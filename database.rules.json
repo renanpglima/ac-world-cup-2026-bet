@@ -47,6 +47,8 @@
 				"photoURL": {".validate": "newData.isString()"},
 				"lastSeenAt": {".validate": "newData.isNumber() || newData.isString()"},
 				"claim": {".validate": "newData.isString() || !newData.exists()"},
+				"nickname": {".validate": "newData.isString() || !newData.exists()"},
+				"wantsKnockout": {".validate": "newData.isBoolean() || !newData.exists()"},
 				"$other": {".validate": false}
 			}
 		},
@@ -54,6 +56,12 @@
 			".read": true,
 			"$uid": {
 				".write": "auth.token.email === 'adriano.interaminense@gmail.com' && auth.token.email_verified === true"
+			}
+		},
+		"knockoutPicks": {
+			".read": true,
+			"$uid": {
+				".write": "auth != null && auth.uid === $uid"
 			}
 		}
 	}
