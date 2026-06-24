@@ -12,7 +12,13 @@ export interface NavItem {
 // page title. `id` is the stable key the owner's menu manager orders/hides by.
 export const NAV_ITEMS: NavItem[] = [
 	{end: true, icon: '🏆', id: 'leaderboard', label: 'Leaderboard', to: '/'},
-	{icon: '🥇', id: 'knockout', label: 'Knockout Stage', to: '/knockout'},
+	{
+		badge: 'new',
+		icon: '🥇',
+		id: 'knockout',
+		label: 'Knockout Stage',
+		to: '/knockout',
+	},
 	{icon: '⚽', id: 'matches', label: 'Matches', to: '/matches'},
 	{icon: '🗂️', id: 'groups', label: 'Groups', to: '/groups'},
 	{icon: '🎯', id: 'bets', label: 'Participants', to: '/bets'},

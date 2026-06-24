@@ -60,6 +60,12 @@ export function NavBar({
 							to={item.to}
 						>
 							{item.label}
+
+							{item.badge && (
+								<span className="rounded bg-amber-400/20 px-1 text-[8px] font-bold uppercase text-amber-300">
+									{item.badge}
+								</span>
+							)}
 						</NavLink>
 					)
 				)}

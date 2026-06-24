@@ -28,6 +28,18 @@ export function KnockoutView({
 }) {
 	return (
 		<div className="space-y-8">
+			<div className="flex items-start gap-3 rounded-2xl border border-amber-400/30 bg-amber-400/10 px-4 py-3">
+				<span aria-hidden className="text-lg leading-none">
+					ℹ️
+				</span>
+
+				<p className="text-sm leading-relaxed text-amber-100">
+					Sign in with Google to join the next phase. Once the matches
+					start being decided, you'll be able to submit your picks for
+					each knockout game right here.
+				</p>
+			</div>
+
 			<section>
 				<h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-emerald-400">
 					Bracket
