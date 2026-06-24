@@ -1,34 +1,9 @@
-import {useState} from 'react';
-
 import type {KnockoutStandingRow} from '../lib/knockoutStandings';
 import {KnockoutBracket} from './KnockoutBracket';
 import {KnockoutLeaderboard} from './KnockoutLeaderboard';
 
-function Tab({
-	active,
-	children,
-	onClick,
-}: {
-	active: boolean;
-	children: React.ReactNode;
-	onClick: () => void;
-}) {
-	return (
-		<button
-			className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
-				active
-					? 'bg-emerald-500 text-emerald-950'
-					: 'bg-white/5 text-slate-300 hover:bg-white/10'
-			}`}
-			onClick={onClick}
-		>
-			{children}
-		</button>
-	);
-}
-
-// The Knockout Stage page: the bracket (moved here from the Matches tab) and the
-// zeroed knockout ranking, as two sub-tabs.
+// The Knockout Stage page: the bracket and the zeroed knockout ranking stacked
+// as two sections on the same screen.
 export function KnockoutView({
 	rows,
 	youUid,
@@ -36,25 +11,23 @@ export function KnockoutView({
 	rows: KnockoutStandingRow[];
 	youUid: string | null;
 }) {
-	const [view, setView] = useState<'bracket' | 'ranking'>('bracket');
-
 	return (
-		<div className="space-y-6">
-			<div className="flex gap-1.5">
-				<Tab active={view === 'bracket'} onClick={() => setView('bracket')}>
+		<div className="space-y-8">
+			<section>
+				<h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-emerald-400">
 					Bracket
-				</Tab>
+				</h2>
 
-				<Tab active={view === 'ranking'} onClick={() => setView('ranking')}>
-					Ranking
-				</Tab>
-			</div>
-
-			{view === 'bracket' ? (
 				<KnockoutBracket />
-			) : (
+			</section>
+
+			<section>
+				<h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-emerald-400">
+					Leaderboard
+				</h2>
+
 				<KnockoutLeaderboard rows={rows} youUid={youUid} />
-			)}
+			</section>
 		</div>
 	);
 }
