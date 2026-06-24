@@ -2,10 +2,12 @@ import {useMemo} from 'react';
 
 import {flagCode} from '../lib/flags';
 import type {KnockoutPick} from '../lib/knockoutCards';
+import type {MatchEntry} from '../lib/matches';
 import {scorePrediction} from '../lib/scoring';
 import {type KnockoutMatch, useKnockout} from '../lib/useKnockout';
 import {useKnockoutPicks} from '../lib/useKnockoutPicks';
 import {Flag} from './Flag';
+import {MatchPicks} from './MatchPicks';
 
 type ByNum = Record<number, KnockoutMatch>;
 
@@ -50,25 +52,19 @@ function TeamLine({
 	const hasFlag = Boolean(team && flagCode(team));
 
 	return (
-		<div className="flex items-center gap-1.5">
+		<div className="flex items-center justify-between gap-1.5">
 			{hasFlag ? (
-				<Flag className="h-4 w-6 shrink-0" team={team as string} />
+				<Flag className="h-5 w-7 shrink-0" team={team as string} />
 			) : (
-				<span className="flex h-4 w-6 shrink-0 items-center justify-center rounded-[2px] bg-white/10 text-[10px] font-bold text-slate-500">
-					{placeholder.slice(0, 2)}
+				<span className="min-w-0 flex-1 truncate text-xs font-medium text-slate-400">
+					{placeholder}
 				</span>
 			)}
 
-			<span
-				className={`min-w-0 flex-1 truncate text-sm leading-tight ${
-					team ? 'text-white' : 'text-slate-400'
-				}`}
-			>
-				{team ?? placeholder}
-			</span>
-
 			{score !== null && (
-				<span className="text-sm font-bold text-amber-300">{score}</span>
+				<span className="shrink-0 text-sm font-bold text-amber-300">
+					{score}
+				</span>
 			)}
 		</div>
 	);
@@ -79,43 +75,23 @@ function TeamLine({
 function PicksPopover({m, picks}: {m: KnockoutMatch; picks: KnockoutPick[]}) {
 	const resolved = m.scoreA != null && m.scoreB != null;
 
+	const entries: MatchEntry[] = picks.map((pick) => ({
+		name: pick.name,
+		p1: pick.p1,
+		p2: pick.p2,
+		points: resolved
+			? scorePrediction(
+					pick.p1,
+					pick.p2,
+					m.scoreA as number,
+					m.scoreB as number
+				)
+			: null,
+	}));
+
 	return (
-		<div className="invisible absolute left-1/2 top-full z-50 mt-1 w-48 -translate-x-1/2 rounded-lg border border-white/10 bg-slate-900 p-2 opacity-0 shadow-xl transition group-hover:visible group-hover:opacity-100">
-			<p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-emerald-400">
-				Picks ({picks.length})
-			</p>
-
-			<ul className="space-y-0.5">
-				{picks.map((pick) => {
-					const points = resolved
-						? scorePrediction(
-								pick.p1,
-								pick.p2,
-								m.scoreA as number,
-								m.scoreB as number
-							)
-						: null;
-
-					return (
-						<li
-							className="flex items-center justify-between gap-2 text-xs text-slate-200"
-							key={pick.uid ?? pick.name}
-						>
-							<span className="truncate">{pick.name}</span>
-
-							<span className="shrink-0 font-bold text-slate-300">
-								{pick.p1}–{pick.p2}
-								{points !== null && (
-									<span className="text-amber-300">
-										{' '}
-										+{points}
-									</span>
-								)}
-							</span>
-						</li>
-					);
-				})}
-			</ul>
+		<div className="invisible absolute left-1/2 top-full z-50 mt-1 w-64 -translate-x-1/2 rounded-2xl border border-white/10 bg-slate-900 p-3 text-left opacity-0 shadow-xl transition group-hover:visible group-hover:opacity-100">
+			<MatchPicks entries={entries} />
 		</div>
 	);
 }
