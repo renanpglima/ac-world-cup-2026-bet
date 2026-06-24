@@ -67,6 +67,10 @@
 		"menu": {
 			".read": true,
 			".write": "auth.token.email === 'adriano.interaminense@gmail.com' && auth.token.email_verified === true"
+		},
+		"settings": {
+			".read": true,
+			".write": "auth.token.email === 'adriano.interaminense@gmail.com' && auth.token.email_verified === true"
 		}
 	}
 }

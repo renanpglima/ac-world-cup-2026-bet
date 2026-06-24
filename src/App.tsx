@@ -68,6 +68,7 @@ import {useLeaderHype} from './lib/useLeaderHype';
 import {useMenu} from './lib/useMenu';
 import {usePresence} from './lib/usePresence';
 import {useMatchReactions, useReactions} from './lib/useReactions';
+import {useSettings} from './lib/useSettings';
 
 const LOADING_MESSAGES = [
 	'Mowing the pitch…',
@@ -151,6 +152,10 @@ export default function App() {
 		() => visibleMenu(NAV_ITEMS, menuConfig),
 		[menuConfig]
 	);
+
+	// When the owner restricts the chat, anonymous visitors can't open or read it.
+	const {chatLoginOnly} = useSettings();
+	const chatLocked = chatLoginOnly && auth.isAnonymous;
 
 	// All approvals (small) so the signed-in viewer knows their linked participant.
 	const [approvals, setApprovals] = useState<Record<string, Approval>>({});
@@ -913,7 +918,7 @@ export default function App() {
 				</Routes>
 			</main>
 
-			{!chatOpen && (
+			{!chatOpen && !chatLocked && (
 				<ChatButton
 					onClick={() => {
 						setChatOpen(true);
@@ -924,7 +929,7 @@ export default function App() {
 				/>
 			)}
 
-			{chatOpen && (
+			{chatOpen && !chatLocked && (
 				<>
 					<div
 						className="fixed inset-0 z-40 bg-black/50"

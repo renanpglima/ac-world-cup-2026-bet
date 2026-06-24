@@ -265,12 +265,6 @@ export function KnockoutBracket() {
 		<div>
 			{/* Desktop: symmetric tree with the trophy in the centre. */}
 			<div className="hidden sm:block">
-				<div className="mb-2 flex justify-between px-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-emerald-400">
-					<span>R32 · R16 · QF · SF</span>
-
-					<span>SF · QF · R16 · R32</span>
-				</div>
-
 				<div className="flex items-stretch gap-2">
 					<Half
 						byMatch={byMatch}
@@ -329,12 +323,6 @@ export function KnockoutBracket() {
 				})}
 			</div>
 
-			<p className="mt-3 px-1 text-[11px] leading-relaxed text-slate-500">
-				Teams fill in as the group stage finishes. Slots show the bracket
-				position (<strong>1A</strong> = Group A winner, <strong>2B</strong>{' '}
-				= Group B runner-up, <strong>3ABCDF</strong> = a best-third). Hover
-				a match to see everyone's picks.
-			</p>
 		</div>
 	);
 }

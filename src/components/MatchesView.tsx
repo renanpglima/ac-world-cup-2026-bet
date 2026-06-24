@@ -247,7 +247,7 @@ function MatchCardArticle({
 				</span>
 			</div>
 
-			{knockoutEntry && (
+			{knockoutEntry && card.status === 'notstarted' && (
 				<KnockoutPickRow
 					entry={knockoutEntry}
 					team1={card.team1}

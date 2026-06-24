@@ -3,6 +3,7 @@ import {pendingKnockout} from '../lib/knockoutStandings';
 import {NAV_ITEMS, orderMenu} from '../lib/nav';
 import {useMenu} from '../lib/useMenu';
 import {useProfiles} from '../lib/useProfiles';
+import {useSettings} from '../lib/useSettings';
 import {Avatar} from './Avatar';
 
 // Owner-only screen: a pending-claim queue, knockout sign-ups, and the full user
@@ -24,11 +25,47 @@ export function AdminView() {
 	const menuRows = orderMenu(NAV_ITEMS, menuConfig);
 	const menuHidden = menuConfig.hidden ?? {};
 
+	const {chatLoginOnly, setChatLoginOnly} = useSettings();
+
 	const pending = rows.filter((row) => row.pending);
 	const knockoutSignups = pendingKnockout(profiles, approvals);
 
 	return (
 		<div className="space-y-6">
+			<section>
+				<h3 className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">
+					Chat
+				</h3>
+
+				<div className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+					<div className="min-w-0">
+						<p className="text-sm font-medium text-white">
+							Only signed-in users can chat
+						</p>
+
+						<p className="text-xs text-slate-400">
+							Anonymous visitors can't open or read the chat.
+						</p>
+					</div>
+
+					<button
+						aria-pressed={chatLoginOnly}
+						className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
+							chatLoginOnly ? 'bg-emerald-500' : 'bg-white/15'
+						}`}
+						onClick={() => setChatLoginOnly(!chatLoginOnly)}
+					>
+						<span
+							className={`absolute top-0.5 h-5 w-5 rounded-full bg-white transition-transform ${
+								chatLoginOnly
+									? 'translate-x-[1.375rem]'
+									: 'translate-x-0.5'
+							}`}
+						/>
+					</button>
+				</div>
+			</section>
+
 			<section>
 				<h3 className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">
 					Pending claims ({pending.length})
