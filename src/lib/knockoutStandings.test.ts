@@ -2,6 +2,7 @@ import {describe, expect, it} from 'vitest';
 
 import {participantSlug} from './auth';
 import {
+	buildKnockoutLeaderStats,
 	buildKnockoutStandings,
 	knockoutRoster,
 	pendingKnockout,
@@ -117,5 +118,36 @@ describe('buildKnockoutStandings', () => {
 		]);
 
 		expect(rows.every((r) => r.points === 0 && r.rank === 1)).toBe(true);
+	});
+});
+
+describe('buildKnockoutLeaderStats', () => {
+	it('returns null when there are no standings', () => {
+		expect(buildKnockoutLeaderStats([], {}, [])).toBeNull();
+	});
+
+	it('builds the leader card stats from the leader picks over finished matches', () => {
+		const standings = buildKnockoutStandings(
+			[
+				{name: 'Bruna', uid: 'b'},
+				{name: 'Caio', uid: 'c'},
+			],
+			{b: {76: {p1: 2, p2: 1}}, c: {76: {p1: 0, p2: 0}}},
+			[match({matchNumber: 76, scoreA: 2, scoreB: 1})]
+		);
+
+		const leader = buildKnockoutLeaderStats(
+			standings,
+			{b: {76: {p1: 2, p2: 1}}},
+			[match({matchNumber: 76, scoreA: 2, scoreB: 1})]
+		);
+
+		expect(leader?.name).toBe('Bruna');
+		expect(leader?.stats.total).toBe(25);
+		expect(leader?.stats.tierCounts).toEqual([1, 0, 0, 0, 0, 0]);
+		expect(leader?.stats.hitRate).toBe(1);
+		expect(leader?.stats.streak).toBe(1);
+		expect(leader?.stats.leadOverNext).toBe(25);
+		expect(leader?.stats.finishedCount).toBe(1);
 	});
 });

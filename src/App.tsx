@@ -46,7 +46,11 @@ import {buildMatchCards} from './lib/matches';
 import {currentNavItem, NAV_ITEMS, visibleMenu} from './lib/nav';
 import {buildParticipantStats} from './lib/participantStats';
 import {loadParticipants} from './lib/predictions';
-import {buildKnockoutStandings, knockoutRoster} from './lib/knockoutStandings';
+import {
+	buildKnockoutLeaderStats,
+	buildKnockoutStandings,
+	knockoutRoster,
+} from './lib/knockoutStandings';
 import {approvedParticipant, type Approval, type Profile} from './lib/profiles';
 import {buildLeaderboardWithMovement} from './lib/ranking';
 import {buildPointsTimeline} from './lib/timeline';
@@ -539,6 +543,16 @@ export default function App() {
 		[profiles, approvals, participants, knockoutPicksByUid, knockoutMatches]
 	);
 
+	const knockoutLeader = useMemo(
+		() =>
+			buildKnockoutLeaderStats(
+				knockoutStandings,
+				knockoutPicksByUid,
+				knockoutMatches
+			),
+		[knockoutStandings, knockoutPicksByUid, knockoutMatches]
+	);
+
 	const knockoutInfo = useMemo(
 		() =>
 			Object.fromEntries(
@@ -843,8 +857,10 @@ export default function App() {
 					<Route
 						element={
 							<KnockoutView
+								leader={knockoutLeader}
+								onHype={hype}
 								rows={knockoutStandings}
-								youUid={auth.user?.uid ?? null}
+								youName={presenceName}
 							/>
 						}
 						path="/knockout"
