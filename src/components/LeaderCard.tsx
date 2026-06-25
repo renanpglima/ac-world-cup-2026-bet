@@ -68,7 +68,7 @@ export function LeaderCard({
 		>
 			<div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
 				<LeaderPhoto
-					className="hidden h-24 w-24 sm:block"
+					className="hidden h-[202px] w-[202px] sm:block"
 					name={name}
 				/>
 
