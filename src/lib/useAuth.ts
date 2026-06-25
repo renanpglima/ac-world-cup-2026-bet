@@ -5,7 +5,6 @@ import {useEffect, useState} from 'react';
 
 import {isOwner as checkOwner} from './auth';
 import {dataPath} from './dataRoot';
-import {emitSignal} from './emitSignal';
 import {auth, db, signInWithGoogle, signOutUser} from './firebase';
 import {buildProfileUpdate, type Profile} from './profiles';
 
@@ -66,26 +65,12 @@ export function useAuth(): AuthState {
 		);
 	}, [user]);
 
-	// Who is asking — for the entry-request webhook below.
-	const requesterName = () =>
-		profile?.nickname || profile?.name || user?.displayName || user?.email;
-
 	const setClaim = (slug: string | null) => {
 		if (!user || user.isAnonymous) {
 			return;
 		}
 
 		set(ref(db, `${dataPath('profiles')}/${user.uid}/claim`), slug);
-
-		// A non-null claim is a request to enter the game as that participant.
-		if (slug) {
-			emitSignal('participant_claim', {
-				claim: slug,
-				email: user.email,
-				name: requesterName(),
-				uid: user.uid,
-			});
-		}
 	};
 
 	const requestKnockout = () => {
@@ -94,12 +79,6 @@ export function useAuth(): AuthState {
 		}
 
 		set(ref(db, `${dataPath('profiles')}/${user.uid}/wantsKnockout`), true);
-
-		emitSignal('knockout_entry_request', {
-			email: user.email,
-			name: requesterName(),
-			uid: user.uid,
-		});
 	};
 
 	const setNickname = (nickname: string) => {
