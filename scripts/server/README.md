@@ -67,12 +67,15 @@ commentary, no Slack). Its contents:
 export ANTHROPIC_API_KEY=...      # AI commentary (optional)
 export SLACK_WEBHOOK_URL=...       # Slack match digest (optional)
 export EMITSIGNAL_WEBHOOK_URL=...  # emitsignal push for kickoff/goal/final (optional)
+export EMITSIGNAL_API_KEY=...      # Bearer token for the emitsignal call (optional)
 ```
 
 With `EMITSIGNAL_WEBHOOK_URL` set, every detected match event (kickoff, goal,
 full time) is POSTed to that emitsignal hook as a flat JSON body
-(`{event, home, away, homeScore?, awayScore?, scorer?, at}`). Unset → no signal
-is sent. The chat bot posts goals only, regardless.
+(`{event, home, away, homeScore?, awayScore?, scorer?, at}`). When
+`EMITSIGNAL_API_KEY` is also set it is sent as an `Authorization: Bearer` header
+to authenticate the call. Unset URL → no signal is sent. The chat bot posts
+goals only, regardless.
 
 ## 4. Verify
 

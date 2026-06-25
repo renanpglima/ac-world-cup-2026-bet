@@ -6,6 +6,7 @@ describe('emitSignal', () => {
 	afterEach(() => {
 		vi.unstubAllGlobals();
 		delete process.env.EMITSIGNAL_WEBHOOK_URL;
+		delete process.env.EMITSIGNAL_API_KEY;
 	});
 
 	it('no-ops when the webhook URL is not configured', async () => {
@@ -38,6 +39,31 @@ describe('emitSignal', () => {
 		expect(body.event).toBe('match_goal');
 		expect(body.home).toBe('France');
 		expect(typeof body.at).toBe('string');
+	});
+
+	it('sends the API key as a Bearer token when configured', async () => {
+		const fetchMock = vi.fn().mockResolvedValue({ok: true});
+		vi.stubGlobal('fetch', fetchMock);
+		process.env.EMITSIGNAL_WEBHOOK_URL = 'https://hook.example/h/abc';
+		process.env.EMITSIGNAL_API_KEY = 'es_secret';
+
+		await emitSignal({event: 'match_goal'});
+
+		const [, init] = fetchMock.mock.calls[0];
+
+		expect(init.headers.Authorization).toBe('Bearer es_secret');
+	});
+
+	it('omits the Authorization header when no API key is set', async () => {
+		const fetchMock = vi.fn().mockResolvedValue({ok: true});
+		vi.stubGlobal('fetch', fetchMock);
+		process.env.EMITSIGNAL_WEBHOOK_URL = 'https://hook.example/h/abc';
+
+		await emitSignal({event: 'match_goal'});
+
+		const [, init] = fetchMock.mock.calls[0];
+
+		expect(init.headers.Authorization).toBeUndefined();
 	});
 
 	it('swallows fetch errors and reports failure', async () => {

@@ -4,8 +4,8 @@
 # Mirrors the local cron wrapper: polls the score sources and pushes them to
 # Firebase RTDB (the `games` node), writing only when scores change, and runs
 # the AI commentary + Slack digest when a match finishes (if the keys are set).
-# Driven every minute by cron during the match window. Self-disables after the
-# group stage.
+# Driven every minute by cron during the match window. Self-disables one day
+# after the final.
 #
 # The only difference from the local wrapper is the repo location, which is
 # configurable via WC2026_REPO_DIR (defaults to ~/ac-world-cup-2026-bet, where
@@ -24,9 +24,9 @@ export GOOGLE_APPLICATION_CREDENTIALS="${GOOGLE_APPLICATION_CREDENTIALS:-$HOME/.
 LOG="$HOME/.local/share/wc2026-push/push.log"
 mkdir -p "$(dirname "$LOG")"
 
-# Stop after the group stage (same cutoff as the local cron). Bump this date to
-# keep polling through the knockout rounds.
-if [ "$(date +%Y%m%d)" -gt 20260628 ]; then
+# Stop one day after the final (covers the whole tournament). Bump this date if
+# the schedule changes.
+if [ "$(date +%Y%m%d)" -gt 20260720 ]; then
 	exit 0
 fi
 
