@@ -52,13 +52,13 @@ export function ProfileView({
 				{photoURL ? (
 					<img
 						alt=""
-						className="h-12 w-12 rounded-full object-cover"
+						className="h-24 w-24 rounded-full object-cover"
 						referrerPolicy="no-referrer"
 						src={photoURL}
 					/>
 				) : (
 					<Avatar
-						className="h-12 w-12 rounded-full"
+						className="h-24 w-24 rounded-full"
 						name={name ?? '?'}
 					/>
 				)}

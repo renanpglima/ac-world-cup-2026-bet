@@ -287,7 +287,7 @@ export function HeadToHeadView({
 
 			<div className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
 				<div className="flex min-w-0 flex-1 flex-col items-center gap-2 text-center">
-					<Avatar className="h-32 w-32 rounded-2xl" name={aName} />
+					<Avatar className="h-24 w-24 rounded-2xl" name={aName} />
 
 					<p className="w-full truncate font-display text-lg font-bold text-white">
 						{aName}
@@ -303,7 +303,7 @@ export function HeadToHeadView({
 				</span>
 
 				<div className="flex min-w-0 flex-1 flex-col items-center gap-2 text-center">
-					<Avatar className="h-32 w-32 rounded-2xl" name={bName} />
+					<Avatar className="h-24 w-24 rounded-2xl" name={bName} />
 
 					<p className="w-full truncate font-display text-lg font-bold text-white">
 						{bName}

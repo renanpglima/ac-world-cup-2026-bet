@@ -14,7 +14,7 @@ export function CelebrateOverlay({name}: {name: string}) {
 			<div className="flex flex-col items-center gap-3">
 				<div className="relative">
 					<Avatar
-						className="h-28 w-28 animate-bounce rounded-full shadow-2xl ring-4 ring-emerald-400/60"
+						className="h-24 w-24 animate-bounce rounded-full shadow-2xl ring-4 ring-emerald-400/60"
 						name={name}
 					/>
 

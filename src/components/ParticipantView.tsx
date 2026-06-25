@@ -49,7 +49,7 @@ export function ParticipantView({
 			<div className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/5 px-5 py-5">
 				<div className="flex items-center gap-3 sm:gap-5">
 					<Avatar
-						className="h-16 w-16 rounded-2xl text-2xl sm:h-64 sm:w-64 sm:text-4xl"
+						className="h-16 w-16 rounded-2xl text-2xl sm:h-24 sm:w-24 sm:text-4xl"
 						name={participant.name}
 						photoURL={participant.photoURL}
 					/>
