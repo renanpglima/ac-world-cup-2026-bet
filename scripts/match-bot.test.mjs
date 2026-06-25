@@ -92,6 +92,7 @@ describe('signalPayload', () => {
 			away: 'Iraq',
 			event: 'match_kickoff',
 			home: 'France',
+			message: formatEvent({game, type: 'kickoff'}),
 		});
 	});
 
@@ -102,6 +103,7 @@ describe('signalPayload', () => {
 			event: 'match_goal',
 			home: 'France',
 			homeScore: 2,
+			message: formatEvent({game, side: 'home', type: 'goal'}),
 			scorer: 'France',
 		});
 	});
@@ -113,6 +115,7 @@ describe('signalPayload', () => {
 			event: 'match_final',
 			home: 'France',
 			homeScore: 2,
+			message: formatEvent({game, type: 'final'}),
 		});
 	});
 });

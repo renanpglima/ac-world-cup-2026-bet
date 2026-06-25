@@ -121,11 +121,19 @@ if (
 	process.exit(0);
 }
 
+// One emitsignal channel hook per event type (each is its own ac-world-cup-2026
+// channel). Firing is gated by EMITSIGNAL_API_KEY in emit-signal.mjs, so only
+// the configured server signals.
+const MATCH_HOOKS = {
+	final: 'https://api.emitsignal.com/h/gh_2k12v79', // ac-world-cup-2026/match_finished
+	goal: 'https://api.emitsignal.com/h/gh_ikfrubx', // ac-world-cup-2026/goals
+	kickoff: 'https://api.emitsignal.com/h/gh_q9ur7an', // ac-world-cup-2026/match_kickoff
+};
+
 // Detect kickoffs, goals and full time against the prior state (before we
 // overwrite it). On the first run `previous` is null, so nothing is detected
 // rather than backfilling history. The chat bot announces goals only; every
-// event (kickoff, goal, final) also goes to the emitsignal webhook when it's
-// configured in the environment.
+// event also goes to its emitsignal channel when the API key is configured.
 try {
 	const events = detectMatchEvents(previous?.games ?? null, games);
 
@@ -138,13 +146,13 @@ try {
 	let signaled = 0;
 
 	for (const event of events) {
-		if (await emitSignal(signalPayload(event))) {
+		if (await emitSignal(MATCH_HOOKS[event.type], signalPayload(event))) {
 			signaled += 1;
 		}
 	}
 
 	if (signaled) {
-		console.log(`Emitted ${signaled} match signal(s) to the webhook`);
+		console.log(`Emitted ${signaled} match signal(s) to channels`);
 	}
 }
 catch (botError) {

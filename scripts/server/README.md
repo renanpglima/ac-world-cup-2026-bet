@@ -64,18 +64,18 @@ The `env` file is optional — without it the poller stays scores-only (no
 commentary, no Slack). Its contents:
 
 ```bash
-export ANTHROPIC_API_KEY=...      # AI commentary (optional)
-export SLACK_WEBHOOK_URL=...       # Slack match digest (optional)
-export EMITSIGNAL_WEBHOOK_URL=...  # emitsignal push for kickoff/goal/final (optional)
-export EMITSIGNAL_API_KEY=...      # Bearer token for the emitsignal call (optional)
+export ANTHROPIC_API_KEY=...   # AI commentary (optional)
+export SLACK_WEBHOOK_URL=...    # Slack match digest (optional)
+export EMITSIGNAL_API_KEY=...   # emitsignal push for kickoff/goal/final (optional)
 ```
 
-With `EMITSIGNAL_WEBHOOK_URL` set, every detected match event (kickoff, goal,
-full time) is POSTed to that emitsignal hook as a flat JSON body
-(`{event, home, away, homeScore?, awayScore?, scorer?, at}`). When
-`EMITSIGNAL_API_KEY` is also set it is sent as an `Authorization: Bearer` header
-to authenticate the call. Unset URL → no signal is sent. The chat bot posts
-goals only, regardless.
+With `EMITSIGNAL_API_KEY` set, every detected match event is POSTed (Bearer
+authenticated) to its own emitsignal channel hook — kickoffs to
+`ac-world-cup-2026/match_kickoff`, goals to `ac-world-cup-2026/goals`, full time
+to `ac-world-cup-2026/match_finished` (the hook URLs are hard-coded in
+`scripts/push-scores.mjs`). The key both authenticates and gates the call, so a
+local checkout without it never signals — only this server does. The chat bot
+posts goals only, regardless.
 
 ## 4. Verify
 

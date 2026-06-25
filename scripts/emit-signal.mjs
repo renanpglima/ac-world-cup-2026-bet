@@ -1,27 +1,23 @@
-// Server-side push to the emitsignal webhook, from the score-poller cron. The
-// hook URL and API key live in the VM env (EMITSIGNAL_WEBHOOK_URL +
-// EMITSIGNAL_API_KEY, kept out of the repo); no URL → no-op, so the poller only
-// signals where it's configured. The event fields go at the top level of the
-// JSON body, matching the in-app client; the API key authenticates the call as
-// a Bearer token when present.
-export async function emitSignal(payload) {
-	const url = process.env.EMITSIGNAL_WEBHOOK_URL;
-
-	if (!url) {
-		return false;
-	}
-
-	const headers = {'Content-Type': 'application/json'};
+// Server-side push to an emitsignal channel hook, from the score-poller cron.
+// Each match channel (match_kickoff, match_goals, match_finished) has its own
+// hook URL. The API key (EMITSIGNAL_API_KEY) authenticates the call as a Bearer
+// token AND gates it: no key → no-op, so only the configured server (the VM)
+// signals, never a local checkout or CI. The event fields go at the top level
+// of the JSON body.
+export async function emitSignal(url, payload) {
 	const apiKey = process.env.EMITSIGNAL_API_KEY;
 
-	if (apiKey) {
-		headers.Authorization = `Bearer ${apiKey}`;
+	if (!url || !apiKey) {
+		return false;
 	}
 
 	try {
 		await fetch(url, {
 			body: JSON.stringify({...payload, at: new Date().toISOString()}),
-			headers,
+			headers: {
+				Authorization: `Bearer ${apiKey}`,
+				'Content-Type': 'application/json',
+			},
 			method: 'POST',
 		});
 

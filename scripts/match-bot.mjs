@@ -78,19 +78,25 @@ export function formatEvent(event) {
 	return `⚽ GOOOOAL! ${teamFlagEmoji(team)} ${team} — ${game.homeTeam} ${game.homeScore}-${game.awayScore} ${game.awayTeam}`;
 }
 
-// The flat JSON payload for the signal webhook, one per match event. Kickoffs,
-// goals and full time all go out here (the chat bot only posts goals).
+// The JSON payload for a match channel hook, one per event. `message` is the
+// readable line (same text as the chat bot); the rest is structured data. Each
+// channel has its own hook (see MATCH_HOOKS in push-scores), so the channel is
+// the URL, not a field here.
 export function signalPayload(event) {
 	const {game} = event;
-	const teams = {away: game.awayTeam, home: game.homeTeam};
+	const common = {
+		away: game.awayTeam,
+		home: game.homeTeam,
+		message: formatEvent(event),
+	};
 
 	if (event.type === 'kickoff') {
-		return {...teams, event: 'match_kickoff'};
+		return {...common, event: 'match_kickoff'};
 	}
 
 	if (event.type === 'final') {
 		return {
-			...teams,
+			...common,
 			awayScore: game.awayScore,
 			event: 'match_final',
 			homeScore: game.homeScore,
@@ -98,7 +104,7 @@ export function signalPayload(event) {
 	}
 
 	return {
-		...teams,
+		...common,
 		awayScore: game.awayScore,
 		event: 'match_goal',
 		homeScore: game.homeScore,
