@@ -11,11 +11,17 @@ export interface ChatMessage {
 	text: string;
 }
 
-// chatRoom/<pushId> = {name, text, at} — one global room for everyone.
-export function useChat(limit = 50): {
+// chatRoom/<pushId> = {name, text, at} — one global room for everyone. Loads the
+// newest `pageSize` messages and grows the window by `pageSize` each time
+// `loadOlder` is called, so older history is fetched on demand. `hasMore` is
+// true while the window is full (more older messages likely exist).
+export function useChat(pageSize = 50): {
+	hasMore: boolean;
+	loadOlder: () => void;
 	messages: ChatMessage[];
 	send: (name: string, text: string) => void;
 } {
+	const [limit, setLimit] = useState(pageSize);
 	const [messages, setMessages] = useState<ChatMessage[]>([]);
 
 	useEffect(
@@ -63,5 +69,10 @@ export function useChat(limit = 50): {
 		});
 	};
 
-	return {messages, send};
+	return {
+		hasMore: messages.length >= limit,
+		loadOlder: () => setLimit((current) => current + pageSize),
+		messages,
+		send,
+	};
 }

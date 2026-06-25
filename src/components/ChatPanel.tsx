@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 
 import {acTrack} from '../lib/analyticsCloud';
 import {parseChatInput, runChatCommand} from '../lib/chatCommands';
@@ -53,7 +53,7 @@ export function ChatPanel({
 	onRequestIdentify,
 	participants,
 }: Props) {
-	const {messages, send} = useChat();
+	const {hasMore, loadOlder, messages, send} = useChat();
 	const chatReactions = useChatReactions();
 	const [draft, setDraft] = useState('');
 	const [ephemeral, setEphemeral] = useState<{id: number; text: string}[]>(
@@ -62,17 +62,36 @@ export function ChatPanel({
 	const ephemeralId = useRef(0);
 	const listRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
+	// Scroll height captured right before loading older messages, so we can keep
+	// the viewport steady once they prepend (null = not loading older).
+	const olderLoad = useRef<number | null>(null);
 
-	useEffect(() => {
-		// Scroll only the message list — not scrollIntoView, which bubbles up and
-		// scrolls the whole window on mobile, pushing the fixed header (and its
-		// close button) out of reach on long conversations.
+	useLayoutEffect(() => {
 		const list = listRef.current;
 
-		if (list) {
-			list.scrollTo({behavior: 'smooth', top: list.scrollHeight});
+		if (!list) {
+			return;
 		}
+
+		// Just loaded older messages → keep the same messages in view instead of
+		// jumping to the bottom.
+		if (olderLoad.current !== null) {
+			list.scrollTop += list.scrollHeight - olderLoad.current;
+			olderLoad.current = null;
+
+			return;
+		}
+
+		// New message / first load → stick to the bottom. Scroll only the list
+		// (not scrollIntoView, which bubbles up and scrolls the whole window on
+		// mobile, pushing the fixed header out of reach).
+		list.scrollTo({behavior: 'smooth', top: list.scrollHeight});
 	}, [messages.length]);
+
+	const handleLoadOlder = () => {
+		olderLoad.current = listRef.current?.scrollHeight ?? 0;
+		loadOlder();
+	};
 
 	useEffect(() => {
 		// Only auto-focus on larger screens. On mobile it pops the soft keyboard
@@ -149,6 +168,17 @@ export function ChatPanel({
 				className="flex-1 space-y-3 overflow-y-auto overflow-x-hidden p-4"
 				ref={listRef}
 			>
+				{hasMore && (
+					<div className="flex justify-center pb-1">
+						<button
+							className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-300 transition hover:bg-white/20"
+							onClick={handleLoadOlder}
+						>
+							Load older messages
+						</button>
+					</div>
+				)}
+
 				{messages.length === 0 ? (
 					<p className="pt-8 text-center text-sm text-slate-500">
 						No messages yet — be the first!
