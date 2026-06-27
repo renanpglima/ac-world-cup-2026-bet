@@ -862,6 +862,7 @@ export default function App() {
 									signedIn: !auth.isAnonymous && !!auth.user,
 								}}
 								matchReactions={matchReactions}
+								myName={presenceName}
 								onClearCommentary={auth.isOwner ? clearMatchCommentary : undefined}
 								onClearMatchReaction={auth.isOwner ? clearMatchReaction : undefined}
 								onMatchReact={reactMatch}

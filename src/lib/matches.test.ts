@@ -1,6 +1,6 @@
 import {describe, expect, it} from 'vitest';
 
-import {buildMatchCards} from './matches';
+import {buildMatchCards, type MatchEntry, visiblePicks} from './matches';
 import type {Game, Participant} from './types';
 
 function makeGame(overrides: Partial<Game> = {}): Game {
@@ -106,6 +106,31 @@ describe('buildMatchCards', () => {
 			'Ana',
 			'Zeca',
 		]);
+	});
+});
+
+describe('visiblePicks', () => {
+	const ENTRIES: MatchEntry[] = [
+		{name: 'Ana', p1: 2, p2: 0, points: null},
+		{name: 'Bia', p1: 1, p2: 1, points: null},
+	];
+
+	it('hides everyone but the signed-in player before kickoff', () => {
+		expect(visiblePicks(ENTRIES, 'notstarted', 'Ana')).toEqual([
+			{name: 'Ana', p1: 2, p2: 0, points: null},
+		]);
+	});
+
+	it('hides every pick when no one is identified before kickoff', () => {
+		expect(visiblePicks(ENTRIES, 'notstarted', null)).toEqual([]);
+	});
+
+	it('reveals all picks once the match is live', () => {
+		expect(visiblePicks(ENTRIES, 'live', 'Ana')).toBe(ENTRIES);
+	});
+
+	it('reveals all picks once the match is finished', () => {
+		expect(visiblePicks(ENTRIES, 'finished', null)).toBe(ENTRIES);
 	});
 });
 

@@ -15,6 +15,22 @@ export interface MatchEntry {
 	points: number | null;
 }
 
+// Before a match kicks off its predictions are private: each player sees only
+// their own scoreline so nobody can copy. Once the match is live or finished,
+// every pick is public. `myName` is the signed-in player's pool name (null when
+// not identified, so they see nothing until kickoff).
+export function visiblePicks(
+	entries: MatchEntry[],
+	status: MatchStatus,
+	myName: string | null
+): MatchEntry[] {
+	if (status !== 'notstarted') {
+		return entries;
+	}
+
+	return myName ? entries.filter((entry) => entry.name === myName) : [];
+}
+
 export interface MatchCard {
 	date: string;
 	entries: MatchEntry[];

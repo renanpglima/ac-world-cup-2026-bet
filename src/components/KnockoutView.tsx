@@ -33,7 +33,7 @@ export function KnockoutView({
 					Bracket
 				</h2>
 
-				<KnockoutBracket />
+				<KnockoutBracket youName={youName} />
 			</section>
 
 			<section>

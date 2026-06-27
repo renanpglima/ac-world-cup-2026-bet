@@ -1,8 +1,8 @@
 import {useMemo} from 'react';
 
 import {flagCode} from '../lib/flags';
-import type {KnockoutPick} from '../lib/knockoutCards';
-import type {MatchEntry} from '../lib/matches';
+import {type KnockoutPick, knockoutStatus} from '../lib/knockoutCards';
+import {type MatchEntry, visiblePicks} from '../lib/matches';
 import {scorePrediction} from '../lib/scoring';
 import {type KnockoutMatch, useKnockout} from '../lib/useKnockout';
 import {useKnockoutPicks} from '../lib/useKnockoutPicks';
@@ -71,9 +71,19 @@ function TeamLine({
 }
 
 // Hover popover listing everyone's picks for the match (with points once the
-// match is decided).
-function PicksPopover({m, picks}: {m: KnockoutMatch; picks: KnockoutPick[]}) {
+// match is decided). Before kickoff only your own pick shows; the rest stay
+// sealed so nobody copies.
+function PicksPopover({
+	m,
+	myName,
+	picks,
+}: {
+	m: KnockoutMatch;
+	myName: string | null;
+	picks: KnockoutPick[];
+}) {
 	const resolved = m.scoreA != null && m.scoreB != null;
+	const sealed = knockoutStatus(m, Date.now()) === 'notstarted';
 
 	const entries: MatchEntry[] = picks.map((pick) => ({
 		name: pick.name,
@@ -90,14 +100,34 @@ function PicksPopover({m, picks}: {m: KnockoutMatch; picks: KnockoutPick[]}) {
 			: null,
 	}));
 
+	const visible = visiblePicks(
+		entries,
+		sealed ? 'notstarted' : 'live',
+		myName
+	);
+
 	return (
 		<div className="invisible absolute left-1/2 top-full z-50 mt-1 w-64 -translate-x-1/2 rounded-2xl border border-white/10 bg-slate-900 p-3 text-left opacity-0 shadow-xl transition group-hover:visible group-hover:opacity-100">
-			<MatchPicks entries={entries} />
+			{visible.length > 0 && <MatchPicks entries={visible} />}
+
+			{sealed && (
+				<p className="text-center text-xs text-slate-500">
+					🔒 Other players' picks are hidden until kickoff
+				</p>
+			)}
 		</div>
 	);
 }
 
-function MatchCard({m, picks}: {m: KnockoutMatch; picks: KnockoutPick[]}) {
+function MatchCard({
+	m,
+	myName,
+	picks,
+}: {
+	m: KnockoutMatch;
+	myName: string | null;
+	picks: KnockoutPick[];
+}) {
 	return (
 		<div className="group relative w-full min-w-0 rounded-md border border-white/10 bg-white/5 px-1.5 py-1">
 			<TeamLine
@@ -114,7 +144,9 @@ function MatchCard({m, picks}: {m: KnockoutMatch; picks: KnockoutPick[]}) {
 				team={m.teamB ?? null}
 			/>
 
-			{picks.length > 0 && <PicksPopover m={m} picks={picks} />}
+			{picks.length > 0 && (
+				<PicksPopover m={m} myName={myName} picks={picks} />
+			)}
 		</div>
 	);
 }
@@ -122,11 +154,13 @@ function MatchCard({m, picks}: {m: KnockoutMatch; picks: KnockoutPick[]}) {
 function Half({
 	byMatch,
 	byNum,
+	myName,
 	rounds,
 	side,
 }: {
 	byMatch: Record<number, KnockoutPick[]>;
 	byNum: ByNum;
+	myName: string | null;
 	rounds: number[][];
 	side: 'left' | 'right';
 }) {
@@ -196,6 +230,7 @@ function Half({
 
 							<MatchCard
 								m={match}
+								myName={myName}
 								picks={byMatch[num] ?? []}
 							/>
 						</div>
@@ -209,9 +244,11 @@ function Half({
 function Center({
 	byMatch,
 	byNum,
+	myName,
 }: {
 	byMatch: Record<number, KnockoutPick[]>;
 	byNum: ByNum;
+	myName: string | null;
 }) {
 	const final = byNum[104];
 	const third = byNum[103];
@@ -236,7 +273,9 @@ function Center({
 				Final
 			</span>
 
-			{final && <MatchCard m={final} picks={byMatch[104] ?? []} />}
+			{final && (
+				<MatchCard m={final} myName={myName} picks={byMatch[104] ?? []} />
+			)}
 
 			{third && (
 				<div className="mt-2 flex w-full flex-col items-center gap-0.5">
@@ -244,14 +283,14 @@ function Center({
 						3rd place
 					</span>
 
-					<MatchCard m={third} picks={byMatch[103] ?? []} />
+					<MatchCard m={third} myName={myName} picks={byMatch[103] ?? []} />
 				</div>
 			)}
 		</div>
 	);
 }
 
-export function KnockoutBracket() {
+export function KnockoutBracket({youName}: {youName: string | null}) {
 	const matches = useKnockout();
 	const {byMatch} = useKnockoutPicks(null);
 
@@ -269,15 +308,17 @@ export function KnockoutBracket() {
 					<Half
 						byMatch={byMatch}
 						byNum={byNum}
+						myName={youName}
 						rounds={LEFT}
 						side="left"
 					/>
 
-					<Center byMatch={byMatch} byNum={byNum} />
+					<Center byMatch={byMatch} byNum={byNum} myName={youName} />
 
 					<Half
 						byMatch={byMatch}
 						byNum={byNum}
+						myName={youName}
 						rounds={RIGHT}
 						side="right"
 					/>
@@ -314,6 +355,7 @@ export function KnockoutBracket() {
 									<MatchCard
 										key={match.matchNumber}
 										m={match}
+										myName={youName}
 										picks={byMatch[match.matchNumber] ?? []}
 									/>
 								))}

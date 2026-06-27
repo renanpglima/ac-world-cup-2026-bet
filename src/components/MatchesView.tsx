@@ -1,7 +1,7 @@
 import {useState} from 'react';
 
 import {kickoffDate} from '../lib/kickoff';
-import type {MatchCard} from '../lib/matches';
+import {type MatchCard, visiblePicks} from '../lib/matches';
 import type {Game, Participant} from '../lib/types';
 import type {CheerCounts} from '../lib/useCheers';
 import type {ReactionsApi} from '../lib/useReactions';
@@ -38,6 +38,7 @@ interface MatchesViewProps {
 	knockoutCards: MatchCard[];
 	knockoutPick: KnockoutSection;
 	matchReactions: ReactionsApi;
+	myName: string | null;
 	onClearCommentary?: (matchNo: number) => void;
 	onClearMatchReaction?: (matchNo: number, emoji: string) => void;
 	onMatchReact: (matchNo: number, emoji: string) => void;
@@ -179,6 +180,7 @@ function MatchCardArticle({
 	games,
 	knockoutEntry,
 	matchReactions,
+	myName,
 	onClearCommentary,
 	onClearMatchReaction,
 	onMatchReact,
@@ -190,6 +192,7 @@ function MatchCardArticle({
 	games: Game[];
 	knockoutEntry?: KnockoutEntry;
 	matchReactions: ReactionsApi;
+	myName: string | null;
 	onClearCommentary?: (matchNo: number) => void;
 	onClearMatchReaction?: (matchNo: number, emoji: string) => void;
 	onMatchReact: (matchNo: number, emoji: string) => void;
@@ -199,6 +202,11 @@ function MatchCardArticle({
 	const live = card.status === 'live';
 	const cheers1 = tally.team1 ?? 0;
 	const cheers2 = tally.team2 ?? 0;
+
+	// Before kickoff only your own pick shows; the rest stay sealed so nobody
+	// copies. Once the match is live or done, everyone's picks are public.
+	const sealed = card.status === 'notstarted';
+	const picks = visiblePicks(card.entries, card.status, myName);
 	return (
 		<article
 			className={`group flex flex-col rounded-2xl border bg-white/5 p-4 ${
@@ -255,10 +263,15 @@ function MatchCardArticle({
 				/>
 			)}
 
-			<MatchPicks
-				entries={card.entries}
-				live={card.status === 'live'}
-			/>
+			{picks.length > 0 && (
+				<MatchPicks entries={picks} live={card.status === 'live'} />
+			)}
+
+			{sealed && (
+				<p className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-center text-xs text-slate-500">
+					🔒 Other players' picks are hidden until kickoff
+				</p>
+			)}
 
 			{card.status === 'live' && !knockoutEntry && (
 				<WhatIfPanel
@@ -290,13 +303,15 @@ function MatchCardArticle({
 				</div>
 			)}
 
-			<div className="mt-auto pt-4">
-				<BetSplitBar
-					entries={card.entries}
-					team1={card.team1}
-					team2={card.team2}
-				/>
-			</div>
+			{!sealed && (
+				<div className="mt-auto pt-4">
+					<BetSplitBar
+						entries={card.entries}
+						team1={card.team1}
+						team2={card.team2}
+					/>
+				</div>
+			)}
 
 			<div className="mt-3 border-t border-white/5 pt-2.5">
 				<Reactions
@@ -322,6 +337,7 @@ function MatchSection({
 	groups,
 	knockout,
 	matchReactions,
+	myName,
 	onClearCommentary,
 	onClearMatchReaction,
 	onMatchReact,
@@ -334,6 +350,7 @@ function MatchSection({
 	groups: DayGroup[];
 	knockout: KnockoutSection;
 	matchReactions: ReactionsApi;
+	myName: string | null;
 	onClearCommentary?: (matchNo: number) => void;
 	onClearMatchReaction?: (matchNo: number, emoji: string) => void;
 	onMatchReact: (matchNo: number, emoji: string) => void;
@@ -379,6 +396,7 @@ function MatchSection({
 									key={card.matchNo}
 									knockoutEntry={knockoutEntry}
 									matchReactions={matchReactions}
+									myName={myName}
 									onClearCommentary={onClearCommentary}
 									onClearMatchReaction={onClearMatchReaction}
 									onMatchReact={onMatchReact}
@@ -445,6 +463,7 @@ export function MatchesView({
 	knockoutCards,
 	knockoutPick,
 	matchReactions,
+	myName,
 	onClearCommentary,
 	onClearMatchReaction,
 	onMatchReact,
@@ -523,6 +542,7 @@ export function MatchesView({
 				groups={groups}
 				knockout={knockout}
 				matchReactions={matchReactions}
+				myName={myName}
 				onClearCommentary={onClearCommentary}
 				onClearMatchReaction={onClearMatchReaction}
 				onMatchReact={onMatchReact}
